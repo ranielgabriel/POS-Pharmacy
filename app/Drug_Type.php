@@ -4,13 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Payment_Method extends Model
+class Drug_Type extends Model
 {
     // Table Name
-    protected $table = 'Payment_Methods';
+    protected $table = 'Drug_Types';
 
     // Primary Key
-    public $primaryKey = 'payment_method_id';
+    public $primaryKey = 'drug_type_id';
 
     // Timestamps
     public $timestamps = true;
@@ -18,6 +18,6 @@ class Payment_Method extends Model
     // Relationship connections
     public function payments(){
         // Foreign key check is 'payment_id'
-        return $this->belongsTo('App\Payment');
+        return $this->belongsTo('App\Product');
     }
 }
