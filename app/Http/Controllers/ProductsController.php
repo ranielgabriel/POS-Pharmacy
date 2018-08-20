@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Product;
 
 class ProductsController extends Controller
 {
@@ -13,7 +14,11 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        //
+        // Get all the products from the database
+        // Paginate with 25 products per page
+        $products = Product::orderBy('brand_name','asc')->paginate(25);
+
+        return view('products.index')->with('products', $products);
     }
 
     /**
@@ -23,7 +28,8 @@ class ProductsController extends Controller
      */
     public function create()
     {
-        //
+        // Show the view for adding product
+        return view('products.create');
     }
 
     /**
@@ -34,7 +40,7 @@ class ProductsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Create a product object to save to database
     }
 
     /**

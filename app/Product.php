@@ -21,6 +21,10 @@ class Product extends Model
         return $this->hasOne('App\Drug_Type');
     }
 
+    public function inventories(){
+        return $this->belongsToMany('App\Inventory');
+    }
+
     public function sales_transactions(){
         // The name of the intermediate table is products_in_transactions
         return $this->belongsToMany('App\Sales_Transaction','products_in_transactions');
@@ -28,6 +32,6 @@ class Product extends Model
 
     public function generic_names(){
         // The name of the intermediate table is products_generic_names
-        return $this->belongToMany('App\Generic_Name','products_generic_names');
+        return $this->belongsToMany('App\Generic_Name','products_generic_names');
     }
 }
