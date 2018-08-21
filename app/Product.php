@@ -7,31 +7,40 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     // Table Name
-    protected $table = 'Products';
+    protected $table = 'products';
+    protected $fillable = [
+    'brand_name',
+    'generic_name_id',
+    'manufacturer',
+    'drug_type_id',
+    'market_price',
+    'special_price',
+    'walk_in_price',
+    'promo_price',
+    'distributor_price',
+    'updated_at',
+    'created_at'];
 
     // Primary Key
-    public $primaryKey = 'product_id';
+    public $primaryKey = 'id';
 
-    // Timestamps
-    public $timestamps = true;
-
-    public function drug_types(){
+    public function drugTypes(){
         // Foreign key check is 'payment_method_id'
         // Products table has a relationship of 1 : 1 in Drug_Types Table
-        return $this->hasOne('App\Drug_Type');
+        return $this->belongsTo('App\DrugType','drug_type_id');
     }
 
-    public function inventories(){
-        return $this->belongsToMany('App\Inventory');
+    function inventories(){
+        return $this->hasMany('App\Inventory');
     }
 
-    public function sales_transactions(){
-        // The name of the intermediate table is products_in_transactions
-        return $this->belongsToMany('App\Sales_Transaction','products_in_transactions');
-    }
+    // function sales_transactions(){
+    //     // The name of the intermediate table is products_in_transactions
+    //     return $this->belongsToMany('App\SalesTransaction','products_in_transactions');
+    // }
 
-    public function generic_names(){
+    public function genericNames(){
         // The name of the intermediate table is products_generic_names
-        return $this->belongsToMany('App\Generic_Name','products_generic_names');
+        return $this->belongsTo('App\GenericName','generic_name_id');
     }
 }

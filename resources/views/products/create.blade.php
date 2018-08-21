@@ -22,6 +22,7 @@
             </div>
             <div class="form-group col-md-3">
             {{Form::label('drugType', 'Drug Type')}}
+            {{-- {{Form::select('drugType', ['L' => 'Large', 'S' => 'Small'], null, ['class' => 'form-control', 'placeholder' => 'Pick a type...'])}} --}}
             {{Form::text('drugType', '', ['class' => 'form-control', 'placeholder' => 'Drug Type'])}}
             </div>
         </div>
