@@ -11,7 +11,7 @@ class Product extends Model
     protected $fillable = [
     'brand_name',
     'generic_name_id',
-    'manufacturer',
+    'manufacturer_id',
     'drug_type_id',
     'market_price',
     'special_price',
@@ -30,14 +30,13 @@ class Product extends Model
         return $this->belongsTo('App\DrugType','drug_type_id');
     }
 
-    function inventories(){
+    public function inventories(){
         return $this->hasMany('App\Inventory');
     }
 
-    // function sales_transactions(){
-    //     // The name of the intermediate table is products_in_transactions
-    //     return $this->belongsToMany('App\SalesTransaction','products_in_transactions');
-    // }
+    public function manufacturers(){
+        return $this->belongsTo('App\Manufacturer','manufacturer_id');
+    }
 
     public function genericNames(){
         // The name of the intermediate table is products_generic_names

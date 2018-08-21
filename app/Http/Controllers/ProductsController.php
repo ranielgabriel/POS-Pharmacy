@@ -9,6 +9,7 @@ use App\DrugType;
 use App\GenericName;
 use App\Inventory;
 use App\Supplier;
+use App\Manufacturer;
 
 class ProductsController extends Controller
 {
@@ -69,8 +70,6 @@ class ProductsController extends Controller
         ]);
 
         // saving to database
-        $product = new Product();
-
         $genericName = new GenericName();
         $genericName = GenericName::firstOrCreate(
             ['description' => $request->input('genericName')]
@@ -81,27 +80,9 @@ class ProductsController extends Controller
             ['description' => $request->input('drugType')]
         );
 
-        // $newProduct->brand_name = $request->input('brandName');
-        // $newProduct->manufacturer = $request->input('manufacturer');
-        // $newProduct->market_price = $request->input('marketPrice');
-        // $newProduct->special_price = $request->input('specialPrice');
-        // $newProduct->walk_in_price = $request->input('walkInPrice');
-        // $newProduct->promo_price = $request->input('promoPrice');
-        // $newProduct->distributor_price = $request->input('distributorPrice');
-        // $newProduct->generic_name_id = $newGenericName->id;
-        // $newProduct->drug_type_id = $newDrugType->id;
-
-        // $newProduct->save();
-        $product = Product::firstOrCreate([
-            'brand_name' => $request->input('brandName'),
-            'manufacturer' => $request->input('manufacturer'),
-            'market_price' => $request->input('marketPrice'),
-            'special_price' => $request->input('specialPrice'),
-            'walk_in_price' => $request->input('walkInPrice'),
-            'promo_price' => $request->input('promoPrice'),
-            'distributor_price' => $request->input('distributorPrice'),
-            'generic_name_id' => $genericName->id,
-            'drug_type_id' => $drugType->id
+        $manufacturer = new Manufacturer();
+        $manufacturer = Manufacturer::firstOrCreate([
+            'name' => $request->input('manufacturer')
         ]);
 
         $supplier = new Supplier();
@@ -109,13 +90,26 @@ class ProductsController extends Controller
             'name' => $request->input('nameOfSupplier')
         ]);
 
+        $product = new Product();
+        $product = Product::firstOrCreate([
+            'brand_name' => $request->input('brandName'),
+            'market_price' => $request->input('marketPrice'),
+            'special_price' => $request->input('specialPrice'),
+            'walk_in_price' => $request->input('walkInPrice'),
+            'promo_price' => $request->input('promoPrice'),
+            'distributor_price' => $request->input('distributorPrice'),
+            'manufacturer_id' => $manufacturer->id,
+            'generic_name_id' => $genericName->id,
+            'drug_type_id' => $drugType->id
+        ]);
+
         $inventory = new Inventory();
         $inventory = Inventory::create([
-            'supplier_id' => $supplier->id,
-            'product_id' => $product->id,
             'quantity' => $request->input('quantity'),
             'expiration_date' => $request->input('expirationDate'),
             'batch_number' => $request->input('batchNumber'),
+            'supplier_id' => $supplier->id,
+            'product_id' => $product->id
         ]);
 
         return redirect('/products')->with('success', 'Product successfully added.');

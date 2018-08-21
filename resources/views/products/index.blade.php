@@ -2,7 +2,9 @@
 @section('content')
 <div class="container">
     <h1>Products</h1>
+
     <a class="btn btn-primary" href="/products/create">Add Product</a>
+
     <table class="table table-striped table-bordered table-hover">
         <th>Brand Name</th>
         <th>Generic Name</th>
@@ -19,14 +21,20 @@
             <td>{{ $product->brand_name }}</td>
             <td>{{ $product->genericNames->description }}</td>
             <td>{{ $product->drugTypes->description }}</td>
-            <td>{{ $product->quantity }}</td>
+            <td>
+
+                @foreach($product->inventories as $inventory)
+                    {{ $inventory->quantity }}
+                @endforeach()
+
+            </td>
             <td>{{ $product->market_price }}</td>
             <td>{{ $product->special_price }}</td>
             <td>{{ $product->walk_in_price }}</td>
             <td>{{ $product->promo_price }}</td>
             <td>{{ $product->distributor_price }}</td>
         </tr>
-    @endforeach
+    @endforeach()
 
 </table>
 </div>
