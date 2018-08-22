@@ -29,7 +29,9 @@ class AjaxController extends Controller
         if($request->name != ''){
 
             $products = Product::orderBy('brand_name','asc')
+            ->join('generic_names', 'products.generic_name_id', '=', 'generic_names.id')
             ->where('brand_name', 'like', '%' . $request->name . '%')
+            ->orWhere('generic_names.description', 'like', '%' . $request->name . '%')
             ->get();
 
             foreach ($products as $key => $product) {
@@ -103,9 +105,4 @@ class AjaxController extends Controller
         }
         return response($output);
     }
-
-    // public function index(){
-    //     $msg = "This is a simple message.";
-    //     return response()->json(array('msg'=> $msg), 200);
-    //  }
 }

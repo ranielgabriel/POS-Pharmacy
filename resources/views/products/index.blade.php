@@ -41,14 +41,13 @@
                     <td>{{ $product->walk_in_price }}</td>
                     <td>{{ $product->promo_price }}</td>
                     <td>{{ $product->distributor_price }}</td>
-                    <td><a class="btn btn-success" href="#">Sell</a></td>
+                    <td><button class="btn btn-success" data-toggle="modal" data-target="#modalSell">Sell</button></td>
                 </tr>
             @endforeach()
             </table>
     </div>
 </div>
 {{ $products->links() }}
-
 @endsection()
 
 @section('formLogic')
