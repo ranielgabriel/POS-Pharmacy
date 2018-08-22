@@ -11,7 +11,7 @@
     <title>{{ config('app.name', 'Pharmacy') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -30,4 +30,5 @@
         </main>
     </div>
 </body>
+@yield('formLogic')
 </html>

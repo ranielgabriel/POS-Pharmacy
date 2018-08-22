@@ -21,3 +21,6 @@ Auth::routes();
 Route::get('/dashboard', 'DashboardController@index');
 
 Route::resource('/products', 'ProductsController');
+Route::post('/searchProducts','AjaxController@searchProducts');
+
+Route::resource('/inventories', 'InventoriesController');

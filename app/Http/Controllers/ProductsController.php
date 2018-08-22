@@ -22,14 +22,13 @@ class ProductsController extends Controller
     {
         // Get all the products from the database
         // Paginate with 25 products per page
-        $products = Product::orderBy('brand_name','asc')->paginate(25);
         // $products = DB::table('products')
         //     ->join('generic_names', 'products.generic_name_id', '=', 'generic_names.id')
         //     ->join('drug_types', 'products.drug_type_id', '=', 'drug_types.id')
         //     ->select('products.*', 'generic_names.name as genericName', 'drug_types.description as drugTypeDescription')
         //     // ->get()
         //     ->paginate(25);
-
+        $products = Product::orderBy('brand_name','asc')->paginate(25);
         return view('products.index')->with('products' , $products);
     }
 
@@ -159,4 +158,5 @@ class ProductsController extends Controller
     {
         //
     }
+
 }
