@@ -29,6 +29,6 @@
             @yield('content')
         </main>
     </div>
+    @yield('formLogic')
 </body>
-@yield('formLogic')
 </html>

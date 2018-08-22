@@ -1,4 +1,5 @@
 @extends('layouts.app')
+
 @section('content')
 <div class="container container-fluid">
     <div class="form-group">
@@ -9,44 +10,45 @@
         {{Form::label('search', 'Search')}}
         {{Form::text('search', '', ['id' => 'search', 'class' => 'form-control', 'placeholder' => 'Search... (Brand Name, Generic Name, Manufacturer)'])}}
     </div>
-    <table class="table table-striped table-bordered table-hover">
-        <th>Brand Name</th>
-        <th>Generic Name</th>
-        <th>Drug Type</th>
-        <th>Quantity</th>
-        <th>Market Price</th>
-        <th>Special Price</th>
-        <th>Walk-In Price</th>
-        <th>Promo Price</th>
-        <th>Distributor's Price</th>
-        <th>Action</th>
+    <div class="" id="tableContainer">
+        <table class="table table-striped table-bordered table-hover" id="tableProducts">
+            <th>Brand Name</th>
+            <th>Generic Name</th>
+            <th>Drug Type</th>
+            <th>Quantity</th>
+            <th>Market Price</th>
+            <th>Special Price</th>
+            <th>Walk-In Price</th>
+            <th>Promo Price</th>
+            <th>Distributor's Price</th>
+            <th>Action</th>
+            @foreach ($products as $product)
+                <tr>
+                    <td><a href="/products/{{ $product->id }}" class="">{{ $product->brand_name }}</a></td>
+                    <td>{{ $product->genericNames->description }}</td>
+                    <td>{{ $product->drugTypes->description }}</td>
+                    <td>
 
-    @foreach ($products as $product)
-        <tr>
-            <td><a href="/products/{{ $product->id }}" class="">{{ $product->brand_name }}</a></td>
-            <td>{{ $product->genericNames->description }}</td>
-            <td>{{ $product->drugTypes->description }}</td>
-            <td>
+                        @php $quantity = array() @endphp
+                        @foreach($product->inventories as $inventory)
+                            <?php array_push($quantity, $inventory->quantity) ?>
+                        @endforeach()
+                        @php echo array_sum($quantity) @endphp
 
-                @php $quantity = array() @endphp
-                @foreach($product->inventories as $inventory)
-                    <?php array_push($quantity, $inventory->quantity) ?>
-                @endforeach()
-                @php echo array_sum($quantity) @endphp
-
-            </td>
-            <td>{{ $product->market_price }}</td>
-            <td>{{ $product->special_price }}</td>
-            <td>{{ $product->walk_in_price }}</td>
-            <td>{{ $product->promo_price }}</td>
-            <td>{{ $product->distributor_price }}</td>
-            <td><a class="btn btn-success" href="#">Sell</a></td>
-        </tr>
-    @endforeach()
-
-</table>
+                    </td>
+                    <td>{{ $product->market_price }}</td>
+                    <td>{{ $product->special_price }}</td>
+                    <td>{{ $product->walk_in_price }}</td>
+                    <td>{{ $product->promo_price }}</td>
+                    <td>{{ $product->distributor_price }}</td>
+                    <td><a class="btn btn-success" href="#">Sell</a></td>
+                </tr>
+            @endforeach()
+            </table>
+    </div>
 </div>
 {{ $products->links() }}
+
 @endsection()
 
 @section('formLogic')
@@ -54,22 +56,23 @@
     $('document').ready(function(){
         console.log('Page is ready');
 
-        // $('#tableProducts').append();
-
         $('#search').keyup(function(){
-            console.log($(this).val());
-            $.ajax({
-                url: '/searchProducts',
-                type: 'POST',
-                data:{_token: "{{ csrf_token() }}", name: $(this).val() 
-                },
-                success: function(msg){
-                    console.log(msg);
-                },
-                error: function(){
+            if($(this).val() != null){
+                $.ajax({
+                    url: '/searchProducts',
+                    type: 'POST',
+                    data:{_token: "{{ csrf_token() }}", name: $(this).val()
+                    },
+                    success: function(msg){
+                        $('#tableContainer').html('');
+                        $('#tableContainer').append(msg);
+                    },
+                    error: function(){
 
-                }
-            })
+                    }
+                });
+            }
+
         });
     });
 </script>
