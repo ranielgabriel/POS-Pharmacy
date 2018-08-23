@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Inventory;
 
 class InventoriesController extends Controller
 {
@@ -13,7 +14,8 @@ class InventoriesController extends Controller
      */
     public function index()
     {
-        return view('inventories.index');
+        $inventories = Inventory::orderBy('batch_number','des')->paginate(25);
+        return view('inventories.index')->with('inventories',$inventories);
     }
 
     /**

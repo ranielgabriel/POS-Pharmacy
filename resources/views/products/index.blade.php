@@ -1,27 +1,28 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container container-fluid">
+<div class="container">
     <div class="form-group">
     <h1 class="">Products</h1>
     <a class="btn btn-primary" href="/products/create">Add Product</a>
     </div>
     <div class="form-group col-md-12">
         {{Form::label('search', 'Search')}}
-        {{Form::text('search', '', ['id' => 'search', 'class' => 'form-control', 'placeholder' => 'Search... (Brand Name, Generic Name, Manufacturer)'])}}
+        {{Form::text('search', '', ['id' => 'search', 'class' => 'form-control', 'placeholder' => 'Search... (Brand Name / Generic Name)'])}}
     </div>
-    <div class="" id="tableContainer">
+    <div class="responsive" id="tableSearchContainer"></div>
+    <div class="responsive" id="tableContainer">
         <table class="table table-striped table-bordered table-hover" id="tableProducts">
-            <th>Brand Name</th>
-            <th>Generic Name</th>
-            <th>Drug Type</th>
-            <th>Quantity</th>
-            <th>Market Price</th>
-            <th>Special Price</th>
-            <th>Walk-In Price</th>
-            <th>Promo Price</th>
-            <th>Distributor's Price</th>
-            <th>Action</th>
+            <th><label>Brand Name</label></th>
+            <th><label>Generic Name</label></th>
+            <th><label>Drug Type</label></th>
+            <th><label>Quantity</label></th>
+            <th><label>Market Price</label></th>
+            <th><label>Special Price</label></th>
+            <th><label>Walk-In Price</label></th>
+            <th><label>Promo Price</label></th>
+            <th><label>Distributor's Price</label></th>
+            <th><label>Action</label></th>
             @foreach ($products as $product)
                 <tr>
                     <td><a href="/products/{{ $product->id }}" class="">{{ $product->brand_name }}</a></td>
@@ -41,12 +42,11 @@
                     <td>{{ $product->walk_in_price }}</td>
                     <td>{{ $product->promo_price }}</td>
                     <td>{{ $product->distributor_price }}</td>
-                    <td><button class="btn btn-success" data-toggle="modal" data-target="#modalSell">Sell</button></td>
+                    <td><button class="btn btn-success" data-toggle="modal" data-target="#modalSell"><span class="badge">Sell</span></button></td>
                 </tr>
             @endforeach()
-            </table>
+        </table>
     </div>
-</div>
 {{ $products->links() }}
 @endsection()
 
@@ -54,25 +54,32 @@
 <script>
     $('document').ready(function(){
         console.log('Page is ready');
-
+        $('#tableSearchContainer').hide();
         $('#search').keyup(function(){
-            if($(this).val() != null){
+            if($(this).val() != ''){
+                searchProducts($(this).val());
+            }else{
+                $('#tableContainer').show();
+                $('#tableSearchContainer').hide();
+            }
+        });
+
+        function searchProducts(productToSearch){
+            if(productToSearch != null){
                 $.ajax({
                     url: '/searchProducts',
                     type: 'POST',
-                    data:{_token: "{{ csrf_token() }}", name: $(this).val()
+                    data:{_token: "{{ csrf_token() }}", name: productToSearch
                     },
                     success: function(msg){
-                        $('#tableContainer').html('');
-                        $('#tableContainer').append(msg);
-                    },
-                    error: function(){
-
+                        $('#tableContainer').hide();
+                        $('#tableSearchContainer').show();
+                        $('#tableSearchContainer').html('');
+                        $('#tableSearchContainer').append(msg);
                     }
                 });
             }
-
-        });
+        }
     });
 </script>
 @endsection()

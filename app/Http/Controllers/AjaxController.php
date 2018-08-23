@@ -32,7 +32,7 @@ class AjaxController extends Controller
             ->join('generic_names', 'products.generic_name_id', '=', 'generic_names.id')
             ->where('brand_name', 'like', '%' . $request->name . '%')
             ->orWhere('generic_names.description', 'like', '%' . $request->name . '%')
-            ->get();
+            ->paginate(1);
 
             foreach ($products as $key => $product) {
                 $inventories = array();
@@ -61,43 +61,7 @@ class AjaxController extends Controller
 
                 '<td>' . $product->distributor_price . '</td>'.
 
-                '<td><a class="btn btn-success" href="#">Sell</a></td>'.
-
-                '</tr>';
-
-            }
-        }else{
-            $products = Product::orderBy('brand_name','asc')
-            ->paginate(25);
-
-            foreach ($products as $key => $product) {
-                $inventories = array();
-
-                foreach ($product->inventories as $key => $value) {
-                    array_push($inventories, $value->quantity);
-                }
-
-                $output.='<tr>'.
-
-                '<td><a href="/products/' . $product->id . '" class="">'.$product->brand_name.'</a></td>'.
-
-                '<td>' . $product->genericNames->description . '</td>'.
-
-                '<td>' . $product->drugTypes->description . '</td>'.
-
-                '<td>' . array_sum($inventories) . '</td>'.
-
-                '<td>' . $product->market_price . '</td>'.
-
-                '<td>' . $product->special_price . '</td>'.
-
-                '<td>' . $product->walk_in_price . '</td>'.
-
-                '<td>' . $product->promo_price . '</td>'.
-
-                '<td>' . $product->distributor_price . '</td>'.
-
-                '<td><a class="btn btn-success" href="#">Sell</a></td>'.
+                '<td><button class="btn btn-success" data-toggle="modal" data-target="#modalSell">Sell</button></td>'.
 
                 '</tr>';
 
