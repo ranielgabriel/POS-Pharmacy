@@ -10,7 +10,10 @@ class Batch extends Model
     protected $table = 'batches';
 
     // Mass Assignment
-    protected $fillable = ['purchase_date'];
+    protected $fillable = [
+        'id',
+        'purchase_date'
+    ];
 
     // Primary Key
     public $primaryKey = 'id';

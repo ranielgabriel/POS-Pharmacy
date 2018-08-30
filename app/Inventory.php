@@ -14,6 +14,7 @@ class Inventory extends Model
         'product_id',
         'quantity',
         'sold',
+        'status',
         'expiration_date',
         'batch_number',
     ];
