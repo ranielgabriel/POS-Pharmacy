@@ -9,6 +9,9 @@ use App\Http\Controllers\Controller;
 use App\Product;
 use App\GenericName;
 use App\Inventory;
+use App\DrugType;
+use App\Manufacturer;
+use App\Supplier;
 
 class AjaxController extends Controller
 {
@@ -16,16 +19,16 @@ class AjaxController extends Controller
 
         $output =
         '<table class="table table-striped table-bordered table-hover">'.
-        '<th>Brand Name</th>'.
-        '<th>Generic Name</th>'.
-        '<th>Drug Type</th>'.
-        '<th>Quantity</th>'.
-        '<th>Market Price</th>'.
-        '<th>Special Price</th>'.
-        '<th>Walk-In Price</th>'.
-        '<th>Promo Price</th>'.
-        '<th>Distributor\'s Price</th>'.
-        '<th>Action</th>';
+        '<th><label>Brand Name</label></th>'.
+        '<th><label>Generic Name</label></th>'.
+        '<th><label>Drug Type</label></th>'.
+        '<th><label>Quantity</label></th>'.
+        '<th><label>Market Price</label></th>'.
+        '<th><label>Special Price</label></th>'.
+        '<th><label>Walk-In Price</label></th>'.
+        '<th><label>Promo Price</label></th>'.
+        '<th><label>Distributor\'s Price</label></th>'.
+        '<th><label>Action</label></th>';
 
         if($request->name != ''){
             $products = Product::orderBy('brand_name','asc')
@@ -58,17 +61,17 @@ class AjaxController extends Controller
                 '<td>' . array_sum($quantity) . '</td>'.
                 // '<td>' . $quantity . '</td>'.
 
-                '<td>' . $product->market_price . '</td>'.
+                '<td>&#8369 ' . $product->market_price . '</td>'.
 
-                '<td>' . $product->special_price . '</td>'.
+                '<td>&#8369 ' . $product->special_price . '</td>'.
 
-                '<td>' . $product->walk_in_price . '</td>'.
+                '<td>&#8369 ' . $product->walk_in_price . '</td>'.
 
-                '<td>' . $product->promo_price . '</td>'.
+                '<td>&#8369 ' . $product->promo_price . '</td>'.
 
-                '<td>' . $product->distributor_price . '</td>'.
+                '<td>&#8369 ' . $product->distributor_price . '</td>'.
 
-                '<td><button class="btn btn-success" data-toggle="modal" data-target="#modalSell">Sell</button></td>'.
+                '<td><button class="btn btn-success" data-toggle="modal" data-target="#modalSell"><span class="badge">Sell</span></button></td>'.
 
                 '</tr>';
 
@@ -78,4 +81,33 @@ class AjaxController extends Controller
         return response()->json([
             'code' => $output]);
     }
+
+    public function getDrugTypes(){
+        $drugTypes = DrugType::orderBy('description','asc')
+        ->select('description')
+        ->get();
+        return response($drugTypes);
+    }
+
+    public function getGenericNames(){
+        $genericNames = GenericName::orderBy('description','asc')
+        ->select('description')
+        ->get();
+        return response($genericNames);
+    }
+
+    public function getManufacturers(){
+        $manufacturers = Manufacturer::orderBy('name','asc')
+        ->select('name')
+        ->get();
+        return response($manufacturers);
+    }
+
+    public function getSuppliers(){
+        $suppliers = Supplier::orderBy('name','asc')
+        ->select('name')
+        ->get();
+        return response($suppliers);
+    }
+
 }

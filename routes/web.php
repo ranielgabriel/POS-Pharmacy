@@ -22,5 +22,9 @@ Route::get('/dashboard', 'DashboardController@index');
 
 Route::resource('/products', 'ProductsController');
 Route::post('/searchProducts','AjaxController@searchProducts');
+Route::get('/getDrugTypes','AjaxController@getDrugTypes');
+Route::get('/getGenericNames','AjaxController@getGenericNames');
+Route::get('/getManufacturers','AjaxController@getManufacturers');
+Route::get('/getSuppliers','AjaxController@getSuppliers');
 
 Route::resource('/inventories', 'InventoriesController');

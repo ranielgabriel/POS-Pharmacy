@@ -39,11 +39,11 @@
                         @php echo array_sum($quantity) @endphp
 
                     </td>
-                    <td>{{ $product->market_price }}</td>
-                    <td>{{ $product->special_price }}</td>
-                    <td>{{ $product->walk_in_price }}</td>
-                    <td>{{ $product->promo_price }}</td>
-                    <td>{{ $product->distributor_price }}</td>
+                    <td>&#8369 {{ $product->market_price }}</td>
+                    <td>&#8369 {{ $product->special_price }}</td>
+                    <td>&#8369 {{ $product->walk_in_price }}</td>
+                    <td>&#8369 {{ $product->promo_price }}</td>
+                    <td>&#8369 {{ $product->distributor_price }}</td>
                     <td><button class="btn btn-success" data-toggle="modal" data-target="#modalSell"><span class="badge">Sell</span></button></td>
                 </tr>
             @endforeach()

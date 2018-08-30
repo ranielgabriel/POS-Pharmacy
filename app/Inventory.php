@@ -31,4 +31,8 @@ class Inventory extends Model
     public function suppliers(){
         return $this->belongsTo('App\Supplier');
     }
+
+    public function batches(){
+        return $this->belongsTo('App\Batch', 'batch_number');
+    }
 }
