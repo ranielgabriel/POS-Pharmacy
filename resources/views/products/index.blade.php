@@ -1,15 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="col-md-12 responsive">
+
     <div class="form-group">
     <h1 class="">Products</h1>
     <a class="btn btn-primary" href="/products/create">Add Product</a>
-    </div>
-    <div class="form-group col-md-12">
+
+    <div class="form-group col-md-12 py-2">
         {{Form::label('search', 'Search')}}
         {{Form::text('search', '', ['id' => 'search', 'class' => 'form-control', 'placeholder' => 'Search... (Brand Name / Generic Name)'])}}
     </div>
+
     <div class="responsive" id="tableSearchContainer"></div>
     <div class="responsive" id="tableContainer">
         <table class="table table-striped table-bordered table-hover" id="tableProducts">
@@ -24,7 +26,7 @@
             <th><label>Distributor's Price</label></th>
             <th><label>Action</label></th>
             @foreach ($products as $product)
-                <tr>
+                <tr class="">
                     <td><a href="/products/{{ $product->id }}" class="">{{ $product->brand_name }}</a></td>
                     <td>{{ $product->genericNames->description }}</td>
                     <td>{{ $product->drugTypes->description }}</td>
@@ -55,6 +57,8 @@
     $('document').ready(function(){
         console.log('Page is ready');
         $('#tableSearchContainer').hide();
+
+        $('#search').val('');
         $('#search').keyup(function(){
             if($(this).val() != ''){
                 searchProducts($(this).val());

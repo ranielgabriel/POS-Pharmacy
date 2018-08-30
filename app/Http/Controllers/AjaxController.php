@@ -39,11 +39,12 @@ class AjaxController extends Controller
             foreach ($products as $product) {
 
                 $quantity = null;
+                $quantity = array();
 
                 foreach ($product->inventories as $productInventory) {
-                    // array_push($quantity, $productInventory->quantity);
+                    array_push($quantity, $productInventory->quantity);
                     array_push($invent, $productInventory);
-                    $quantity += $productInventory->quantity;
+                    // $quantity += $productInventory->quantity;
                 }
 
                 $output.='<tr>'.
@@ -54,8 +55,8 @@ class AjaxController extends Controller
 
                 '<td>' . $product->drugTypes->description . '</td>'.
 
-                // '<td>' . array_sum($quantity) . '</td>'.
-                '<td>' . $quantity . '</td>'.
+                '<td>' . array_sum($quantity) . '</td>'.
+                // '<td>' . $quantity . '</td>'.
 
                 '<td>' . $product->market_price . '</td>'.
 
