@@ -10,6 +10,7 @@ use App\GenericName;
 use App\Inventory;
 use App\Supplier;
 use App\Manufacturer;
+use Carbon\Carbon;
 
 class ProductsController extends Controller
 {
@@ -20,7 +21,7 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $products = Product::orderBy('id','asc')->paginate(25);
+        $products = Product::orderBy('brand_name','asc')->paginate(25);
         return view('products.index')->with('products' , $products);
     }
 
@@ -115,7 +116,8 @@ class ProductsController extends Controller
      */
     public function show($id)
     {
-        //
+        $product = Product::find($id);
+        return view('products.show')->with('product', $product);
     }
 
     /**

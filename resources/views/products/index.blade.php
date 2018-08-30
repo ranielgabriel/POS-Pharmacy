@@ -63,23 +63,27 @@
                 $('#tableSearchContainer').hide();
             }
         });
-
-        function searchProducts(productToSearch){
-            if(productToSearch != null){
-                $.ajax({
-                    url: '/searchProducts',
-                    type: 'POST',
-                    data:{_token: "{{ csrf_token() }}", name: productToSearch
-                    },
-                    success: function(msg){
-                        $('#tableContainer').hide();
-                        $('#tableSearchContainer').show();
-                        $('#tableSearchContainer').html('');
-                        $('#tableSearchContainer').append(msg);
-                    }
-                });
-            }
-        }
     });
+
+    function searchProducts(productToSearch) {
+        if (productToSearch != null) {
+            $.ajax({
+                url: '/searchProducts',
+                type: 'POST',
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    name: productToSearch
+                },
+                success: function (msg) {
+                    $('#tableContainer').hide();
+                    $('#tableSearchContainer').show();
+                    $('#tableSearchContainer').html('');
+                    $('#tableSearchContainer').append(msg.code);
+
+                    // console.log(msg);
+                }
+            });
+        }
+    }
 </script>
-@endsection()
+@endsection

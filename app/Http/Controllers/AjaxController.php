@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Product;
+use App\GenericName;
 use App\Inventory;
 
 class AjaxController extends Controller
@@ -27,18 +28,22 @@ class AjaxController extends Controller
         '<th>Action</th>';
 
         if($request->name != ''){
-
             $products = Product::orderBy('brand_name','asc')
-            ->join('generic_names', 'products.generic_name_id', '=', 'generic_names.id')
             ->where('brand_name', 'like', '%' . $request->name . '%')
-            ->orWhere('generic_names.description', 'like', '%' . $request->name . '%')
-            ->paginate(1);
+            ->orWhereHas('genericNames', function($query) use ($request){
+                $query->where('description', 'like', '%' . $request->name . '%');
+            })
+            ->get();
 
-            foreach ($products as $key => $product) {
-                $inventories = array();
+            $invent = array();
+            foreach ($products as $product) {
 
-                foreach ($product->inventories as $key => $value) {
-                    array_push($inventories, $value->quantity);
+                $quantity = null;
+
+                foreach ($product->inventories as $productInventory) {
+                    // array_push($quantity, $productInventory->quantity);
+                    array_push($invent, $productInventory);
+                    $quantity += $productInventory->quantity;
                 }
 
                 $output.='<tr>'.
@@ -49,7 +54,8 @@ class AjaxController extends Controller
 
                 '<td>' . $product->drugTypes->description . '</td>'.
 
-                '<td>' . array_sum($inventories) . '</td>'.
+                // '<td>' . array_sum($quantity) . '</td>'.
+                '<td>' . $quantity . '</td>'.
 
                 '<td>' . $product->market_price . '</td>'.
 
@@ -67,6 +73,8 @@ class AjaxController extends Controller
 
             }
         }
-        return response($output);
+        // return response($products);
+        return response()->json([
+            'code' => $output]);
     }
 }
