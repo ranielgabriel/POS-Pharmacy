@@ -21,7 +21,10 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $products = Product::orderBy('brand_name','asc')->paginate(25);
+        $products = Product::orderBy('brand_name','asc')
+        ->where('status', '!=', 'In-stock')
+        ->where('status', '!=', 'Out-of-stock')
+        ->paginate(50);
         return view('products.index')->with('products' , $products);
     }
 
@@ -33,7 +36,12 @@ class ProductsController extends Controller
     public function create()
     {
         // Show the view for adding product
-        return view('products.create');
+        $products = Product::orderBy('brand_name','asc')
+        ->where('status','=','In-stock')
+        ->orWhere('status','=','Out-of-stock')
+        ->get();
+
+        return view('products.create')->with('products', $products);
     }
 
     /**
@@ -55,55 +63,47 @@ class ProductsController extends Controller
             'walkInPrice' => 'required',
             'promoPrice' => 'required',
             'distributorPrice' => 'required',
-            'expirationDate' => 'required',
-            'nameOfSupplier' => 'required',
-            'quantity' => 'required',
-            'batchNumber' => 'required'
+            'quantity' => 'gt:0'
         ]);
+
+        $product = Product::find($request->input('brandName'));
+        $product->status = 'Selling';
+        $product->market_price = $request->input('marketPrice');
+        $product->special_price = $request->input('specialPrice');
+        $product->walk_in_price = $request->input('walkInPrice');
+        $product->promo_price = $request->input('promoPrice');
+        $product->distributor_price = $request->input('distributorPrice');
+        $product->save();
 
         // saving to database
-        $genericName = new GenericName();
-        $genericName = GenericName::firstOrCreate(
-            ['description' => $request->input('genericName')]
-        );
+        // $genericName = new GenericName();
+        // $genericName = GenericName::firstOrCreate(
+        //     ['description' => $request->input('genericName')]
+        // );
 
-        $drugType = new DrugType();
-        $drugType = DrugType::firstOrCreate(
-            ['description' => $request->input('drugType')]
-        );
+        // $drugType = new DrugType();
+        // $drugType = DrugType::firstOrCreate(
+        //     ['description' => $request->input('drugType')]
+        // );
 
-        $manufacturer = new Manufacturer();
-        $manufacturer = Manufacturer::firstOrCreate([
-            'name' => $request->input('manufacturer')
-        ]);
+        // $manufacturer = new Manufacturer();
+        // $manufacturer = Manufacturer::firstOrCreate([
+        //     'name' => $request->input('manufacturer')
+        // ]);
 
-        $supplier = new Supplier();
-        $supplier = Supplier::firstOrCreate([
-            'name' => $request->input('nameOfSupplier')
-        ]);
-
-        $product = new Product();
-        $product = Product::firstOrCreate([
-            'brand_name' => $request->input('brandName'),
-            'market_price' => $request->input('marketPrice'),
-            'special_price' => $request->input('specialPrice'),
-            'walk_in_price' => $request->input('walkInPrice'),
-            'promo_price' => $request->input('promoPrice'),
-            'distributor_price' => $request->input('distributorPrice'),
-            'manufacturer_id' => $manufacturer->id,
-            'generic_name_id' => $genericName->id,
-            'drug_type_id' => $drugType->id
-        ]);
-
-        $inventory = new Inventory();
-        $inventory = Inventory::create([
-            'quantity' => $request->input('quantity'),
-            'sold' => 0,
-            'expiration_date' => $request->input('expirationDate'),
-            'batch_number' => $request->input('batchNumber'),
-            'supplier_id' => $supplier->id,
-            'product_id' => $product->id
-        ]);
+        // $product = new Product();
+        // $product = Product::firstOrCreate([
+        //     'brand_name' => $request->input('brandName'),
+        //     'market_price' => $request->input('marketPrice'),
+        //     'special_price' => $request->input('specialPrice'),
+        //     'walk_in_price' => $request->input('walkInPrice'),
+        //     'promo_price' => $request->input('promoPrice'),
+        //     'distributor_price' => $request->input('distributorPrice'),
+        //     'manufacturer_id' => $manufacturer->id,
+        //     'generic_name_id' => $genericName->id,
+        //     'drug_type_id' => $drugType->id,
+        //     'status' => 'Selling'
+        // ]);
 
         return redirect('/products')->with('success', 'Product successfully added.');
     }

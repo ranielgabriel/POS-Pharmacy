@@ -17,6 +17,7 @@ class Product extends Model
     'special_price',
     'walk_in_price',
     'promo_price',
+    'status',
     'distributor_price',
     'updated_at',
     'created_at'];

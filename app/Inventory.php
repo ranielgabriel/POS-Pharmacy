@@ -14,7 +14,6 @@ class Inventory extends Model
         'product_id',
         'quantity',
         'sold',
-        'status',
         'expiration_date',
         'batch_number',
     ];
@@ -25,11 +24,11 @@ class Inventory extends Model
     public $timestamps = true;
 
     // Relationship connections
-    public function products(){
+    public function product(){
         return $this->belongsTo('App\Product');
     }
 
-    public function suppliers(){
+    public function supplier(){
         return $this->belongsTo('App\Supplier');
     }
 

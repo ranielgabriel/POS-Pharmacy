@@ -10,16 +10,16 @@
         <div class="col-md-12 row">
             <div class="form-group col-md-2">
             {{Form::label('batchNumber', 'Batch Number')}}
-            {{Form::number('batchNumber', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Batch Number' , 'step' => 1])}}
+            {{Form::number('batchNumber', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Batch Number'])}}
             </div>
             <div class="form-group  col-md-3">
             {{Form::label('nameOfSupplier', 'Name of Supplier')}}
             {{Form::text('nameOfSupplier', 'Supplier 1', ['class' => 'form-control', 'placeholder' => 'Name of Supplier', 'id' => 'suppliers',])}}
             </div>
-            <div class="form-group  col-md-3">
+            {{-- <div class="form-group  col-md-3">
             {{Form::label('status', 'Status')}}
             {{Form::select('status', array('Stock' => 'In-stock', 'Selling' => 'Currently selling'), 'Stock', ['class' => 'form-control'])}}
-            </div>
+            </div> --}}
             <div class="form-group col-md-3">
             {{Form::label('purchaseDate', 'Purchase Date')}}
             {{Form::date('purchaseDate', date('Y-m-d'), ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Purchase Date' ])}}
@@ -57,33 +57,9 @@
             {{Form::number('quantity', 100, ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Quantity' ])}}
             </div>
         </div>
-        
-        <hr>
-        <h3>Prices</h3>
-        <div class="col-md-12 row">
-            <div class="form-group col-md-2">
-            {{Form::label('marketPrice', 'Market Price')}}
-            {{Form::number('marketPrice', 11, ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Market Price' , 'step' => 1])}}
-            </div>
-            <div class="form-group col-md-2">
-            {{Form::label('specialPrice', 'Special Price')}}
-            {{Form::number('specialPrice', 12, ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Special Price' , 'step' => 1])}}
-            </div>
-            <div class="form-group col-md-2">
-            {{Form::label('walkInPrice', 'Walk-In Price')}}
-            {{Form::number('walkInPrice', 13, ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Walk-In Price' , 'step' => 1])}}
-            </div>
-            <div class="form-group col-md-2">
-            {{Form::label('promoPrice', 'Promo Price')}}
-            {{Form::number('promoPrice', 14, ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Promo Price' , 'step' => 1])}}
-            </div>
-            <div class="form-group col-md-2">
-            {{Form::label('distributorPrice', 'Distributor\'s Price')}}
-            {{Form::number('distributorPrice', 15, ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Distributor\'s Price' , 'step' => 1])}}
-            </div>
-        </div>
 
         <hr>
+
         <a class="btn btn-danger" href="/inventories">Cancel</a>
         {{ Form::submit('Add Inventory', ['class' => 'btn btn-primary'])}}
     </div>

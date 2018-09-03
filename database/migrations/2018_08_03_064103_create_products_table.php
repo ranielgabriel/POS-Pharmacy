@@ -17,6 +17,7 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->string('manufacturer_id');
             $table->string('brand_name');
+            $table->string('status');
             $table->decimal('market_price', 10, 2);
             $table->decimal('special_price', 10, 2);
             $table->decimal('walk_in_price', 10, 2);

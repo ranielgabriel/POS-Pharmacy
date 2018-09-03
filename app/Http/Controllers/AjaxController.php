@@ -12,6 +12,7 @@ use App\Inventory;
 use App\DrugType;
 use App\Manufacturer;
 use App\Supplier;
+use App\Batch;
 
 class AjaxController extends Controller
 {
@@ -23,6 +24,7 @@ class AjaxController extends Controller
         '<th><label>Generic Name</label></th>'.
         '<th><label>Drug Type</label></th>'.
         '<th><label>Quantity</label></th>'.
+        '<th><label>Status</label></th>'.
         '<th><label>Market Price</label></th>'.
         '<th><label>Special Price</label></th>'.
         '<th><label>Walk-In Price</label></th>'.
@@ -31,6 +33,10 @@ class AjaxController extends Controller
         '<th><label>Action</label></th>';
 
         if($request->name != ''){
+
+            // get all products and order by brand name
+            // first check if the brand name exist
+            // then check if the generic name exist
             $products = Product::orderBy('brand_name','asc')
             ->where('brand_name', 'like', '%' . $request->name . '%')
             ->orWhereHas('genericNames', function($query) use ($request){
@@ -38,15 +44,24 @@ class AjaxController extends Controller
             })
             ->get();
 
-            $invent = array();
+            // temporary array for inventory
+            // $invent = array();
+
+            // loop to every product
             foreach ($products as $product) {
 
+                // temporary variable for storing quantity
                 $quantity = null;
                 $quantity = array();
 
+                // loop to every inventory of the product
                 foreach ($product->inventories as $productInventory) {
-                    array_push($quantity, $productInventory->quantity);
-                    array_push($invent, $productInventory);
+
+                    // if there are still remaining quantity in the inventory, it will push it to the array of quantities
+                    if(($productInventory->quantity - $productInventory->sold) >= 0){
+                        array_push($quantity, ($productInventory->quantity - $productInventory->sold));
+                    }
+                    // array_push($invent, $productInventory);
                     // $quantity += $productInventory->quantity;
                 }
 
@@ -60,6 +75,8 @@ class AjaxController extends Controller
 
                 '<td>' . array_sum($quantity) . '</td>'.
                 // '<td>' . $quantity . '</td>'.
+
+                '<td>' . $product->status . '</td>'.
 
                 '<td>&#8369 ' . $product->market_price . '</td>'.
 
@@ -79,7 +96,46 @@ class AjaxController extends Controller
         }
         // return response($products);
         return response()->json([
-            'code' => $output]);
+            'code' => $output
+            ]);
+    }
+
+    public function searchBatch(Request $request){
+        $batch = Batch::find($request->input('batchNumber'));
+
+        if($batch === null){
+            return response()->json([
+                'batch' => $batch
+                ]);
+        }else{
+
+            $products = array();
+
+            foreach($batch->inventories as $inventory){
+                array_push($products, $inventory->product);
+            }
+
+            return response()->json([
+                'batch' => $batch,
+                'inventories' => $batch->inventories,
+                'products' => $products
+                ]);
+        };
+    }
+
+    public function searchProductInfo(Request $request){
+        if($request->id != null){
+
+            $product = Product::find($request->id);
+
+            return response()->json([
+                'product' => $product,
+                'genericNames' => $product->genericNames,
+                'manufacturers' => $product->manufacturers,
+                'drugTypes' => $product->drugTypes,
+                'inventories' => $product->inventories
+            ]);
+        }
     }
 
     public function getDrugTypes(){
@@ -109,5 +165,6 @@ class AjaxController extends Controller
         ->get();
         return response($suppliers);
     }
+
 
 }

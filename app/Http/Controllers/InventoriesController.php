@@ -20,8 +20,10 @@ class InventoriesController extends Controller
      */
     public function index()
     {
-        $inventories = Inventory::orderBy('batch_number','des')->paginate(25);
-        return view('inventories.index')->with('inventories',$inventories);
+        $batches = Batch::orderBy('purchase_date','des')
+        ->orderBy('created_at','des')
+        ->paginate(10);
+        return view('inventories.index')->with('batches',$batches);
     }
 
     /**
@@ -48,17 +50,11 @@ class InventoriesController extends Controller
             'genericName' => 'required',
             'manufacturer' => 'required',
             'drugType' => 'required',
-            'marketPrice' => 'required',
-            'specialPrice' => 'required',
-            'walkInPrice' => 'required',
-            'promoPrice' => 'required',
-            'distributorPrice' => 'required',
             'expirationDate' => 'required',
             'purchaseDate' => 'required',
             'nameOfSupplier' => 'required',
             'quantity' => 'required',
-            'batchNumber' => 'required',
-            'status' => 'required'
+            'batchNumber' => 'required'
         ]);
 
         // saving to database
@@ -91,11 +87,12 @@ class InventoriesController extends Controller
         $product = new Product();
         $product = Product::firstOrCreate([
             'brand_name' => $request->input('brandName'),
-            'market_price' => $request->input('marketPrice'),
-            'special_price' => $request->input('specialPrice'),
-            'walk_in_price' => $request->input('walkInPrice'),
-            'promo_price' => $request->input('promoPrice'),
-            'distributor_price' => $request->input('distributorPrice'),
+            'status' => 'In-stock',
+            'market_price' => 0,
+            'special_price' => 0,
+            'walk_in_price' => 0,
+            'promo_price' => 0,
+            'distributor_price' => 0,
             'manufacturer_id' => $manufacturer->id,
             'generic_name_id' => $genericName->id,
             'drug_type_id' => $drugType->id
@@ -104,7 +101,6 @@ class InventoriesController extends Controller
         $inventory = new Inventory();
         $inventory = Inventory::create([
             'quantity' => $request->input('quantity'),
-            'status' => $request->input('status'),
             'sold' => 0,
             'expiration_date' => $request->input('expirationDate'),
             'batch_number' => $batch->id,
@@ -112,7 +108,7 @@ class InventoriesController extends Controller
             'product_id' => $product->id
         ]);
 
-        return redirect('/products')->with('success', 'Product successfully added.');
+        return redirect('/inventories')->with('success', 'Inventory successfully added.');
     }
 
     /**

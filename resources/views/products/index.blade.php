@@ -19,6 +19,7 @@
             <th><label>Generic Name</label></th>
             <th><label>Drug Type</label></th>
             <th><label>Quantity</label></th>
+            <th><label>Status</label></th>
             <th><label>Market Price</label></th>
             <th><label>Special Price</label></th>
             <th><label>Walk-In Price</label></th>
@@ -39,6 +40,7 @@
                         @php echo array_sum($quantity) @endphp
 
                     </td>
+                    <td>{{ $product->status }}</td>
                     <td>&#8369 {{ $product->market_price }}</td>
                     <td>&#8369 {{ $product->special_price }}</td>
                     <td>&#8369 {{ $product->walk_in_price }}</td>

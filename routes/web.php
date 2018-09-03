@@ -20,11 +20,17 @@ Auth::routes();
 // Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/dashboard', 'DashboardController@index');
 
+// Resource
 Route::resource('/products', 'ProductsController');
+Route::resource('/inventories', 'InventoriesController');
+
+// Post
 Route::post('/searchProducts','AjaxController@searchProducts');
+Route::post('/searchBatch','AjaxController@searchBatch');
+Route::post('/searchProductInfo','AjaxController@searchProductInfo');
+
+// Get
 Route::get('/getDrugTypes','AjaxController@getDrugTypes');
 Route::get('/getGenericNames','AjaxController@getGenericNames');
 Route::get('/getManufacturers','AjaxController@getManufacturers');
 Route::get('/getSuppliers','AjaxController@getSuppliers');
-
-Route::resource('/inventories', 'InventoriesController');
