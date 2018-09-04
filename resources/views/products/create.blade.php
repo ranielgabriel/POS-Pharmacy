@@ -133,7 +133,7 @@ $('document').ready(function(){
         });
     }
 
-    // Function for getting the batch
+    // Function for getting the product information
     function searchProductInfo(productId){
         $.ajax({
             url: '/searchProductInfo',

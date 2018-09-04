@@ -30,7 +30,7 @@ class AjaxController extends Controller
         '<th><label>Walk-In Price</label></th>'.
         '<th><label>Promo Price</label></th>'.
         '<th><label>Distributor\'s Price</label></th>'.
-        '<th><label>Action</label></th>';
+        '<th></th>';
 
         if($request->name != ''){
 
@@ -86,11 +86,21 @@ class AjaxController extends Controller
 
                 '<td>&#8369 ' . $product->promo_price . '</td>'.
 
-                '<td>&#8369 ' . $product->distributor_price . '</td>'.
+                '<td>&#8369 ' . $product->distributor_price . '</td>';
 
-                '<td><button class="btn btn-success" data-toggle="modal" data-target="#modalSell"><span class="badge">Sell</span></button></td>'.
+                if($product->status == 'Selling'){
+                $output.= '<td>
+                    <center>
+                        <button class="btn btn-success modalSellClass" data-toggle="modal" data-target="#modalSell" data-product-id='. $product->id .'>
+                            <span class="fa fa-cart-arrow-down"></span>
+                        </button>
+                    </center>
+                </td>'.
 
                 '</tr>';
+                }else{
+                    $output .= '</tr>';
+                }
 
             }
         }

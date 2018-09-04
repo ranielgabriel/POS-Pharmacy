@@ -8,7 +8,6 @@
     <a class="btn btn-primary" href="/products/create">Add Product</a>
 
     <div class="form-group col-md-12 py-2">
-        {{Form::label('search', 'Search')}}
         {{Form::text('search', '', ['id' => 'search', 'class' => 'form-control', 'placeholder' => 'Search... (Brand Name / Generic Name)'])}}
     </div>
 
@@ -25,7 +24,7 @@
             <th><label>Walk-In Price</label></th>
             <th><label>Promo Price</label></th>
             <th><label>Distributor's Price</label></th>
-            <th><label>Action</label></th>
+            <th></th>
             @foreach ($products as $product)
                 <tr class="">
                     <td><a href="/products/{{ $product->id }}" class="">{{ $product->brand_name }}</a></td>
@@ -46,50 +45,102 @@
                     <td>&#8369 {{ $product->walk_in_price }}</td>
                     <td>&#8369 {{ $product->promo_price }}</td>
                     <td>&#8369 {{ $product->distributor_price }}</td>
-                    <td><button class="btn btn-success" data-toggle="modal" data-target="#modalSell"><span class="badge">Sell</span></button></td>
+                    <td>
+                        <center>
+                            <button class="btn btn-success modalSellClass" data-toggle="modal" data-target="#modalSell" data-product-id={{ $product->id }}>
+                                <span class="fa fa-cart-arrow-down"></span>
+                            </button>
+                        </center>
+                    </td>
                 </tr>
             @endforeach()
         </table>
     </div>
+
 {{ $products->links() }}
 @endsection()
 
 @section('formLogic')
 <script>
-    $('document').ready(function(){
+    $('document').ready(function () {
         console.log('Page is ready');
         $('#tableSearchContainer').hide();
 
         $('#search').val('');
-        $('#search').keyup(function(){
-            if($(this).val() != ''){
+        $('#search').keyup(function () {
+            if ($(this).val() != '') {
                 searchProducts($(this).val());
-            }else{
+            } else {
                 $('#tableContainer').show();
                 $('#tableSearchContainer').hide();
             }
         });
-    });
 
-    function searchProducts(productToSearch) {
-        if (productToSearch != null) {
+        $(".modalSellClass").click(function () {
+            var productId = $(this).data('product-id');
+            searchProductInfo(productId);
+        })
+
+        // Function for getting the product information
+        function searchProductInfo(productId) {
             $.ajax({
-                url: '/searchProducts',
+                url: '/searchProductInfo',
                 type: 'POST',
                 data: {
                     _token: "{{ csrf_token() }}",
-                    name: productToSearch
+                    id: productId
                 },
                 success: function (msg) {
-                    $('#tableContainer').hide();
-                    $('#tableSearchContainer').show();
-                    $('#tableSearchContainer').html('');
-                    $('#tableSearchContainer').append(msg.code);
 
-                    // console.log(msg);
+                    // if the response is not null
+                    if (msg['product'] != null) {
+
+                        var quantity = 0;
+
+                        for (var i = 0; i < msg['inventories'].length; i++) {
+
+                            var remainingQuantity = msg['inventories'][i]['quantity'] - msg['inventories'][i]['sold'];
+
+                            if (remainingQuantity > 0) {
+                                quantity += remainingQuantity;
+                            }
+                        }
+                        $('#brandName').html(msg['product']['brand_name']);
+                        $('#genericName').val(msg['genericNames']['description']);
+                        $('#drugType').val(msg['drugTypes']['description']);
+                        $('#manufacturerName').val(msg['manufacturers']['name']);
+                        $('#quantity').val(quantity);
+                        $('#marketPrice').val(msg['product']['market_price']);
+                        $('#specialPrice').val(msg['product']['special_price']);
+                        $('#walkInPrice').val(msg['product']['walk_in_price']);
+                        $('#promoPrice').val(msg['product']['promo_price']);
+                        $('#distributorPrice').val(msg['product']['distributor_price']);
+                        console.log(msg);
+                    }
                 }
             });
         }
-    }
+
+        function searchProducts(productToSearch) {
+            if (productToSearch != null) {
+                $.ajax({
+                    url: '/searchProducts',
+                    type: 'POST',
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        name: productToSearch
+                    },
+                    success: function (msg) {
+                        $('#tableContainer').hide();
+                        $('#tableSearchContainer').show();
+                        $('#tableSearchContainer').html('');
+                        $('#tableSearchContainer').append(msg.code);
+
+                        // console.log(msg);
+                    }
+                });
+            }
+        }
+    });
 </script>
 @endsection

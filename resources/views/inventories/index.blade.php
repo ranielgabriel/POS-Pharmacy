@@ -20,13 +20,13 @@
                 <th colspan="6"><small>Batch Number: </small>{{ $batch->id }}</th>
                 <th colspan="1"><small>Date of Purchase: </small>{{ $batch->purchase_date }}</th>
             </tr>
-            <th>Brand Name</th>
-            <th>Generic Name</th>
-            <th>Supplier</th>
-            <th>Quantity</th>
-            <th>Sold</th>
-            <th>Remaining Stocks</th>
-            <th>Expiration Date</th>
+            <th><center>Brand Name</center></th>
+            <th><center>Generic Name</center></th>
+            <th><center>Supplier</center></th>
+            <th><center>Quantity</center></th>
+            <th><center>Sold</center></th>
+            <th><center>Remaining Stocks</center></th>
+            <th><center>Expiration Date</center></th>
             @foreach ($batch->inventories as $inventory)
                 <tr>
                     <td><small>{{ $inventory->product->brand_name }}</small></td>
