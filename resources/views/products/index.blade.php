@@ -69,9 +69,11 @@
         $('#search').keyup(function () {
             if ($(this).val() != '') {
                 searchProducts($(this).val());
+                $('.pagination').hide();
             } else {
                 $('#tableContainer').show();
                 $('#tableSearchContainer').hide();
+                $('.pagination').show();
             }
         });
 

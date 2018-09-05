@@ -21,7 +21,7 @@ class InventoriesController extends Controller
     public function index()
     {
         $batches = Batch::
-        orderBy('created_at','des')
+        orderBy('id','des')
         ->paginate(10);
         return view('inventories.index')->with('batches',$batches);
     }

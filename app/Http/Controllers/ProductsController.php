@@ -26,7 +26,7 @@ class ProductsController extends Controller
         ->orderBy('gn.description')
         ->where('status', '!=', 'In-stock')
         ->where('status', '!=', 'Out-of-stock')
-        ->paginate(10);
+        ->paginate(30);
         return view('products.index')->with('products' , $products);
 
         // $products = GenericName::orderBy('description','asc')
