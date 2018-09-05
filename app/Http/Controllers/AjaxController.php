@@ -20,8 +20,8 @@ class AjaxController extends Controller
 
         $output =
         '<table class="table table-striped table-bordered table-hover">'.
-        '<th><label>Brand Name</label></th>'.
         '<th><label>Generic Name</label></th>'.
+        '<th><label>Brand Name</label></th>'.
         '<th><label>Drug Type</label></th>'.
         '<th><label>Quantity</label></th>'.
         '<th><label>Status</label></th>'.
@@ -67,9 +67,9 @@ class AjaxController extends Controller
 
                 $output.='<tr>'.
 
-                '<td><a href="/products/' . $product->id . '" class="">'.$product->brand_name.'</a></td>'.
-
                 '<td>' . $product->genericNames->description . '</td>'.
+
+                '<td><a href="/products/' . $product->id . '" class="">'.$product->brand_name.'</a></td>'.
 
                 '<td>' . $product->drugTypes->description . '</td>'.
 

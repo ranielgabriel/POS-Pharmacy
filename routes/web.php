@@ -23,6 +23,7 @@ Route::get('/dashboard', 'DashboardController@index');
 // Resource
 Route::resource('/products', 'ProductsController');
 Route::resource('/inventories', 'InventoriesController');
+Route::resource('/suppliers', 'SuppliersController');
 Route::resource('/cart', 'CartsController');
 
 // Post

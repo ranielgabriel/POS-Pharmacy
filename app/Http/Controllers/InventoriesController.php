@@ -20,8 +20,8 @@ class InventoriesController extends Controller
      */
     public function index()
     {
-        $batches = Batch::orderBy('purchase_date','des')
-        ->orderBy('created_at','des')
+        $batches = Batch::
+        orderBy('created_at','des')
         ->paginate(10);
         return view('inventories.index')->with('batches',$batches);
     }
@@ -51,7 +51,7 @@ class InventoriesController extends Controller
             'manufacturer' => 'required',
             'drugType' => 'required',
             'expirationDate' => 'required',
-            'purchaseDate' => 'required',
+            'deliveryDate' => 'required',
             'nameOfSupplier' => 'required',
             'quantity' => 'required',
             'batchNumber' => 'required'
@@ -61,7 +61,6 @@ class InventoriesController extends Controller
         $batch = new Batch();
         $batch = Batch::firstOrCreate([
             'id' => $request->input('batchNumber'),
-            'purchase_date' => $request->input('purchaseDate'),
         ]);
 
         $genericName = new GenericName();
@@ -105,7 +104,8 @@ class InventoriesController extends Controller
             'expiration_date' => $request->input('expirationDate'),
             'batch_number' => $batch->id,
             'supplier_id' => $supplier->id,
-            'product_id' => $product->id
+            'product_id' => $product->id,
+            'delivery_date' => $request->input('deliveryDate')
         ]);
 
         return redirect('/inventories')->with('success', 'Inventory successfully added.');

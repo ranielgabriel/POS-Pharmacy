@@ -11,8 +11,7 @@ class Batch extends Model
 
     // Mass Assignment
     protected $fillable = [
-        'id',
-        'purchase_date'
+        'id'
     ];
 
     // Primary Key

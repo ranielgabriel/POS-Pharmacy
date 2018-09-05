@@ -82,8 +82,8 @@
             {{Form::text('nameOfSupplier', '', ['class' => 'form-control', 'placeholder' => 'Name of Supplier', 'id' => 'suppliers',])}}
             </div>
             <div class="form-group col-md-3">
-            {{Form::label('purchaseDate', 'Purchase Date')}}
-            {{Form::date('purchaseDate', date('Y-m-d'), ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Purchase Date' ])}}
+            {{Form::label('deliveryDate', 'Delivery Date')}}
+            {{Form::date('deliveryDate', date('Y-m-d'), ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Delivery Date' ])}}
             </div>
         </div> 
 

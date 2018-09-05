@@ -17,12 +17,12 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->string('manufacturer_id');
             $table->string('brand_name');
-            $table->string('status');
-            $table->decimal('market_price', 10, 2);
-            $table->decimal('special_price', 10, 2);
-            $table->decimal('walk_in_price', 10, 2);
-            $table->decimal('promo_price', 10, 2);
-            $table->decimal('distributor_price', 10, 2);
+            $table->string('status')->default('In-stock');
+            $table->decimal('market_price', 10, 2)->default(0);
+            $table->decimal('special_price', 10, 2)->default(0);
+            $table->decimal('walk_in_price', 10, 2)->default(0);
+            $table->decimal('promo_price', 10, 2)->default(0);
+            $table->decimal('distributor_price', 10, 2)->default(0);
             $table->integer('drug_type_id');
             $table->integer('generic_name_id');
             $table->timestamps();

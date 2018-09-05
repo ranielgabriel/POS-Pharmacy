@@ -20,7 +20,8 @@ class Product extends Model
     'status',
     'distributor_price',
     'updated_at',
-    'created_at'];
+    'created_at'
+];
 
     // Primary Key
     public $primaryKey = 'id';

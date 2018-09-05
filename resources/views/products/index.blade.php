@@ -14,8 +14,8 @@
     <div class="responsive" id="tableSearchContainer"></div>
     <div class="responsive" id="tableContainer">
         <table class="table table-striped table-bordered table-hover" id="tableProducts">
-            <th><label>Brand Name</label></th>
             <th><label>Generic Name</label></th>
+            <th><label>Brand Name</label></th>
             <th><label>Drug Type</label></th>
             <th><label>Quantity</label></th>
             <th><label>Status</label></th>
@@ -27,8 +27,8 @@
             <th></th>
             @foreach ($products as $product)
                 <tr class="">
-                    <td><a href="/products/{{ $product->id }}" class="">{{ $product->brand_name }}</a></td>
                     <td>{{ $product->genericNames->description }}</td>
+                    <td><a href="/products/{{ $product->id }}" class="">{{ $product->brand_name }}</a></td>
                     <td>{{ $product->drugTypes->description }}</td>
                     <td>
 
@@ -56,7 +56,6 @@
             @endforeach()
         </table>
     </div>
-
 {{ $products->links() }}
 @endsection()
 
@@ -80,7 +79,6 @@
             var productId = $(this).data('product-id');
             searchProductInfo(productId);
         })
-
         // Function for getting the product information
         function searchProductInfo(productId) {
             $.ajax({

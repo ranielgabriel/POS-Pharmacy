@@ -16,6 +16,7 @@ class Inventory extends Model
         'sold',
         'expiration_date',
         'batch_number',
+        'delivery_date'
     ];
     // Primary Key
     public $primaryKey = 'id';

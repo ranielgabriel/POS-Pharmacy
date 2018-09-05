@@ -18,8 +18,9 @@ class CreateInventoriesTable extends Migration
             $table->integer('supplier_id');
             $table->integer('product_id');
             $table->integer('quantity');
-            $table->integer('sold');
+            $table->integer('sold')->default(0);
             $table->date('expiration_date');
+            $table->date('delivery_date');
             $table->integer('batch_number');
             $table->timestamps();
         });

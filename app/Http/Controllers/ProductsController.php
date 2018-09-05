@@ -21,11 +21,20 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $products = Product::orderBy('brand_name','asc')
+        $products = Product::join('generic_names as gn', 'gn.id', '=', 'generic_name_id')
+        // orderBy('brand_name','asc')
+        ->orderBy('gn.description')
         ->where('status', '!=', 'In-stock')
         ->where('status', '!=', 'Out-of-stock')
-        ->paginate(50);
+        ->paginate(10);
         return view('products.index')->with('products' , $products);
+
+        // $products = GenericName::orderBy('description','asc')
+        // ->whereHas('products', function ($query){
+        //     $query->where('status', '!=', 'In-stock')->where('status', '!=', 'Out-of-stock');
+        // })
+        // ->paginate(50);
+        // return view('products.index')->with('products' , $products);
     }
 
     /**
