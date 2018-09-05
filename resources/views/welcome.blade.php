@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Jenia Pharmacy
+                    Jenia Pharma Trading
                 </div>
             </div>
         </div>

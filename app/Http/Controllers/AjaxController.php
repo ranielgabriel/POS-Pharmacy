@@ -48,22 +48,22 @@ class AjaxController extends Controller
             // $invent = array();
 
             // loop to every product
-            foreach ($products as $product) {
+            foreach ($products->sortBy('genericNames.description') as $product) {
 
                 // temporary variable for storing quantity
                 $quantity = null;
                 $quantity = array();
 
                 // loop to every inventory of the product
-                foreach ($product->inventories as $productInventory) {
+                // foreach ($product->inventories as $productInventory) {
 
-                    // if there are still remaining quantity in the inventory, it will push it to the array of quantities
-                    if(($productInventory->quantity - $productInventory->sold) >= 0){
-                        array_push($quantity, ($productInventory->quantity - $productInventory->sold));
-                    }
-                    // array_push($invent, $productInventory);
-                    // $quantity += $productInventory->quantity;
-                }
+                //     // if there are still remaining quantity in the inventory, it will push it to the array of quantities
+                //     if(($productInventory->quantity - $productInventory->sold) >= 0){
+                //         array_push($quantity, ($productInventory->quantity - $productInventory->sold));
+                //     }
+                //     // array_push($invent, $productInventory);
+                //     // $quantity += $productInventory->quantity;
+                // }
 
                 $output.='<tr>'.
 
@@ -73,7 +73,7 @@ class AjaxController extends Controller
 
                 '<td>' . $product->drugTypes->description . '</td>'.
 
-                '<td>' . array_sum($quantity) . '</td>'.
+                '<td>' . ($product->inventories->sum('quantity') - $product->inventories->sum('sold')) . '</td>'.
                 // '<td>' . $quantity . '</td>'.
 
                 '<td>' . $product->status . '</td>'.

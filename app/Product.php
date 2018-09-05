@@ -12,15 +12,7 @@ class Product extends Model
     'brand_name',
     'generic_name_id',
     'manufacturer_id',
-    'drug_type_id',
-    'market_price',
-    'special_price',
-    'walk_in_price',
-    'promo_price',
-    'status',
-    'distributor_price',
-    'updated_at',
-    'created_at'
+    'drug_type_id'
 ];
 
     // Primary Key

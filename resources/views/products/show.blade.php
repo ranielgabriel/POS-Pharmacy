@@ -26,7 +26,7 @@
 
         <hr>
         <h3>Inventory Information</h3>
-        @foreach ($product->inventories as $inventory)
+        @foreach ($product->inventories->sortByDesc('expiration_date') as $inventory)
             @if ($inventory->quantity != $inventory->sold)
             <div class="col-md-12 row">
                 <div class="form-group col-md-3">

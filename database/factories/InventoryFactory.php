@@ -5,11 +5,18 @@ use Faker\Generator as Faker;
 $factory->define(App\Inventory::class, function (Faker $faker) {
     return [
         'supplier_id' => function () {
-            return factory(App\Supplier::class)->create()->id;
+            try{
+                return factory(App\Supplier::class)->create()->id;
+            }catch(Exception $e){
+                return factory(App\Supplier::class)->make()->id;
+            }
         },
         'product_id' => function () {
-            $product = factory(App\Product::class)->create()->id;
-            return $product;
+            try{
+                return factory(App\Product::class)->create()->id;
+            }catch(Exception $e){
+                return factory(App\Product::class)->make()->id;
+            }
         },
         'quantity'=> $faker->numberBetween($min = 50, $max = 100),
         'sold' => $faker->numberBetween($min = 0, $max = 50),

@@ -51,23 +51,23 @@
             <div class="col-md-12 row">
                 <div class="form-group col-md-2">
                 {{Form::label('marketPrice', 'Market Price')}}
-                {{Form::number('marketPrice', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Market Price' , 'step' => 1, 'id' => 'marketPrice'])}}
+                {{Form::number('marketPrice', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Market Price' , 'step' => 'any', 'id' => 'marketPrice'])}}
                 </div>
                 <div class="form-group col-md-2">
                 {{Form::label('specialPrice', 'Special Price')}}
-                {{Form::number('specialPrice', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Special Price' , 'step' => 1, 'id' => 'specialPrice'])}}
+                {{Form::number('specialPrice', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Special Price' , 'step' => 'any', 'id' => 'specialPrice'])}}
                 </div>
                 <div class="form-group col-md-2">
                 {{Form::label('walkInPrice', 'Walk-In Price')}}
-                {{Form::number('walkInPrice', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Walk-In Price' , 'step' => 1, 'id' => 'walkInPrice'])}}
+                {{Form::number('walkInPrice', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Walk-In Price' , 'step' => 'any', 'id' => 'walkInPrice'])}}
                 </div>
                 <div class="form-group col-md-2">
                 {{Form::label('promoPrice', 'Promo Price')}}
-                {{Form::number('promoPrice', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Promo Price' , 'step' => 1, 'id' => 'promoPrice'])}}
+                {{Form::number('promoPrice', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Promo Price' , 'step' => 'any', 'id' => 'promoPrice'])}}
                 </div>
                 <div class="form-group col-md-2">
                 {{Form::label('distributorPrice', 'Distributor\'s Price')}}
-                {{Form::number('distributorPrice', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Distributor\'s Price' , 'step' => 1, 'id' => 'distributorPrice'])}}
+                {{Form::number('distributorPrice', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Distributor\'s Price' , 'step' => 'any', 'id' => 'distributorPrice'])}}
                 </div>
             </div>
         </div>

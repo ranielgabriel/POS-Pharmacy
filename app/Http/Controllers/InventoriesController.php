@@ -86,12 +86,6 @@ class InventoriesController extends Controller
         $product = new Product();
         $product = Product::firstOrCreate([
             'brand_name' => $request->input('brandName'),
-            'status' => 'In-stock',
-            'market_price' => 0,
-            'special_price' => 0,
-            'walk_in_price' => 0,
-            'promo_price' => 0,
-            'distributor_price' => 0,
             'manufacturer_id' => $manufacturer->id,
             'generic_name_id' => $genericName->id,
             'drug_type_id' => $drugType->id

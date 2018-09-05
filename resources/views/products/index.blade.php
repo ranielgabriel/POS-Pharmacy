@@ -25,19 +25,13 @@
             <th><label>Promo Price</label></th>
             <th><label>Distributor's Price</label></th>
             <th></th>
-            @foreach ($products as $product)
+            @foreach ($products->sortBy('genericNames.description') as $product)
                 <tr class="">
                     <td>{{ $product->genericNames->description }}</td>
                     <td><a href="/products/{{ $product->id }}" class="">{{ $product->brand_name }}</a></td>
                     <td>{{ $product->drugTypes->description }}</td>
                     <td>
-
-                        @php $quantity = array() @endphp
-                        @foreach($product->inventories as $inventory)
-                            <?php array_push($quantity, $inventory->quantity) ?>
-                        @endforeach()
-                        @php echo array_sum($quantity) @endphp
-
+                        {{ $product->inventories->sum('quantity') - $product->inventories->sum('sold') }}
                     </td>
                     <td>{{ $product->status }}</td>
                     <td>&#8369 {{ $product->market_price }}</td>

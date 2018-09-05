@@ -21,20 +21,14 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $products = Product::join('generic_names as gn', 'gn.id', '=', 'generic_name_id')
-        // orderBy('brand_name','asc')
-        ->orderBy('gn.description')
+        $products = Product::orderBy('brand_name','asc')
+        // whereHas('genericNames', function($query){
+        //     $query->orderBy('description','asc');
+        // })
         ->where('status', '!=', 'In-stock')
         ->where('status', '!=', 'Out-of-stock')
         ->paginate(30);
         return view('products.index')->with('products' , $products);
-
-        // $products = GenericName::orderBy('description','asc')
-        // ->whereHas('products', function ($query){
-        //     $query->where('status', '!=', 'In-stock')->where('status', '!=', 'Out-of-stock');
-        // })
-        // ->paginate(50);
-        // return view('products.index')->with('products' , $products);
     }
 
     /**
@@ -126,6 +120,11 @@ class ProductsController extends Controller
     public function show($id)
     {
         $product = Product::find($id);
+        // $product = Product::where('id','=',$id)->get();
+        // where('products.id','=',$id)
+        // ->join('inventories as i','i.product_id','=','products.id')
+        // ->orderBy('i.expiration_date')
+        // ->get();
         return view('products.show')->with('product', $product);
     }
 
