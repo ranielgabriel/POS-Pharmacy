@@ -50,9 +50,9 @@ $('document').ready(function ($) {
             searchSuppplier($(this).val());
             $('.pagination').hide();
         } else {
-            $('#tableContainer').show();
+            $('#tableContainer').fadeIn();
             $('#tableSearchContainer').hide();
-            $('.pagination').show();
+            $('.pagination').fadeIn();
         }
     });
 
@@ -67,7 +67,7 @@ $('document').ready(function ($) {
                 },
                 success: function (msg) {
                     $('#tableContainer').hide();
-                    $('#tableSearchContainer').show();
+                    $('#tableSearchContainer').fadeIn();
                     $('#tableSearchContainer').html('');
                     $('#tableSearchContainer').append(msg.code);
 

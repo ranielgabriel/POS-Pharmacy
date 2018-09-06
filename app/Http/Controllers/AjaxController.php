@@ -44,26 +44,9 @@ class AjaxController extends Controller
             })
             ->get();
 
-            // temporary array for inventory
-            // $invent = array();
-
-            // loop to every product
             foreach ($products->sortBy('genericNames.description') as $product) {
 
                 // temporary variable for storing quantity
-                $quantity = null;
-                $quantity = array();
-
-                // loop to every inventory of the product
-                // foreach ($product->inventories as $productInventory) {
-
-                //     // if there are still remaining quantity in the inventory, it will push it to the array of quantities
-                //     if(($productInventory->quantity - $productInventory->sold) >= 0){
-                //         array_push($quantity, ($productInventory->quantity - $productInventory->sold));
-                //     }
-                //     // array_push($invent, $productInventory);
-                //     // $quantity += $productInventory->quantity;
-                // }
 
                 $output.='<tr>'.
 

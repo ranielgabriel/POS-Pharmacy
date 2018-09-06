@@ -6,114 +6,91 @@
     {!! Form::open(['action' => 'InventoriesController@store', 'method' => 'POST', 'autocomplete' => 'off']) !!}
     <div class="col-md-12">
         <h3>Inventory Information</h3>
-        {{-- <table class="table table-striped table-bordered">
-            <tr>
-                <th><center>Batch Number: </center></th>
-                <td colspan="3">
-                    {{Form::number('batchNumber', '', ['class' => 'form-control', 'min' => 0 ])}}
-                </td>
-                <th><center>Purchase Date: </center></th>
-                <td colspan="2">
-                    {{Form::date('purchaseDate', date('Y-m-d'), ['class' => 'form-control', 'min' => 0])}}
-                </td>
-            </tr>
-            <tr>
-                <th colspan="2">
-                    <center>
-                    Inventory Information
-                    </center>
-                </th>
-                <th colspan="5">
-                    <center>
-                    Product Information
-                    </center>
-                </th>
-            </tr>
-            <th><center><small>Name of Supplier</small></center></th>
-            <th><center><small>Brand Name</small></center></th>
-            <th><center><small>Generic Name</small></center></th>
-            <th><center><small>Manufacturer</small></center></th>
-            <th><center><small>Drug Type</small></center></th>
-            <th><center><small>Quantity</small></center></th>
-            <th><center><small>Expiration Date</small></center></th>
-            <tr>
-                <td>
-                    <div class="form-group col">
-                    {{Form::text('nameOfSupplier', '', ['class' => 'form-control', 'id' => 'suppliers',])}}
-                    </div>
-                </td>
-                <td>
-                    <div class="form-group col">
-                    {{Form::text('brandName', '', ['class' => 'form-control'])}}
-                    </div>
-                </td>
-                <td>
-                    <div class="form-group col">
-                    {{Form::text('genericName', '', ['class' => 'form-control', 'id' => 'genericNames'])}}
-                    </div>
-                </td>
-                <td>
-                    <div class="form-group col">
-                    {{Form::text('manufacturer', '', ['class' => 'form-control', 'id' => 'manufacturers'])}}
-                    </div>
-                </td>
-                <td>
-                    <div class="form-group col">
-                        {{Form::text('drugType', 'Tablet', ['class' => 'form-control', 'placeholder' => 'Drug Type', 'id' => 'drugType', 'type' => 'text', ])}}
-                    </div>
-                </td>
-                <td>
-                    <div class="form-group col">
-                    {{Form::number('quantity', '', ['class' => 'form-control', 'min' => 0  ])}}
-                    </div>
-                </td>
-                <td>
-                    {{Form::date('expirationDate', '', ['class' => 'form-control'])}}
-                </td>
-            </tr>
-        </table> --}}
-        <div class="col-md-12 row"> 
+
+        <div class="col-md-12 row">
             <div class="form-group col-md-2">
             {{Form::label('batchNumber', 'Batch Number')}}
-            {{Form::number('batchNumber', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Batch Number'])}}
+            {{Form::number('batchNumber', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Batch Number', 'id' => 'batchNumber'])}}
             </div>
             <div class="form-group  col-md-3">
-            {{Form::label('nameOfSupplier', 'Name of Supplier')}}
-            {{Form::text('nameOfSupplier', '', ['class' => 'form-control', 'placeholder' => 'Name of Supplier', 'id' => 'suppliers',])}}
+            {{Form::label('supplierName', 'Name of Supplier')}}
+            {{Form::text('supplierName', '', ['class' => 'form-control', 'placeholder' => 'Name of Supplier', 'id' => 'supplierName'])}}
             </div>
             <div class="form-group col-md-3">
             {{Form::label('deliveryDate', 'Delivery Date')}}
-            {{Form::date('deliveryDate', date('Y-m-d'), ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Delivery Date' ])}}
+            {{Form::date('deliveryDate', date('Y-m-d'), ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Delivery Date' , 'id' => 'deliveryDate'])}}
             </div>
-        </div> 
+        </div>
 
-        <hr>
+        <div id="supplierInformation">
+            <hr>
+            <h3>Supplier Information</h3>
+            <div class="col-md-12">
+                <div class="row col-md-12">
+                    <div class="form-group col-md-4">
+                        {{Form::label('supplierName', 'Supplier Name')}}
+                        {{Form::text('supplierName', '', ['class' => 'form-control', 'placeholder' => 'Supplier Name', 'disabled' => true])}}
+                    </div>
+                    <div class="form-group  col-md-8">
+                        {{Form::label('address', 'Address')}}
+                        {{Form::text('address', '', ['class' => 'form-control', 'placeholder' => 'Address', 'disabled' => true])}}
+                    </div>
+                </div>
+                <div class="row col-md-12">
+                    <div class="form-group  col-md-6">
+                        {{Form::label('ltoNumber', 'LTO Number')}}
+                        {{Form::number('ltoNumber', '' , ['class' => 'form-control', 'placeholder' => 'LTO Number', 'disabled' => true])}}
+                    </div>
+                    <div class="form-group col-md-6">
+                        {{Form::label('expirationDate', 'Expiration Date')}}
+                        {{Form::text('expirationDate', '', ['class' => 'form-control', 'placeholder' => 'Expiration Date', 'disabled' => true])}}
+                    </div>
+                </div>
+                <div class="row col-md-12">
+                    <div class="form-group col-md-4">
+                        {{Form::label('contactPerson', 'Contact Person')}}
+                        {{Form::text('contactPerson', '', ['class' => 'form-control', 'placeholder' => 'Contact Person', 'disabled' => true])}}
+                    </div>
+                    <div class="form-group col-md-4">
+                        {{Form::label('contactNumber', 'Contact Number')}}
+                        {{Form::text('contactNumber', '', ['class' => 'form-control', 'placeholder' => 'Contact Number', 'disabled' => true])}}
+                    </div>
+                    <div class="form-group col-md-4">
+                        {{Form::label('emailAddress', 'Email Address')}}
+                        {{Form::text('emailAddress', '', ['class' => 'form-control', 'placeholder' => 'Email Address', 'disabled' => true])}}
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <h3>Product Information</h3>
-        <div class="col-md-12 row">
-            <div class="form-group col-md-3">
-            {{Form::label('brandName', 'Brand Name')}}
-            {{Form::text('brandName', '', ['class' => 'form-control', 'placeholder' => 'Brand Name'])}}
-            </div>
-            <div class="form-group  col-md-3">
-            {{Form::label('genericName', 'Generic Name')}}
-            {{Form::text('genericName', '', ['class' => 'form-control', 'placeholder' => 'Generic Name',  'id' => 'genericNames'])}}
-            </div>
-            <div class="form-group  col-md-3">
-            {{Form::label('manufacturer', 'Manufacturer')}}
-            {{Form::text('manufacturer', '', ['class' => 'form-control', 'placeholder' => 'Manufacturer',  'id' => 'manufacturers'])}}
-            </div>
-            <div class="form-group col-md-3">
-            {{Form::label('drugType', 'Drug Type')}}
-            {{Form::text('drugType', '', ['class' => 'form-control', 'placeholder' => 'Drug Type', 'id' => 'drugType', 'type' => 'text', ])}}
-            </div>
-            <div class="form-group col-md-3">
-            {{Form::label('expirationDate', 'Expiration Date')}}
-            {{Form::date('expirationDate', '', ['class' => 'form-control', 'placeholder' => 'Expiration Date' ])}}
-            </div>
-            <div class="form-group col-md-3">
-            {{Form::label('quantity', 'Quantity')}}
-            {{Form::number('quantity', '', ['class' => 'form-control', 'min' => 0, 'placeholder' => 'Quantity'  ])}}
+        <div id="productInformation">
+            <hr>
+            <h3>Product Information</h3>
+            <div class="col-md-12 row">
+                <div class="form-group col-md-3">
+                {{Form::label('brandName', 'Brand Name')}}
+                {{Form::text('brandName', '', ['class' => 'form-control', 'placeholder' => 'Brand Name'])}}
+                </div>
+                <div class="form-group  col-md-3">
+                {{Form::label('genericName', 'Generic Name')}}
+                {{Form::text('genericName', '', ['class' => 'form-control', 'placeholder' => 'Generic Name',  'id' => 'genericNames'])}}
+                </div>
+                <div class="form-group  col-md-3">
+                {{Form::label('manufacturer', 'Manufacturer')}}
+                {{Form::text('manufacturer', '', ['class' => 'form-control', 'placeholder' => 'Manufacturer',  'id' => 'manufacturers'])}}
+                </div>
+                <div class="form-group col-md-3">
+                {{Form::label('drugType', 'Drug Type')}}
+                {{Form::text('drugType', '', ['class' => 'form-control', 'placeholder' => 'Drug Type', 'id' => 'drugType', 'type' => 'text', ])}}
+                </div>
+                <div class="form-group col-md-3">
+                {{Form::label('expirationDate', 'Expiration Date')}}
+                {{Form::date('expirationDate', '', ['class' => 'form-control', 'placeholder' => 'Expiration Date' ])}}
+                </div>
+                <div class="form-group col-md-3">
+                {{Form::label('quantity', 'Quantity')}}
+                {{Form::number('quantity', '', ['class' => 'form-control', 'min' => 0, 'placeholder' => 'Quantity'  ])}}
+                </div>
             </div>
         </div>
 
@@ -135,12 +112,24 @@
             manufacturers = [],
             suppliers = [];
 
-        getArrayAutocomplete();
+        $('#supplierInformation').hide();
+        $('#productInformation').hide();
 
+        $('#batchNumber').keyup(function(){
+            hideShowProductInformation();
+        });
+        $('#deliveryDate').change(function(){
+            hideShowProductInformation();
+        });
+        $('#supplierName').keyup(function(){
+            hideShowSupplierInformation();
+        });
+
+        getArrayAutocomplete();
         autocomplete(document.getElementById("drugType"), drugTypes);
         autocomplete(document.getElementById("genericNames"), genericNames);
         autocomplete(document.getElementById("manufacturers"), manufacturers);
-        autocomplete(document.getElementById("suppliers"), suppliers);
+        autocomplete(document.getElementById("supplierName"), suppliers);
 
         function getArrayAutocomplete() {
 
@@ -211,6 +200,22 @@
                     }
                 }
             });
+        }
+
+        function hideShowProductInformation(){
+            if($('#batchNumber').val() != "" && $('#deliveryDate').val() != ""){
+                $('#productInformation').fadeIn();
+            }else{
+                $('#productInformation').fadeOut();
+            }
+        }
+
+        function hideShowSupplierInformation(){
+            if($('#supplierName').val() != ""){
+                $('#supplierInformation').fadeIn();
+            }else{
+                $('#supplierInformation').fadeOut();
+            }
         }
 
         function autocomplete(inp, arr) {

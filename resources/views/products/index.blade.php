@@ -65,9 +65,9 @@
                 searchProducts($(this).val());
                 $('.pagination').hide();
             } else {
-                $('#tableContainer').show();
+                $('#tableContainer').fadeIn();
                 $('#tableSearchContainer').hide();
-                $('.pagination').show();
+                $('.pagination').fadeIn();
             }
         });
 
@@ -126,7 +126,7 @@
                     },
                     success: function (msg) {
                         $('#tableContainer').hide();
-                        $('#tableSearchContainer').show();
+                        $('#tableSearchContainer').fadeIn();
                         $('#tableSearchContainer').html('');
                         $('#tableSearchContainer').append(msg.code);
 
