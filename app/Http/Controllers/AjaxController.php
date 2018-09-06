@@ -101,8 +101,8 @@ class AjaxController extends Controller
                 }else{
                     $output .= '</tr>';
                 }
-
             }
+            $output .= '</table>';
         }
         // return response($products);
         return response()->json([
@@ -150,6 +150,57 @@ class AjaxController extends Controller
 
     public function searchSupplier(Request $request){
 
+        $output =
+        '<table class="table table-striped table-bordered table-hover" id="tableProducts">'.
+        '<th><center><label>Name</label></center></th>'.
+        '<th><center><label>Address</label></center></th>'.
+        '<th><center><label>LTO Number</label></center></th>'.
+        '<th><center><label>Expiration Date</label></center></th>'.
+        '<th><center><label>Contact Person</label></center></th>'.
+        '<th><center><label>Contact Number</label></center></th>'.
+        '<th><center><label>Email Address</label></center></th>';
+
+        if($request->name != ''){
+
+            // get all products and order by brand name
+            // first check if the brand name exist
+            // then check if the generic name exist
+            $suppliers = Supplier::orderBy('name','asc')
+            ->where('name', 'like', '%' . $request->name . '%')
+            ->orWhere('contact_person', 'like', '%' . $request->name . '%')
+            ->get();
+
+            // temporary array for inventory
+            // $invent = array();
+
+            // loop to every product
+            foreach ($suppliers as $supplier) {
+
+                $output.= '<tr>'.
+
+                '<td>'. $supplier->name .'</td>'.
+
+                '<td>'. $supplier->address .'</td>'.
+
+                '<td>'. $supplier->lto_number .'</td>'.
+
+                '<td>'. $supplier->expiration_date .'</td>'.
+
+                '<td>'. $supplier->contact_person .'</td>'.
+
+                '<td>'. $supplier->contact_number .'</td>'.
+
+                '<td>'. $supplier->email_address .'</td>'.
+
+            '</tr>';
+            }
+        }
+
+        $output .= '</table>';
+
+        return response()->json([
+            'code' => $output,
+            ]);
     }
 
     public function getDrugTypes(){

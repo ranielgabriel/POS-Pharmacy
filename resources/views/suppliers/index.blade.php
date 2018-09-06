@@ -8,7 +8,7 @@
     <a class="btn btn-primary" href="/products/create">Add Supplier</a>
 
     <div class="form-group col-md-12 py-2">
-        {{Form::text('search', '', ['id' => 'search', 'class' => 'form-control', 'placeholder' => 'Search... (Supplier Name, Contact Person)'])}}
+        {{Form::text('search', '', ['id' => 'search', 'class' => 'form-control', 'placeholder' => 'Search... (Supplier Name / Contact Person)'])}}
     </div>
 
     <div class="responsive" id="tableSearchContainer"></div>
@@ -22,9 +22,8 @@
             <th><center><label>Contact Number</label></center></th>
             <th><center><label>Email Address</label></center></th>
             @foreach ($suppliers as $supplier)
-
-        <tr class="clickable-row" data-href="/suppliers/{{$supplier->id}}">
-                    <td>{{ $supplier->name }}</td>
+                <tr class="">
+                    <td><a href="/suppliers/{{$supplier->id}}">{{ $supplier->name }}</a></td>
                     <td>{{ $supplier->address }}</td>
                     <td>{{ $supplier->lto_number }}</td>
                     <td>{{ $supplier->expiration_date }}</td>
@@ -40,10 +39,43 @@
 
 @section('formLogic')
 <script>
-$(document).ready(function($) {
-    $(".clickable-row").click(function() {
-        window.location = $(this).data("href");
+$('document').ready(function ($) {
+
+    console.log('Page is ready');
+    $('#tableSearchContainer').hide();
+
+    $('#search').val('');
+    $('#search').keyup(function () {
+        if ($(this).val() != '') {
+            searchSuppplier($(this).val());
+            $('.pagination').hide();
+        } else {
+            $('#tableContainer').show();
+            $('#tableSearchContainer').hide();
+            $('.pagination').show();
+        }
     });
+
+    function searchSuppplier(name) {
+        if (name != null) {
+            $.ajax({
+                url: '/searchSupplier',
+                type: 'POST',
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    name: name
+                },
+                success: function (msg) {
+                    $('#tableContainer').hide();
+                    $('#tableSearchContainer').show();
+                    $('#tableSearchContainer').html('');
+                    $('#tableSearchContainer').append(msg.code);
+
+                    console.log(msg);
+                }
+            });
+        }
+    }
 });
 </script>
 @endsection
