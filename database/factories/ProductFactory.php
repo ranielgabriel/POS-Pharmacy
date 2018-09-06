@@ -30,7 +30,7 @@ $factory->define(App\Product::class, function (Faker $faker) {
                 return factory(App\DrugType::class)->make()->id;
             }
         },
-        'market_price' => $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 1000),
+        'purchase_price' => $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 1000),
         'special_price' => $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 1000),
         'walk_in_price' => $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 1000),
         'promo_price' => $faker->randomFloat($nbMaxDecimals = 2, $min = 0, $max = 1000),

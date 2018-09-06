@@ -18,7 +18,7 @@ class CreateProductsTable extends Migration
             $table->string('manufacturer_id');
             $table->string('brand_name');
             $table->string('status')->default('In-stock');
-            $table->decimal('market_price', 10, 2)->default(0);
+            $table->decimal('purchase_price', 10, 2)->default(0);
             $table->decimal('special_price', 10, 2)->default(0);
             $table->decimal('walk_in_price', 10, 2)->default(0);
             $table->decimal('promo_price', 10, 2)->default(0);

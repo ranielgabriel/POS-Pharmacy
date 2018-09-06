@@ -17,7 +17,7 @@
             <th><label>Drug Type</label></th>
             <th><label>Quantity</label></th>
             <th><label>Status</label></th>
-            <th><label>Market Price</label></th>
+            <th><label>Purchase Price</label></th>
             <th><label>Special Price</label></th>
             <th><label>Walk-In Price</label></th>
             <th><label>Promo Price</label></th>
@@ -32,7 +32,7 @@
                         {{ $product->inventories->sum('quantity') - $product->inventories->sum('sold') }}
                     </td>
                     <td>{{ $product->status }}</td>
-                    <td>&#8369 {{ $product->market_price }}</td>
+                    <td>&#8369 {{ $product->purchase_price }}</td>
                     <td>&#8369 {{ $product->special_price }}</td>
                     <td>&#8369 {{ $product->walk_in_price }}</td>
                     <td>&#8369 {{ $product->promo_price }}</td>
@@ -102,7 +102,7 @@
                         $('#drugType').val(msg['drugTypes']['description']);
                         $('#manufacturerName').val(msg['manufacturers']['name']);
                         $('#quantity').val(quantity);
-                        $('#marketPrice').val(msg['product']['market_price']);
+                        $('#purchasePrice').val(msg['product']['purchase_price']);
                         $('#specialPrice').val(msg['product']['special_price']);
                         $('#walkInPrice').val(msg['product']['walk_in_price']);
                         $('#promoPrice').val(msg['product']['promo_price']);

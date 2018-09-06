@@ -5,13 +5,13 @@
     <div class="col-md-12">
         <h3>Product Information</h3>
         <div class="col-md-12 row">
-            <div class="form-group col-md-3">
-            {{Form::label('brandName', 'Brand Name')}}
-            {{Form::text('brandName', $product->brand_name, ['class' => 'form-control', 'placeholder' => 'Brand Name', 'disabled' => true])}}
-            </div>
             <div class="form-group  col-md-3">
             {{Form::label('genericName', 'Generic Name')}}
             {{Form::text('genericName', $product->genericNames->description, ['class' => 'form-control', 'placeholder' => 'Generic Name', 'disabled' => true])}}
+            </div>
+            <div class="form-group col-md-3">
+            {{Form::label('brandName', 'Brand Name')}}
+            {{Form::text('brandName', $product->brand_name, ['class' => 'form-control', 'placeholder' => 'Brand Name', 'disabled' => true])}}
             </div>
             <div class="form-group  col-md-3">
             {{Form::label('manufacturer', 'Manufacturer')}}
@@ -26,9 +26,16 @@
 
         <hr>
         <h3>Inventory Information</h3>
+        <table class="table table-bordered table-striped table-hover">
+            <th><center>Expiration Date</center></th>
+            <th><center>Remaining Quantity</center></th>
         @foreach ($product->inventories->sortByDesc('expiration_date') as $inventory)
             @if ($inventory->quantity != $inventory->sold)
-            <div class="col-md-12 row">
+                <tr>
+                    <td><center>{{$inventory->expiration_date}}</center></td>
+                    <td><center>{{$inventory->quantity - $inventory->sold}}</center></td>
+                </tr>
+            {{-- <div class="col-md-12 row">
                 <div class="form-group col-md-3">
                     {{Form::label('expirationDate', 'Expiration Date')}}
                     {{Form::date('expirationDate', $inventory->expiration_date, ['class' => 'form-control', 'placeholder' => 'Expiration Date', 'disabled' => true])}}
@@ -45,15 +52,16 @@
                     {{Form::label('sold', 'Sold')}}
                     {{Form::number('sold', $inventory->sold, ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Sold', 'disabled' => true])}}
                 </div>
-            </div>
+            </div> --}}
             @endif
         @endforeach
+        </table>
         <hr>
         <h3>Prices</h3>
         <div class="col-md-12 row">
             <div class="form-group col-md-2">
-            {{Form::label('marketPrice', 'Market Price')}}
-            {{Form::number('marketPrice', $product->market_price, ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Market Price' , 'step' => 1, 'disabled' => true])}}
+            {{Form::label('purchasePrice', 'Purchase Price')}}
+            {{Form::number('purchasePrice', $product->purchase_price, ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Market Price' , 'step' => 1, 'disabled' => true])}}
             </div>
             <div class="form-group col-md-2">
             {{Form::label('specialPrice', 'Special Price')}}

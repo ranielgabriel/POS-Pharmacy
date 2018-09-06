@@ -50,8 +50,8 @@
             <h3>Prices</h3>
             <div class="col-md-12 row">
                 <div class="form-group col-md-2">
-                {{Form::label('marketPrice', 'Market Price')}}
-                {{Form::number('marketPrice', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Market Price' , 'step' => 'any', 'id' => 'marketPrice'])}}
+                {{Form::label('purchasePrice', 'Purchase Price')}}
+                {{Form::number('purchasePrice', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Purchase Price' , 'step' => 'any', 'id' => 'purchasePrice'])}}
                 </div>
                 <div class="form-group col-md-2">
                 {{Form::label('specialPrice', 'Special Price')}}
@@ -162,7 +162,7 @@ $('document').ready(function(){
                     $('#genericName').val(msg['genericNames']['description']);
                     $('#manufacturer').val(msg['manufacturers']['name']);
                     $('#drugType').val(msg['drugTypes']['description']);
-                    $('#marketPrice').val(msg['product']['market_price']);
+                    $('#purchasePrice').val(msg['product']['purchase_price']);
                     $('#specialPrice').val(msg['product']['special_price']);
                     $('#walkInPrice').val(msg['product']['walk_in_price']);
                     $('#promoPrice').val(msg['product']['promo_price']);
@@ -175,7 +175,7 @@ $('document').ready(function(){
                     $('#genericName').val('');
                     $('#manufacturer').val('');
                     $('#drugType').val('');
-                    $('#marketPrice').val('');
+                    $('#purchasePrice').val('');
                     $('#specialPrice').val('');
                     $('#walkInPrice').val('');
                     $('#promoPrice').val('');

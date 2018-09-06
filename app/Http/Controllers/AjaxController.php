@@ -60,7 +60,7 @@ class AjaxController extends Controller
 
                 '<td>' . $product->status . '</td>'.
 
-                '<td>&#8369 ' . $product->market_price . '</td>'.
+                '<td>&#8369 ' . $product->purchase_price . '</td>'.
 
                 '<td>&#8369 ' . $product->special_price . '</td>'.
 

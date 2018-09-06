@@ -19,7 +19,7 @@ class CreateSuppliersTable extends Migration
             $table->string('address');
             $table->string('email_address');
             $table->string('lto_number');
-            $table->string('expiration_date');
+            $table->date('expiration_date');
             $table->string('contact_person');
             $table->string('contact_number');
             $table->timestamps();

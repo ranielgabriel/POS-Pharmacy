@@ -64,7 +64,7 @@ class ProductsController extends Controller
             'genericName' => 'required',
             'manufacturer' => 'required',
             'drugType' => 'required',
-            'marketPrice' => 'required',
+            'purchasePrice' => 'required',
             'specialPrice' => 'required',
             'walkInPrice' => 'required',
             'promoPrice' => 'required',
@@ -74,7 +74,7 @@ class ProductsController extends Controller
 
         $product = Product::find($request->input('brandName'));
         $product->status = 'Selling';
-        $product->market_price = $request->input('marketPrice');
+        $product->purchase_price = $request->input('purchasePrice');
         $product->special_price = $request->input('specialPrice');
         $product->walk_in_price = $request->input('walkInPrice');
         $product->promo_price = $request->input('promoPrice');
@@ -100,7 +100,7 @@ class ProductsController extends Controller
         // $product = new Product();
         // $product = Product::firstOrCreate([
         //     'brand_name' => $request->input('brandName'),
-        //     'market_price' => $request->input('marketPrice'),
+        //     'purchase_price' => $request->input('marketPrice'),
         //     'special_price' => $request->input('specialPrice'),
         //     'walk_in_price' => $request->input('walkInPrice'),
         //     'promo_price' => $request->input('promoPrice'),
