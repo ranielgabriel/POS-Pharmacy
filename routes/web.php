@@ -30,6 +30,7 @@ Route::resource('/cart', 'CartsController');
 Route::post('/searchProducts','AjaxController@searchProducts');
 Route::post('/searchBatch','AjaxController@searchBatch');
 Route::post('/searchProductInfo','AjaxController@searchProductInfo');
+Route::post('/searchSupplierInfo','AjaxController@searchSupplierInfo');
 Route::post('/searchSupplier','AjaxController@searchSupplier');
 
 // Get

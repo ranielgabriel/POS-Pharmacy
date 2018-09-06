@@ -33,7 +33,8 @@ class InventoriesController extends Controller
      */
     public function create()
     {
-        return view('inventories.create');
+        $suppliers = Supplier::orderBy('name')->get();
+        return view('inventories.create')->with('suppliers', $suppliers);
     }
 
     /**
@@ -52,7 +53,7 @@ class InventoriesController extends Controller
             'drugType' => 'required',
             'expirationDate' => 'required',
             'deliveryDate' => 'required',
-            'nameOfSupplier' => 'required',
+            'supplierName' => 'required',
             'quantity' => 'required',
             'batchNumber' => 'required'
         ]);
@@ -79,9 +80,7 @@ class InventoriesController extends Controller
         ]);
 
         $supplier = new Supplier();
-        $supplier = Supplier::firstOrCreate([
-            'name' => $request->input('nameOfSupplier')
-        ]);
+        $supplier = Supplier::find($request->input('supplierName'));
 
         $product = new Product();
         $product = Product::firstOrCreate([

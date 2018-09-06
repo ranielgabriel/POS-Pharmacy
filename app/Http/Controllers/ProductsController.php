@@ -27,6 +27,9 @@ class ProductsController extends Controller
         // })
         ->where('status', '!=', 'In-stock')
         ->where('status', '!=', 'Out-of-stock')
+        ->with('genericNames')
+        ->with('drugTypes')
+        ->with('inventories')
         ->paginate(30);
         return view('products.index')->with('products' , $products);
     }

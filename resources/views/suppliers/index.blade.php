@@ -10,7 +10,7 @@
     <div class="form-group col-md-12 py-2">
         {{Form::text('search', '', ['id' => 'search', 'class' => 'form-control', 'placeholder' => 'Search... (Supplier Name / Contact Person)'])}}
     </div>
-
+    
     <div class="responsive" id="tableSearchContainer"></div>
     <div class="responsive" id="tableContainer">
         <table class="table table-striped table-bordered table-hover" id="tableProducts">
@@ -43,16 +43,15 @@ $('document').ready(function ($) {
 
     console.log('Page is ready');
     $('#tableSearchContainer').hide();
-
     $('#search').val('');
     $('#search').keyup(function () {
         if ($(this).val() != '') {
             searchSuppplier($(this).val());
             $('.pagination').hide();
         } else {
-            $('#tableContainer').fadeIn();
+            $('#tableContainer').show();
             $('#tableSearchContainer').hide();
-            $('.pagination').fadeIn();
+            $('.pagination').show();
         }
     });
 
@@ -67,7 +66,7 @@ $('document').ready(function ($) {
                 },
                 success: function (msg) {
                     $('#tableContainer').hide();
-                    $('#tableSearchContainer').fadeIn();
+                    $('#tableSearchContainer').show();
                     $('#tableSearchContainer').html('');
                     $('#tableSearchContainer').append(msg.code);
 

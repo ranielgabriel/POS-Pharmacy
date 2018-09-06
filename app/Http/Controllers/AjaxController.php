@@ -29,8 +29,7 @@ class AjaxController extends Controller
         '<th><label>Special Price</label></th>'.
         '<th><label>Walk-In Price</label></th>'.
         '<th><label>Promo Price</label></th>'.
-        '<th><label>Distributor\'s Price</label></th>'.
-        '<th></th>';
+        '<th><label>Distributor\'s Price</label></th>';
 
         if($request->name != ''){
 
@@ -161,7 +160,7 @@ class AjaxController extends Controller
 
                 $output.= '<tr>'.
 
-                '<td>'. $supplier->name .'</td>'.
+                '<td><a href="/suppliers/'. $supplier->id. '">'. $supplier->name .'</a></td>'.
 
                 '<td>'. $supplier->address .'</td>'.
 
@@ -184,6 +183,16 @@ class AjaxController extends Controller
         return response()->json([
             'code' => $output,
             ]);
+    }
+
+    public function searchSupplierInfo(Request $request){
+        if($request->id != null){
+            $supplier = Supplier::find($request->id);
+
+            return response()->json([
+                'supplier' => $supplier
+            ]);
+        }
     }
 
     public function getDrugTypes(){

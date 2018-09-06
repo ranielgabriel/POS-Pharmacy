@@ -2,7 +2,6 @@
 
 @section('content')
 <div class="col-md-12 responsive">
-
     <div class="form-group">
     <h1 class="">Products</h1>
     <a class="btn btn-primary" href="/products/create">Add Product</a>
@@ -10,7 +9,6 @@
     <div class="form-group col-md-12 py-2">
         {{Form::text('search', '', ['id' => 'search', 'class' => 'form-control', 'placeholder' => 'Search... (Brand Name / Generic Name)'])}}
     </div>
-
     <div class="responsive" id="tableSearchContainer"></div>
     <div class="responsive" id="tableContainer">
         <table class="table table-striped table-bordered table-hover" id="tableProducts">
@@ -24,7 +22,7 @@
             <th><label>Walk-In Price</label></th>
             <th><label>Promo Price</label></th>
             <th><label>Distributor's Price</label></th>
-            <th></th>
+
             @foreach ($products->sortBy('genericNames.description') as $product)
                 <tr class="">
                     <td>{{ $product->genericNames->description }}</td>
@@ -65,9 +63,9 @@
                 searchProducts($(this).val());
                 $('.pagination').hide();
             } else {
-                $('#tableContainer').fadeIn();
+                $('#tableContainer').show();
                 $('#tableSearchContainer').hide();
-                $('.pagination').fadeIn();
+                $('.pagination').show();
             }
         });
 
@@ -126,7 +124,7 @@
                     },
                     success: function (msg) {
                         $('#tableContainer').hide();
-                        $('#tableSearchContainer').fadeIn();
+                        $('#tableSearchContainer').show();
                         $('#tableSearchContainer').html('');
                         $('#tableSearchContainer').append(msg.code);
 
