@@ -148,6 +148,10 @@ class AjaxController extends Controller
         }
     }
 
+    public function searchSupplier(Request $request){
+
+    }
+
     public function getDrugTypes(){
         $drugTypes = DrugType::orderBy('description','asc')
         ->select('description')
@@ -175,6 +179,5 @@ class AjaxController extends Controller
         ->get();
         return response($suppliers);
     }
-
 
 }

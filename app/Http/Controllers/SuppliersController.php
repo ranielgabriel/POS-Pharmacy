@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Supplier;
 
 class SuppliersController extends Controller
 {
@@ -13,7 +14,9 @@ class SuppliersController extends Controller
      */
     public function index()
     {
-        return view('suppliers.index');
+        $suppliers = Supplier::orderBy('name')
+        ->paginate(10);
+        return view('suppliers.index')->with('suppliers', $suppliers);
     }
 
     /**
@@ -45,7 +48,8 @@ class SuppliersController extends Controller
      */
     public function show($id)
     {
-        //
+        $supplier = Supplier::find($id);
+        return view('suppliers.show')->with('supplier', $supplier);
     }
 
     /**
