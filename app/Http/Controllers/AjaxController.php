@@ -146,13 +146,13 @@ class AjaxController extends Controller
         $output =
         '<table class="table table-striped table-bordered table-hover" id="tableProducts">'.
         '<thead><tr>'.
-        '<th><center><label>Name</label></center></th>'.
-        '<th><center><label>Address</label></center></th>'.
-        '<th><center><label>LTO Number</label></center></th>'.
-        '<th><center><label>Expiration Date</label></center></th>'.
-        '<th><center><label>Contact Person</label></center></th>'.
-        '<th><center><label>Contact Number</label></center></th>'.
-        '<th><center><label>Email Address</label></center></th>'.
+        '<th><center><small>Name</small></center></th>'.
+        '<th><center><small>Address</small></center></th>'.
+        '<th><center><small>LTO Number</small></center></th>'.
+        '<th><center><small>Expiration Date</small></center></th>'.
+        '<th><center><small>Contact Person</small></center></th>'.
+        '<th><center><small>Contact Number</small></center></th>'.
+        '<th><center><small>Email Address</small></center></th>'.
         '</tr></thead>';
 
         if($request->name != ''){
@@ -173,7 +173,7 @@ class AjaxController extends Controller
 
                 $output.= '<tr>'.
 
-                '<td><a href="/suppliers/'. $supplier->id. '">'. $supplier->name .'</a></td>'.
+                '<td>'. $supplier->name .'</td>'.
 
                 '<td>'. $supplier->address .'</td>'.
 
@@ -194,7 +194,7 @@ class AjaxController extends Controller
         $output .= '</table>';
 
         return response()->json([
-            'code' => $output,
+            'code' => $output
             ]);
     }
 

@@ -10,25 +10,25 @@
     <div class="form-group col-md-12 py-2">
         {{Form::text('search', '', ['id' => 'search', 'class' => 'form-control', 'placeholder' => 'Search... (Supplier Name / Contact Person)'])}}
     </div>
-    
+
     <div class="responsive" id="tableSearchContainer"></div>
     <div class="responsive" id="tableContainer">
         <table class="table table-striped table-bordered table-hover" id="tableProducts">
             <thead>
                 <tr>
-                    <th><center><label>Name</label></center></th>
-                    <th><center><label>Address</label></center></th>
-                    <th><center><label>LTO Number</label></center></th>
-                    <th><center><label>Expiration Date</label></center></th>
-                    <th><center><label>Contact Person</label></center></th>
-                    <th><center><label>Contact Number</label></center></th>
-                    <th><center><label>Email Address</label></center></th>
+                    <th><center><small>Name</small></center></th>
+                    <th><center><small>Address</small></center></th>
+                    <th><center><small>LTO Number</small></center></th>
+                    <th><center><small>Expiration Date</small></center></th>
+                    <th><center><small>Contact Person</small></center></th>
+                    <th><center><small>Contact Number</small></center></th>
+                    <th><center><small>Email Adress</small></center></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($suppliers as $supplier)
                     <tr class="modalSupplierClass" data-target="#modalSupplier" data-toggle="modal" data-supplier-id={{ $supplier->id }}>
-                        <td><a >{{ $supplier->name }}</a></td>
+                        <td>{{ $supplier->name }}</td>
                         <td>{{ $supplier->address }}</td>
                         <td>{{ $supplier->lto_number }}</td>
                         <td>{{ $supplier->expiration_date }}</td>
@@ -98,6 +98,7 @@ $('document').ready(function ($) {
                 success: function (msg) {
 
                     // if the response is not null
+
                     if (msg['supplier'] != null) {
 
                         // modalSupplier
