@@ -10,7 +10,7 @@
         <div class="col-md-12 row">
             <div class="form-group col-md-2">
             {{Form::label('batchNumber', 'Batch Number')}}
-            {{Form::number('batchNumber', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Batch Number', 'id' => 'batchNumber'])}}
+            {{Form::number('batchNumber', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Batch Number', 'required', 'id' => 'batchNumber'])}}
             </div>
             <div class="form-group col-md-3">
                 {{Form::label('supplierName', 'Name of Supplier')}}
@@ -23,12 +23,11 @@
                 @php
                     // echo json_encode($productsToDisplay);getProductInfo
                 @endphp
-                {{Form::select('supplierName', $suppliersToDisplay , null, ['class' => 'form-control', 'placeholder' => 'Pick a supplier...', 'id' => 'supplierName'])}}
-                {{-- {{Form::text('brandName', '', ['class' => 'form-control', 'placeholder' => 'Brand Name', 'id' => 'brandName'])}} --}}
+                {{Form::select('supplierName', $suppliersToDisplay , null, ['class' => 'form-control', 'placeholder' => 'Pick a supplier...', 'required', 'id' => 'supplierName'])}}
             </div>
             <div class="form-group col-md-3">
             {{Form::label('deliveryDate', 'Delivery Date')}}
-            {{Form::date('deliveryDate', date('Y-m-d'), ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Delivery Date' , 'id' => 'deliveryDate'])}}
+            {{Form::date('deliveryDate', date('Y-m-d'), ['class' => 'form-control', 'placeholder' => 'Delivery Date', 'required', 'id' => 'deliveryDate'])}}
             </div>
         </div>
 
@@ -39,29 +38,29 @@
                 <div class="row col-md-12">
                     <div class="form-group  col-md-6">
                         {{Form::label('address', 'Address')}}
-                        {{Form::text('address', '', ['class' => 'form-control', 'placeholder' => 'Address', 'id' => 'address','disabled' => true])}}
+                        {{Form::text('address', '', ['class' => 'form-control', 'placeholder' => 'Address', 'id' => 'address','disabled' => true,'required'])}}
                     </div>
                     <div class="form-group  col-md-3">
                         {{Form::label('ltoNumber', 'LTO Number')}}
-                        {{Form::number('ltoNumber', '' , ['class' => 'form-control', 'placeholder' => 'LTO Number', 'id' => 'ltoNumber','disabled' => true])}}
+                        {{Form::number('ltoNumber', '' , ['class' => 'form-control', 'placeholder' => 'LTO Number', 'id' => 'ltoNumber','disabled' => true,'required'])}}
                     </div>
                     <div class="form-group col-md-3">
                         {{Form::label('expirationDate', 'Expiration Date')}}
-                        {{Form::text('expirationDate', '', ['class' => 'form-control', 'placeholder' => 'Expiration Date', 'id' => 'expirationDate', 'disabled' => true])}}
+                        {{Form::text('expirationDate', '', ['class' => 'form-control', 'placeholder' => 'Expiration Date', 'id' => 'expirationDate', 'disabled' => true,'required'])}}
                     </div>
                 </div>
                 <div class="row col-md-12">
                     <div class="form-group col-md-6">
                         {{Form::label('contactPerson', 'Contact Person')}}
-                        {{Form::text('contactPerson', '', ['class' => 'form-control', 'placeholder' => 'Contact Person', 'id' => 'contactPerson','disabled' => true])}}
+                        {{Form::text('contactPerson', '', ['class' => 'form-control', 'placeholder' => 'Contact Person', 'id' => 'contactPerson','disabled' => true,'required'])}}
                     </div>
                     <div class="form-group col-md-3">
                         {{Form::label('contactNumber', 'Contact Number')}}
-                        {{Form::text('contactNumber', '', ['class' => 'form-control', 'placeholder' => 'Contact Number', 'id' => 'contactNumber','disabled' => true])}}
+                        {{Form::text('contactNumber', '', ['class' => 'form-control', 'placeholder' => 'Contact Number', 'id' => 'contactNumber','disabled' => true,'required'])}}
                     </div>
                     <div class="form-group col-md-3">
                         {{Form::label('emailAddress', 'Email Address')}}
-                        {{Form::text('emailAddress', '', ['class' => 'form-control', 'placeholder' => 'Email Address', 'id' => 'emailAddress','disabled' => true])}}
+                        {{Form::text('emailAddress', '', ['class' => 'form-control', 'placeholder' => 'Email Address', 'id' => 'emailAddress','disabled' => true,'required'])}}
                     </div>
                 </div>
             </div>
@@ -73,29 +72,29 @@
             <div class="col-md-12 row">
                 <div class="form-group  col-md-4">
                     {{Form::label('genericName', 'Generic Name')}}
-                    {{Form::text('genericName', '', ['class' => 'form-control', 'placeholder' => 'Generic Name',  'id' => 'genericName'])}}
+                    {{Form::text('genericName', '', ['class' => 'form-control', 'placeholder' => 'Generic Name','required',  'id' => 'genericName'])}}
                 </div>
                 <div class="form-group col-md-4">
                     {{Form::label('brandName', 'Brand Name')}}
-                    {{Form::text('brandName', '', ['class' => 'form-control', 'placeholder' => 'Brand Name', 'id' => 'brandName'])}}
+                    {{Form::text('brandName', '', ['class' => 'form-control', 'placeholder' => 'Brand Name','required', 'id' => 'brandName'])}}
                 </div>
                 <div class="form-group  col-md-4">
                     {{Form::label('manufacturer', 'Manufacturer')}}
-                    {{Form::text('manufacturer', '', ['class' => 'form-control', 'placeholder' => 'Manufacturer',  'id' => 'manufacturer'])}}
+                    {{Form::text('manufacturer', '', ['class' => 'form-control', 'placeholder' => 'Manufacturer','required',  'id' => 'manufacturer'])}}
                 </div>
             </div>
             <div class="col-md-12 row">
                 <div class="form-group col-md-4">
                     {{Form::label('drugType', 'Drug Type')}}
-                    {{Form::text('drugType', '', ['class' => 'form-control', 'placeholder' => 'Drug Type', 'id' => 'drugType', 'type' => 'text', ])}}
+                    {{Form::text('drugType', '', ['class' => 'form-control', 'placeholder' => 'Drug Type','required', 'id' => 'drugType', 'type' => 'text', ])}}
                 </div>
                 <div class="form-group col-md-4">
                     {{Form::label('expirationDate', 'Expiration Date')}}
-                    {{Form::date('expirationDate', '', ['class' => 'form-control', 'placeholder' => 'Expiration Date', 'id' => 'expirationDate' ])}}
+                    {{Form::date('expirationDate', '', ['class' => 'form-control', 'placeholder' => 'Expiration Date','required', 'id' => 'expirationDate' ])}}
                 </div>
                 <div class="form-group col-md-4">
                     {{Form::label('quantity', 'Quantity')}}
-                    {{Form::number('quantity', '', ['class' => 'form-control', 'min' => 0, 'placeholder' => 'Quantity', 'id' => 'quantity'  ])}}
+                    {{Form::number('quantity', '', ['class' => 'form-control', 'min' => 0, 'placeholder' => 'Quantity','required', 'id' => 'quantity'  ])}}
                 </div>
             </div>
         </div>
