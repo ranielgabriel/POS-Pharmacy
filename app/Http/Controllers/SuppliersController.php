@@ -26,7 +26,7 @@ class SuppliersController extends Controller
      */
     public function create()
     {
-        //
+        return view('suppliers.create');
     }
 
     /**
@@ -37,7 +37,30 @@ class SuppliersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // validate request
+        $this->validate($request,[
+            'supplierName' => 'required',
+            'address' => 'required',
+            'ltoNumber' => 'required',
+            'expirationDate' => 'required|date|after:today',
+            'contactPerson' => 'required',
+            'contactNumber' => 'required',
+            'emailAddress' => 'required|email'
+        ]);
+
+        // create supplier
+        $supplier = Supplier::create([
+            'name' => $request->input('supplierName'),
+            'address' => $request->input('address'),
+            'email_address' => $request->input('emailAddress'),
+            'lto_number' => $request->input('ltoNumber'),
+            'expiration_date' => $request->input('expirationDate'),
+            'contact_person' => $request->input('contactPerson'),
+            'contact_number' => $request->input('contactNumber')
+        ]);
+
+        // redirect to index of products
+        return redirect('/suppliers')->with('success', 'Supplier successfully added.');
     }
 
     /**

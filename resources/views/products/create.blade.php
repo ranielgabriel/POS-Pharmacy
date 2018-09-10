@@ -73,7 +73,7 @@
         </div>
 
         <hr>
-        <a class="btn btn-danger" href="/products">Cancel</a>
+        <a class="btn btn-info" href="/products">Cancel</a>
         {{ Form::submit('Add Product', ['class' => 'btn btn-primary'])}}
     </div>
     {!! Form::close() !!}

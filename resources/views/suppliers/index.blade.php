@@ -5,7 +5,7 @@
 
     <div class="form-group">
     <h1 class="">Suppliers</h1>
-    <a class="btn btn-primary" href="/products/create">Add Supplier</a>
+    <a class="btn btn-primary" href="/suppliers/create">Add Supplier</a>
 
     <div class="form-group col-md-12 py-2">
         {{Form::text('search', '', ['id' => 'search', 'class' => 'form-control', 'placeholder' => 'Search... (Supplier Name / Contact Person)'])}}

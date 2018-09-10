@@ -5,6 +5,7 @@
         <h3>Supplier Information</h3>
             <div class="col-md-12">
                 <div class="form-group col-md-12">
+                    <div class="form-group  col-md-12">
                     {{Form::label('supplierName', 'Supplier Name')}}
                     {{Form::text('supplierName', $supplier->name, ['class' => 'form-control', 'placeholder' => 'Supplier Name', 'disabled' => true])}}
                     </div>
@@ -36,6 +37,7 @@
                     {{-- {{Form::select('drugType', ['L' => 'Large', 'S' => 'Small'], null, ['class' => 'form-control', 'placeholder' => 'Pick a type...'])}} --}}
                     {{Form::text('emailAddress', $supplier->email_address , ['class' => 'form-control', 'placeholder' => 'Email Address', 'disabled' => true])}}
                     </div>
+                </div>
             </div>
         <hr>
         <a class="btn btn-info" href="/suppliers">Back</a>

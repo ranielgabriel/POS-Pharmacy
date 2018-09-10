@@ -62,8 +62,8 @@ class InventoriesController extends Controller
             'genericName' => 'required',
             'manufacturer' => 'required',
             'drugType' => 'required',
-            'expirationDate' => 'required',
-            'deliveryDate' => 'required',
+            'expirationDate' => 'required|date|after:today',
+            'deliveryDate' => 'required|date',
             'supplierName' => 'required',
             'quantity' => 'required',
             'batchNumber' => 'required'
