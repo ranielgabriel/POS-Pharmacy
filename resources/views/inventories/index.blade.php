@@ -16,30 +16,36 @@
     @foreach ($batches as $batch)
     <div class="responsive py-2" id="tableContainer">
         <table class="table table-striped table-bordered">
-            <tr>
-                <th colspan="8"><small>Batch Number: </small>{{ $batch->id }}</th>
-                {{-- <th colspan="1"><small>Date of Delivery: </small>{{ $batch->delivery_date }}</th> --}}
-            </tr>
-            <th><center>Brand Name</center></th>
-            <th><center>Generic Name</center></th>
-            <th><center>Supplier</center></th>
-            <th><center>Quantity</center></th>
-            <th><center>Sold</center></th>
-            <th><center>Remaining Stocks</center></th>
-            <th><center>Delivery Date</center></th>
-            <th><center>Expiration Date</center></th>
-            @foreach ($batch->inventories as $inventory)
+            <thead>
                 <tr>
-                    <td><center><small>{{ $inventory->product->brand_name }}</small></center></td>
-                    <td><center><small>{{ $inventory->product->genericNames->description }}</small></center></td>
-                    <td><center><small>{{ $inventory->supplier->name }}</small></center></td>
-                    <td><center><small>{{ $inventory->quantity }}</small></center></td>
-                    <td><center><small>{{ $inventory->sold }}</small></center></td>
-                    <td><center><small>{{ $inventory->quantity - $inventory->sold }}</small></center></td>
-                    <td><center><small>{{ $inventory->delivery_date }}</small></center></td>
-                    <td><center><small>{{ $inventory->expiration_date }}</small></center></td>
+                    <tr>
+                        <th colspan="8"><small>Batch Number: </small>{{ $batch->id }}</th>
+                        {{-- <th colspan="1"><small>Date of Delivery: </small>{{ $batch->delivery_date }}</th> --}}
+                    </tr>
+                    <th><center><small>Brand Name</small></center></th>
+                    <th><center><small>Generic Name</small></center></th>
+                    <th><center><small>Supplier</small></center></th>
+                    <th><center><small>Quantity</small></center></th>
+                    <th><center><small>Sold</small></center></th>
+                    <th><center><small>Remaining Stocks</small></center></th>
+                    <th><center><small>Delivery Date</small></center></th>
+                    <th><center><small>Expiration Date</small></center></th>
                 </tr>
-            @endforeach
+            </thead>
+            <tbody>
+                @foreach ($batch->inventories as $inventory)
+                    <tr>
+                        <td><center>{{ $inventory->product->brand_name }}</center></td>
+                        <td><center>{{ $inventory->product->genericNames->description }}</center></td>
+                        <td><center>{{ $inventory->supplier->name }}</center></td>
+                        <td><center>{{ $inventory->quantity }}</center></td>
+                        <td><center>{{ $inventory->sold }}</center></td>
+                        <td><center>{{ $inventory->quantity - $inventory->sold }}</center></td>
+                        <td><center>{{ $inventory->delivery_date }}</center></td>
+                        <td><center>{{ $inventory->expiration_date }}</center></td>
+                    </tr>
+                @endforeach
+            </tbody>
         </table>
     </div>
     @endforeach

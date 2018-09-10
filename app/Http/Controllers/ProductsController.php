@@ -21,16 +21,22 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $products = Product::orderBy('brand_name','asc')
-        // whereHas('genericNames', function($query){
-        //     $query->orderBy('description','asc');
-        // })
+        $products = Product::
+        // Order by brand name
+        orderBy('brand_name','asc')
+        // Status should not be In-stock and Out-of-stock
         ->where('status', '!=', 'In-stock')
         ->where('status', '!=', 'Out-of-stock')
+        
+        // Return together with genericNames, drugtypes, and inventories
         ->with('genericNames')
         ->with('drugTypes')
         ->with('inventories')
+
+        // paginate with 30 products per page
         ->paginate(30);
+
+        // return the view index from products folder.
         return view('products.index')->with('products' , $products);
     }
 
@@ -42,11 +48,18 @@ class ProductsController extends Controller
     public function create()
     {
         // Show the view for adding product
-        $products = Product::orderBy('brand_name','asc')
+
+        // Get all the products
+        $products = Product::
+        // Order by brand name
+        orderBy('brand_name','asc')
+
+        // Status should only be In-stock and Out-of-stock
         ->where('status','=','In-stock')
         ->orWhere('status','=','Out-of-stock')
         ->get();
 
+        // return the view create from the products folder
         return view('products.create')->with('products', $products);
     }
 
@@ -72,45 +85,23 @@ class ProductsController extends Controller
             'quantity' => 'gt:0'
         ]);
 
+        // find the product
         $product = Product::find($request->input('brandName'));
+
+        // change the status to selling
         $product->status = 'Selling';
+
+        // update the prices
         $product->purchase_price = $request->input('purchasePrice');
         $product->special_price = $request->input('specialPrice');
         $product->walk_in_price = $request->input('walkInPrice');
         $product->promo_price = $request->input('promoPrice');
         $product->distributor_price = $request->input('distributorPrice');
+
+        // save
         $product->save();
 
-        // saving to database
-        // $genericName = new GenericName();
-        // $genericName = GenericName::firstOrCreate(
-        //     ['description' => $request->input('genericName')]
-        // );
-
-        // $drugType = new DrugType();
-        // $drugType = DrugType::firstOrCreate(
-        //     ['description' => $request->input('drugType')]
-        // );
-
-        // $manufacturer = new Manufacturer();
-        // $manufacturer = Manufacturer::firstOrCreate([
-        //     'name' => $request->input('manufacturer')
-        // ]);
-
-        // $product = new Product();
-        // $product = Product::firstOrCreate([
-        //     'brand_name' => $request->input('brandName'),
-        //     'purchase_price' => $request->input('marketPrice'),
-        //     'special_price' => $request->input('specialPrice'),
-        //     'walk_in_price' => $request->input('walkInPrice'),
-        //     'promo_price' => $request->input('promoPrice'),
-        //     'distributor_price' => $request->input('distributorPrice'),
-        //     'manufacturer_id' => $manufacturer->id,
-        //     'generic_name_id' => $genericName->id,
-        //     'drug_type_id' => $drugType->id,
-        //     'status' => 'Selling'
-        // ]);
-
+        // redirect to index of products
         return redirect('/products')->with('success', 'Product successfully added.');
     }
 
@@ -122,12 +113,10 @@ class ProductsController extends Controller
      */
     public function show($id)
     {
+        // find the product
         $product = Product::find($id);
-        // $product = Product::where('id','=',$id)->get();
-        // where('products.id','=',$id)
-        // ->join('inventories as i','i.product_id','=','products.id')
-        // ->orderBy('i.expiration_date')
-        // ->get();
+
+        // return the view show from products folder
         return view('products.show')->with('product', $product);
     }
 

@@ -11,41 +11,46 @@
     </div>
     <div class="responsive" id="tableSearchContainer"></div>
     <div class="responsive" id="tableContainer">
-        <table class="table table-striped table-bordered table-hover" id="tableProducts">
-            <th><label>Generic Name</label></th>
-            <th><label>Brand Name</label></th>
-            <th><label>Drug Type</label></th>
-            <th><label>Quantity</label></th>
-            <th><label>Status</label></th>
-            <th><label>Purchase Price</label></th>
-            <th><label>Special Price</label></th>
-            <th><label>Walk-In Price</label></th>
-            <th><label>Promo Price</label></th>
-            <th><label>Distributor's Price</label></th>
-
-            @foreach ($products->sortBy('genericNames.description') as $product)
-                <tr class="">
-                    <td>{{ $product->genericNames->description }}</td>
-                    <td><a href="/products/{{ $product->id }}" class="">{{ $product->brand_name }}</a></td>
-                    <td>{{ $product->drugTypes->description }}</td>
-                    <td>
-                        {{ $product->inventories->sum('quantity') - $product->inventories->sum('sold') }}
-                    </td>
-                    <td>{{ $product->status }}</td>
-                    <td>&#8369 {{ $product->purchase_price }}</td>
-                    <td>&#8369 {{ $product->special_price }}</td>
-                    <td>&#8369 {{ $product->walk_in_price }}</td>
-                    <td>&#8369 {{ $product->promo_price }}</td>
-                    <td>&#8369 {{ $product->distributor_price }}</td>
-                    <td>
-                        <center>
-                            <button class="btn btn-success modalSellClass" data-toggle="modal" data-target="#modalSell" data-product-id={{ $product->id }}>
-                                <span class="fa fa-cart-arrow-down"></span>
-                            </button>
-                        </center>
-                    </td>
+        <table class="table table-striped table-bordered table-hover nowrap" id="tableProducts">
+            <thead>
+                <tr>
+                    <th><small class="">Generic Name</small></th>
+                    <th><small class="">Brand Name</small></th>
+                    <th><small class="">Drug Type</small></th>
+                    <th><small class="">Quantity</small></th>
+                    <th><small class="">Status</small></th>
+                    <th><small class="">Purchase Price</small></th>
+                    <th><small class="">Special Price</small></th>
+                    <th><small class="">Walk-In Price</small></th>
+                    <th><small class="">Promo Price</small></th>
+                    <th><small class="">Distributor's Price</small></th>
                 </tr>
-            @endforeach()
+            </thead>
+            <tbody>
+                @foreach ($products->sortBy('genericNames.description') as $product)
+                    <tr class="">
+                        <td>{{ $product->genericNames->description }}</td>
+                        <td><a class="link-unstyled" href="/products/{{$product->id}}">{{ $product->brand_name }}</a></td>
+                        <td>{{ $product->drugTypes->description }}</td>
+                        <td>
+                            {{ $product->inventories->sum('quantity') - $product->inventories->sum('sold') }}
+                        </td>
+                        <td>{{ $product->status }}</td>
+                        <td>&#8369 {{ $product->purchase_price }}</td>
+                        <td>&#8369 {{ $product->special_price }}</td>
+                        <td>&#8369 {{ $product->walk_in_price }}</td>
+                        <td>&#8369 {{ $product->promo_price }}</td>
+                        <td>&#8369 {{ $product->distributor_price }}</td>
+                        <td>
+                            <center>
+                                <button class="btn btn-success modalSellClass" data-toggle="modal" data-target="#modalSell" data-product-id={{ $product->id }}>
+                                    <span class="fa fa-cart-arrow-down"></span>
+                                </button>
+                            </center>
+                        </td>
+                    </tr>
+                @endforeach()
+            </tbody>
         </table>
     </div>
 {{ $products->links() }}
@@ -73,6 +78,7 @@
             var productId = $(this).data('product-id');
             searchProductInfo(productId);
         })
+
         // Function for getting the product information
         function searchProductInfo(productId) {
             $.ajax({
@@ -97,6 +103,8 @@
                                 quantity += remainingQuantity;
                             }
                         }
+
+                        // modalSell
                         $('#brandName').html(msg['product']['brand_name']);
                         $('#genericName').val(msg['genericNames']['description']);
                         $('#drugType').val(msg['drugTypes']['description']);

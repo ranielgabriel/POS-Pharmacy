@@ -16,20 +16,25 @@ use App\Batch;
 
 class AjaxController extends Controller
 {
+
+    // This function is for searching products
+    // This will return a list of product(s)
     public function searchProducts(Request $request){
 
         $output =
         '<table class="table table-striped table-bordered table-hover">'.
-        '<th><label>Generic Name</label></th>'.
-        '<th><label>Brand Name</label></th>'.
-        '<th><label>Drug Type</label></th>'.
-        '<th><label>Quantity</label></th>'.
-        '<th><label>Status</label></th>'.
-        '<th><label>Market Price</label></th>'.
-        '<th><label>Special Price</label></th>'.
-        '<th><label>Walk-In Price</label></th>'.
-        '<th><label>Promo Price</label></th>'.
-        '<th><label>Distributor\'s Price</label></th>';
+        '<thead><tr>'.
+        '<th><small>Generic Name</small></th>'.
+        '<th><small>Brand Name</small></th>'.
+        '<th><small>Drug Type</small></th>'.
+        '<th><small>Quantity</small></th>'.
+        '<th><small>Status</small></th>'.
+        '<th><small>Purchase Price</small></th>'.
+        '<th><small>Special Price</small></th>'.
+        '<th><small>Walk-In Price</small></th>'.
+        '<th><small>Promo Price</small></th>'.
+        '<th><small>Distributor\'s Prsmall></th>'.
+        '</tr></thead>';
 
         if($request->name != ''){
 
@@ -51,7 +56,7 @@ class AjaxController extends Controller
 
                 '<td>' . $product->genericNames->description . '</td>'.
 
-                '<td><a href="/products/' . $product->id . '" class="">'.$product->brand_name.'</a></td>'.
+                '<td><a class="link-unstyled" href="/products/' . $product->id . '" class="">'.$product->brand_name.'</a></td>'.
 
                 '<td>' . $product->drugTypes->description . '</td>'.
 
@@ -92,6 +97,8 @@ class AjaxController extends Controller
             ]);
     }
 
+    // This function is for searching Batch
+    // This returns a batch
     public function searchBatch(Request $request){
         $batch = Batch::find($request->input('batchNumber'));
 
@@ -115,6 +122,8 @@ class AjaxController extends Controller
         };
     }
 
+    // This function is for searching a specific product
+    // This returns every information about the product.
     public function searchProductInfo(Request $request){
         if($request->id != null){
 
@@ -130,17 +139,21 @@ class AjaxController extends Controller
         }
     }
 
+    // This function is for searching suppliers
+    // This returns a list of supplier(s).
     public function searchSupplier(Request $request){
 
         $output =
         '<table class="table table-striped table-bordered table-hover" id="tableProducts">'.
+        '<thead><tr>'.
         '<th><center><label>Name</label></center></th>'.
         '<th><center><label>Address</label></center></th>'.
         '<th><center><label>LTO Number</label></center></th>'.
         '<th><center><label>Expiration Date</label></center></th>'.
         '<th><center><label>Contact Person</label></center></th>'.
         '<th><center><label>Contact Number</label></center></th>'.
-        '<th><center><label>Email Address</label></center></th>';
+        '<th><center><label>Email Address</label></center></th>'.
+        '</tr></thead>';
 
         if($request->name != ''){
 
@@ -185,6 +198,8 @@ class AjaxController extends Controller
             ]);
     }
 
+    // This function is for searching a specific supplier
+    // This returns every information about the supplier.
     public function searchSupplierInfo(Request $request){
         if($request->id != null){
             $supplier = Supplier::find($request->id);
@@ -195,6 +210,8 @@ class AjaxController extends Controller
         }
     }
 
+    // This function gets the list of all the Drug types from the database.
+    // This returns a list of drug types
     public function getDrugTypes(){
         $drugTypes = DrugType::orderBy('description','asc')
         ->select('description')
@@ -202,6 +219,8 @@ class AjaxController extends Controller
         return response($drugTypes);
     }
 
+    // This function gets the list of all the generic names from the database.
+    // This returns a list of generic names
     public function getGenericNames(){
         $genericNames = GenericName::orderBy('description','asc')
         ->select('description')
@@ -209,6 +228,8 @@ class AjaxController extends Controller
         return response($genericNames);
     }
 
+    // This function gets the list of all the manufcturers from the database.
+    // This returns a list of manufcturers
     public function getManufacturers(){
         $manufacturers = Manufacturer::orderBy('name','asc')
         ->select('name')
@@ -216,6 +237,8 @@ class AjaxController extends Controller
         return response($manufacturers);
     }
 
+    // This function gets the list of all the suppliers from the database.
+    // This returns a list of suppliers
     public function getSuppliers(){
         $suppliers = Supplier::orderBy('name','asc')
         ->select('name')

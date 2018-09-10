@@ -73,15 +73,15 @@
             <div class="col-md-12 row">
                 <div class="form-group  col-md-4">
                     {{Form::label('genericName', 'Generic Name')}}
-                    {{Form::text('genericName', '', ['class' => 'form-control', 'placeholder' => 'Generic Name',  'id' => 'genericNames'])}}
+                    {{Form::text('genericName', '', ['class' => 'form-control', 'placeholder' => 'Generic Name',  'id' => 'genericName'])}}
                 </div>
                 <div class="form-group col-md-4">
                     {{Form::label('brandName', 'Brand Name')}}
-                    {{Form::text('brandName', '', ['class' => 'form-control', 'placeholder' => 'Brand Name'])}}
+                    {{Form::text('brandName', '', ['class' => 'form-control', 'placeholder' => 'Brand Name', 'id' => 'brandName'])}}
                 </div>
                 <div class="form-group  col-md-4">
                     {{Form::label('manufacturer', 'Manufacturer')}}
-                    {{Form::text('manufacturer', '', ['class' => 'form-control', 'placeholder' => 'Manufacturer',  'id' => 'manufacturers'])}}
+                    {{Form::text('manufacturer', '', ['class' => 'form-control', 'placeholder' => 'Manufacturer',  'id' => 'manufacturer'])}}
                 </div>
             </div>
             <div class="col-md-12 row">
@@ -91,12 +91,12 @@
                 </div>
                 <div class="form-group col-md-4">
                     {{Form::label('expirationDate', 'Expiration Date')}}
-                    {{Form::date('expirationDate', '', ['class' => 'form-control', 'placeholder' => 'Expiration Date' ])}}
+                    {{Form::date('expirationDate', '', ['class' => 'form-control', 'placeholder' => 'Expiration Date', 'id' => 'expirationDate' ])}}
                 </div>
                 <div class="form-group col-md-4">
                     {{Form::label('quantity', 'Quantity')}}
-                    {{Form::number('quantity', '', ['class' => 'form-control', 'min' => 0, 'placeholder' => 'Quantity'  ])}}
-            </div>
+                    {{Form::number('quantity', '', ['class' => 'form-control', 'min' => 0, 'placeholder' => 'Quantity', 'id' => 'quantity'  ])}}
+                </div>
             </div>
         </div>
 
@@ -215,6 +215,12 @@
                 $('#productInformation').fadeIn();
             }else{
                 $('#productInformation').fadeOut();
+                $('#genericName').val(null);
+                $('#brandName').val(null);
+                $('#manufacturer').val(null);
+                $('#drugType').val(null);
+                $('#expirationDate').val('');
+                $('#quantity').val(null);
             }
         }
 
@@ -235,13 +241,21 @@
                     id: name
                 },
                 success: function (msg) {
-                    console.log(msg);
+                    if(msg!=''){
                         $('#address').val(msg['supplier']['address']);
                         $('#ltoNumber').val(msg['supplier']['lto_number']);
                         $('#expirationDate').val(msg['supplier']['expiration_date']);
                         $('#contactPerson').val(msg['supplier']['contact_person']);
                         $('#contactNumber').val(msg['supplier']['contact_number']);
                         $('#emailAddress').val(msg['supplier']['email_address']);
+                    }else{
+                        $('#address').val(null);
+                        $('#ltoNumber').val(null);
+                        $('#expirationDate').val(null);
+                        $('#contactPerson').val(null);
+                        $('#contactNumber').val(null);
+                        $('#emailAddress').val(null);
+                    }
                 }
             });
         }

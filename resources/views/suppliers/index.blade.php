@@ -14,24 +14,30 @@
     <div class="responsive" id="tableSearchContainer"></div>
     <div class="responsive" id="tableContainer">
         <table class="table table-striped table-bordered table-hover" id="tableProducts">
-            <th><center><label>Name</label></center></th>
-            <th><center><label>Address</label></center></th>
-            <th><center><label>LTO Number</label></center></th>
-            <th><center><label>Expiration Date</label></center></th>
-            <th><center><label>Contact Person</label></center></th>
-            <th><center><label>Contact Number</label></center></th>
-            <th><center><label>Email Address</label></center></th>
-            @foreach ($suppliers as $supplier)
-                <tr class="">
-                    <td><a href="/suppliers/{{$supplier->id}}">{{ $supplier->name }}</a></td>
-                    <td>{{ $supplier->address }}</td>
-                    <td>{{ $supplier->lto_number }}</td>
-                    <td>{{ $supplier->expiration_date }}</td>
-                    <td>{{ $supplier->contact_person }}</td>
-                    <td>{{ $supplier->contact_number }}</td>
-                    <td>{{ $supplier->email_address }}</td>
+            <thead>
+                <tr>
+                    <th><center><label>Name</label></center></th>
+                    <th><center><label>Address</label></center></th>
+                    <th><center><label>LTO Number</label></center></th>
+                    <th><center><label>Expiration Date</label></center></th>
+                    <th><center><label>Contact Person</label></center></th>
+                    <th><center><label>Contact Number</label></center></th>
+                    <th><center><label>Email Address</label></center></th>
                 </tr>
-            @endforeach()
+            </thead>
+            <tbody>
+                @foreach ($suppliers as $supplier)
+                    <tr class="modalSupplierClass" data-target="#modalSupplier" data-toggle="modal" data-supplier-id={{ $supplier->id }}>
+                        <td><a >{{ $supplier->name }}</a></td>
+                        <td>{{ $supplier->address }}</td>
+                        <td>{{ $supplier->lto_number }}</td>
+                        <td>{{ $supplier->expiration_date }}</td>
+                        <td>{{ $supplier->contact_person }}</td>
+                        <td>{{ $supplier->contact_number }}</td>
+                        <td>{{ $supplier->email_address }}</td>
+                    </tr>
+                @endforeach()
+            </tbody>
         </table>
     </div>
 {{ $suppliers->links() }}
@@ -55,6 +61,11 @@ $('document').ready(function ($) {
         }
     });
 
+    $(".modalSupplierClass").click(function () {
+        var supplierId = $(this).data('supplier-id');
+        searchSupplierInfo(supplierId);
+    })
+
     function searchSuppplier(name) {
         if (name != null) {
             $.ajax({
@@ -74,6 +85,32 @@ $('document').ready(function ($) {
                 }
             });
         }
+    }
+
+    function searchSupplierInfo(supplierId) {
+            $.ajax({
+                url: '/searchSupplierInfo',
+                type: 'POST',
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    id: supplierId
+                },
+                success: function (msg) {
+
+                    // if the response is not null
+                    if (msg['supplier'] != null) {
+
+                        // modalSupplier
+                        $('#supplierName').html(msg['supplier']['name']);
+                        $('#address').val(msg['supplier']['address']);
+                        $('#emailAddress').val(msg['supplier']['email_address']);
+                        $('#ltoNumber').val(msg['supplier']['lto_number']);
+                        $('#expirationDate').val(msg['supplier']['expiration_date']);
+                        $('#contactPerson').val(msg['supplier']['contact_person']);
+                        $('#contactNumber').val(msg['supplier']['contact_number']);
+                    }
+                }
+            });
     }
 });
 </script>
