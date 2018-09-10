@@ -13,7 +13,7 @@
 
     <div class="responsive" id="tableSearchContainer"></div>
     <div class="responsive" id="tableContainer">
-        <table class="table table-striped table-bordered table-hover" id="tableProducts">
+        <table class="table table-striped table-bordered table-hover">
             <thead>
                 <tr>
                     <th><center><small>Name</small></center></th>
@@ -25,7 +25,7 @@
                     <th><center><small>Email Adress</small></center></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="tableSupplier">
                 @foreach ($suppliers as $supplier)
                     <tr class="modalSupplierClass" data-target="#modalSupplier" data-toggle="modal" data-supplier-id={{ $supplier->id }}>
                         <td>{{ $supplier->name }}</td>
@@ -40,7 +40,7 @@
             </tbody>
         </table>
     </div>
-{{ $suppliers->links() }}
+{{-- {{ $suppliers->links() }} --}}
 @endsection
 
 @section('formLogic')
@@ -51,14 +51,20 @@ $('document').ready(function ($) {
     $('#tableSearchContainer').hide();
     $('#search').val('');
     $('#search').keyup(function () {
-        if ($(this).val() != '') {
-            searchSuppplier($(this).val());
-            $('.pagination').hide();
-        } else {
-            $('#tableContainer').show();
-            $('#tableSearchContainer').hide();
-            $('.pagination').show();
-        }
+
+        var value = $(this).val().toLowerCase();
+        $("#tableSupplier tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+
+        // if ($(this).val() != '') {
+        //     searchSuppplier($(this).val());
+        //     $('.pagination').hide();
+        // } else {
+        //     $('#tableContainer').show();
+        //     $('#tableSearchContainer').hide();
+        //     $('.pagination').show();
+        // }
     });
 
     $(".modalSupplierClass").click(function () {

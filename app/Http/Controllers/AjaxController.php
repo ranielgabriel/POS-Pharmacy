@@ -60,12 +60,17 @@ class AjaxController extends Controller
 
                 '<td>' . $product->drugTypes->description . '</td>'.
 
-                '<td>' . ($product->inventories->sum('quantity') - $product->inventories->sum('sold')) . '</td>'.
-                // '<td>' . $quantity . '</td>'.
+                '<td>' . ($product->inventories->sum('quantity') - $product->inventories->sum('sold')) . '</td>';
 
-                '<td>' . $product->status . '</td>'.
+                if($product->status == 'In-stock'){
+                    $output .='<td><p class="text-warning">' . $product->status . '</p></td>';
+                }elseif($product->status == 'Out-of-stock'){
+                    $output .='<td><p class="text-danger">' . $product->status . '</p></td>';
+                }elseif($product->status == 'Selling'){
+                    $output .='<td><p class="text-success">' . $product->status . '</p></td>';
+                }
 
-                '<td>&#8369 ' . $product->purchase_price . '</td>'.
+                $output.= '<td>&#8369 ' . $product->purchase_price . '</td>'.
 
                 '<td>&#8369 ' . $product->special_price . '</td>'.
 

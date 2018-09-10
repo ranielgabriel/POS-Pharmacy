@@ -35,7 +35,7 @@
                         <td>
                             {{ $product->inventories->sum('quantity') - $product->inventories->sum('sold') }}
                         </td>
-                        <td>{{ $product->status }}</td>
+                        <td><p class="text-success">{{ $product->status }}</p></td>
                         <td>&#8369 {{ $product->purchase_price }}</td>
                         <td>&#8369 {{ $product->special_price }}</td>
                         <td>&#8369 {{ $product->walk_in_price }}</td>
