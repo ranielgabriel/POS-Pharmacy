@@ -44,7 +44,7 @@ class CartsController extends Controller
 
         $product = Product::find($request->input('productId'));
 
-        return redirect('/products')->with('success', $product->brand_name . ' has been added to your cart.');
+        return redirect('/products')->with('success', '"'. $cart->product->genericNames->description . ' ' . $cart->product->brand_name .'" has been added to your cart.');
     }
 
     /**
@@ -92,6 +92,8 @@ class CartsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $cart = Cart::find($id);
+        $cart->delete();
+        return \App::make('redirect')->back()->with('info', '"'. $cart->product->genericNames->description . ' ' . $cart->product->brand_name . '" has been removed from the cart.');
     }
 }

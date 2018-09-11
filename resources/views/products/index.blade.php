@@ -24,14 +24,20 @@
                         <th><p class="small text-center">Generic Name</p></th>
                         <th><p class="small text-center">Brand Name</p></th>
                         <th><p class="small text-center">Drug Type</p></th>
-                        <th><p class="small text-center">Quantity</p></th>
+                        <th><p class="small text-center">Stocks</p></th>
                         <th><p class="small text-center">Status</p></th>
-                        <th><p class="small text-center">Purchase Price</p></th>
-                        <th><p class="small text-center">Special Price</p></th>
-                        <th><p class="small text-center">Walk-In Price</p></th>
-                        <th><p class="small text-center">Promo Price</p></th>
-                        <th><p class="small text-center">Distributor's Price</></th>
-                        <th><p class="small text-center">Action</></th>
+                        @guest
+                            <th><p class="small text-center">Price</p></th>
+                        @endguest
+
+                        @auth
+                            <th><p class="small text-center">Purchase Price</p></th>
+                            <th><p class="small text-center">Special Price</p></th>
+                            <th><p class="small text-center">Walk-In Price</p></th>
+                            <th><p class="small text-center">Promo Price</p></th>
+                            <th><p class="small text-center">Distributor's Price</></th>
+                            <th><p class="small text-center">Action</></th>
+                        @endauth
                     </tr>
                 </thead>
                 <tbody id="tableProducts" class="table-sm">
@@ -50,21 +56,28 @@
                                 <td><p class="text-danger text-center">{{ $product->status }}</p></td>
                             @endif
 
-                            <td><p class="text-center">&#8369 {{ $product->purchase_price }}</p></td>
-                            <td><p class="text-center">&#8369 {{ $product->special_price }}</p></td>
-                            <td><p class="text-center">&#8369 {{ $product->walk_in_price }}</p></td>
-                            <td><p class="text-center">&#8369 {{ $product->promo_price }}</p></td>
-                            <td><p class="text-center">&#8369 {{ $product->distributor_price }}</p></td>
+                            @guest
+                                <td><p class="text-center">&#8369 {{ $product->walk_in_price }}</p></td>
+                            @endguest
 
                             @auth
+                                <td><p class="text-center">&#8369 {{ $product->purchase_price }}</p></td>
+                                <td><p class="text-center">&#8369 {{ $product->special_price }}</p></td>
+                                <td><p class="text-center">&#8369 {{ $product->walk_in_price }}</p></td>
+                                <td><p class="text-center">&#8369 {{ $product->promo_price }}</p></td>
+                                <td><p class="text-center">&#8369 {{ $product->distributor_price }}</p></td>
+
                                 @if($product->status == 'Selling' and $cart->contains('product_id', $product->id))
+                                    {!!Form::open(['action' => ['CartsController@destroy', $cart->firstWhere('product_id', $product->id)], 'method' => 'POST',])!!}
+                                    {{Form::hidden('_method', 'DELETE')}}
                                     <td>
                                         <center>
-                                            <button class="btn btn-danger modalSellClass" data-toggle="modal" data-target="#modalSell" data-product-id={{ $product->id }}>
+                                            <button class="btn btn-danger">
                                                 <span class="fa fa-minus-circle"></span>
                                             </button>
                                         </center>
                                     </td>
+                                    {!!Form::close()!!}
                                 @elseif($product->status == 'Selling')
                                     <td>
                                         <center>

@@ -2,7 +2,6 @@
 
 @section('content')
 <div class="col-md-12 responsive">
-
     <div class="form-group">
         <h1 class="">Suppliers</h1>
         <a class="btn btn-primary" href="/suppliers/create">Add Supplier</a>
@@ -26,7 +25,7 @@
                 </thead>
                 <tbody id="tableSupplier">
                     @foreach ($suppliers as $supplier)
-                        <tr class="modalSupplierClass" data-target="#modalSupplier" data-toggle="modal" data-supplier-id={{ $supplier->id }}>
+                        <tr class="modalSupplierClass" data-target="#modalSupplier" data-toggle="modal" data-supplier-id={{ $supplier->id }} style="cursor: pointer;">
                             <td>{{ $supplier->name }}</td>
                             <td>{{ $supplier->address }}</td>
                             <td>{{ $supplier->lto_number }}</td>

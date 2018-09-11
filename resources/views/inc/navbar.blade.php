@@ -16,10 +16,10 @@
                 </li>
                 @auth
                     <li class="nav-item">
-                        <a class="nav-link" href="/inventories/">Inventories</a>
+                        <a class="nav-link" href="/suppliers/">Suppliers</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/suppliers/">Suppliers</a>
+                        <a class="nav-link" href="/inventories/">Inventories</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/cart/{{ Auth::user()->id}}">Cart</a>

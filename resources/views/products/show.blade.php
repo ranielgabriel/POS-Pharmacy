@@ -36,14 +36,22 @@
             <tbody class="table-sm">
                 @foreach ($product->inventories->sortByDesc('expiration_date') as $inventory)
                     @if ($inventory->quantity != $inventory->sold)
-                        <tr>
-                            @if($inventory->expiration_date > date('Y-m-d'))
-                                <td><center><b class="text-success">{{$inventory->expiration_date}}</b></center></td>
+                            @php
+                                $now = DateTime::createFromFormat('Y-m-d', date('Y-m-d'));
+                                // ->modify('+10 months')->format('Y-m-d');
+                            @endphp
+                            @if($inventory->expiration_date > $now->format('Y-m-d'))
+                                <tr class="table-success">
+                                    <td><center>{{$inventory->expiration_date}}</center></td>
+                                    <td><center>{{$inventory->quantity - $inventory->sold}}</center></td>
+                                </tr>
                             @else
-                                <td><center><b class="text-danger">{{$inventory->expiration_date}}</b></center></td>
+                                <tr class="table-danger">
+                                    <td><center>{{$inventory->expiration_date}}</center></td>
+                                    <td><center>{{$inventory->quantity - $inventory->sold}}</center></td>
+                                </tr>
                             @endif
-                            <td><center>{{$inventory->quantity - $inventory->sold}}</center></td>
-                        </tr>
+                            
                     {{-- <div class="col-md-12 row">
                         <div class="form-group col-md-3">
                             {{Form::label('expirationDate', 'Expiration Date')}}
