@@ -19,11 +19,11 @@
             </div>
             <div class="form-group col-md-3">
             {{Form::label('drugType', 'Drug Type')}}
-            {{-- {{Form::select('drugType', ['L' => 'Large', 'S' => 'Small'], null, ['class' => 'form-control', 'placeholder' => 'Pick a type...'])}} --}}
             {{Form::text('drugType', $product->drugTypes->description , ['class' => 'form-control', 'placeholder' => 'Drug Type', 'disabled' => true])}}
             </div>
         </div>
 
+        @auth
         <hr>
         <h3>Inventory Information</h3>
         <table class="table table-bordered table-striped table-hover">
@@ -51,7 +51,7 @@
                                     <td><center>{{$inventory->quantity - $inventory->sold}}</center></td>
                                 </tr>
                             @endif
-                            
+
                     {{-- <div class="col-md-12 row">
                         <div class="form-group col-md-3">
                             {{Form::label('expirationDate', 'Expiration Date')}}
@@ -98,7 +98,7 @@
             {{Form::number('distributorPrice', $product->distributor_price, ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Distributor\'s Price' , 'step' => 1, 'disabled' => true])}}
             </div>
         </div>
-
+        @endauth
         <hr>
         <a class="btn btn-info" href="/products">Back</a>
     </div>

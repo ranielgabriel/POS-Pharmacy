@@ -144,6 +144,22 @@ class AjaxController extends Controller
         }
     }
 
+    // This function is for searching a specific product quantity
+    // This returns every information about the product quantity.
+    public function searchProductQuantityInfo(Request $request){
+        if($request->productId != null){
+
+            $inventories = Inventory::where('product_id','=',$request->productId)
+            ->where('expiration_date','=',$request->expirationDate)
+            ->get()
+            ->first();
+
+            return response()->json([
+                'inventories' => $inventories
+            ]);
+        }
+    }
+
     // This function is for searching suppliers
     // This returns a list of supplier(s).
     public function searchSupplier(Request $request){
