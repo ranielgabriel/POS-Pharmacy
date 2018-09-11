@@ -27,7 +27,6 @@
 
         <main class="py-4">
             @yield('content')
-            @include('inc.modals')
         </main>
     </div>
     @yield('formLogic')

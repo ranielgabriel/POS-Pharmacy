@@ -14,15 +14,17 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/products/">Products</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/inventories/">Inventories</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/suppliers/">Suppliers</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/cart/">Cart</a>
-                </li>
+                @auth
+                    <li class="nav-item">
+                        <a class="nav-link" href="/inventories/">Inventories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/suppliers/">Suppliers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/cart/{{ Auth::user()->id}}">Cart</a>
+                    </li>
+                @endauth
             </ul>
 
             <!-- Right Side Of Navbar -->

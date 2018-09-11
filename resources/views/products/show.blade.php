@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<div class="container container-fluid">
+<div class="col-md-12 responsive">
     {!! Form::open(['action' => 'ProductsController@store', 'method' => 'POST']) !!}
     <div class="col-md-12">
         <h3>Product Information</h3>
@@ -27,34 +27,44 @@
         <hr>
         <h3>Inventory Information</h3>
         <table class="table table-bordered table-striped table-hover">
-            <th><center>Expiration Date</center></th>
-            <th><center>Remaining Quantity</center></th>
-        @foreach ($product->inventories->sortByDesc('expiration_date') as $inventory)
-            @if ($inventory->quantity != $inventory->sold)
+            <thead class="thead-dark">
                 <tr>
-                    <td><center>{{$inventory->expiration_date}}</center></td>
-                    <td><center>{{$inventory->quantity - $inventory->sold}}</center></td>
+                    <th><center>Expiration Date</center></th>
+                    <th><center>Remaining Quantity</center></th>
                 </tr>
-            {{-- <div class="col-md-12 row">
-                <div class="form-group col-md-3">
-                    {{Form::label('expirationDate', 'Expiration Date')}}
-                    {{Form::date('expirationDate', $inventory->expiration_date, ['class' => 'form-control', 'placeholder' => 'Expiration Date', 'disabled' => true])}}
-                </div>
-                <div class="form-group col-md-2">
-                    {{Form::label('quantity', 'Quantity')}}
-                    {{Form::number('quantity', $inventory->quantity, ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Quantity', 'disabled' => true])}}
-                </div>
-                <div class="form-group col-md-2">
-                    {{Form::label('remainingQuantity', 'Remaining Quantity')}}
-                    {{Form::number('remainingQuantity', $inventory->quantity - $inventory->sold, ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Remaining Quantity', 'disabled' => true])}}
-                </div>
-                <div class="form-group col-md-2">
-                    {{Form::label('sold', 'Sold')}}
-                    {{Form::number('sold', $inventory->sold, ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Sold', 'disabled' => true])}}
-                </div>
-            </div> --}}
-            @endif
-        @endforeach
+            </thead>
+            <tbody class="table-sm">
+                @foreach ($product->inventories->sortByDesc('expiration_date') as $inventory)
+                    @if ($inventory->quantity != $inventory->sold)
+                        <tr>
+                            @if($inventory->expiration_date > date('Y-m-d'))
+                                <td><center><b class="text-success">{{$inventory->expiration_date}}</b></center></td>
+                            @else
+                                <td><center><b class="text-danger">{{$inventory->expiration_date}}</b></center></td>
+                            @endif
+                            <td><center>{{$inventory->quantity - $inventory->sold}}</center></td>
+                        </tr>
+                    {{-- <div class="col-md-12 row">
+                        <div class="form-group col-md-3">
+                            {{Form::label('expirationDate', 'Expiration Date')}}
+                            {{Form::date('expirationDate', $inventory->expiration_date, ['class' => 'form-control', 'placeholder' => 'Expiration Date', 'disabled' => true])}}
+                        </div>
+                        <div class="form-group col-md-2">
+                            {{Form::label('quantity', 'Quantity')}}
+                            {{Form::number('quantity', $inventory->quantity, ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Quantity', 'disabled' => true])}}
+                        </div>
+                        <div class="form-group col-md-2">
+                            {{Form::label('remainingQuantity', 'Remaining Quantity')}}
+                            {{Form::number('remainingQuantity', $inventory->quantity - $inventory->sold, ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Remaining Quantity', 'disabled' => true])}}
+                        </div>
+                        <div class="form-group col-md-2">
+                            {{Form::label('sold', 'Sold')}}
+                            {{Form::number('sold', $inventory->sold, ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Sold', 'disabled' => true])}}
+                        </div>
+                    </div> --}}
+                    @endif
+                @endforeach
+            </tbody>
         </table>
         <hr>
         <h3>Prices</h3>

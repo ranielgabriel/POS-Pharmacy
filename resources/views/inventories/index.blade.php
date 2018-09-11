@@ -22,8 +22,8 @@
                         <th colspan="8"><small>Batch Number: </small>{{ $batch->id }}</th>
                         {{-- <th colspan="1"><small>Date of Delivery: </small>{{ $batch->delivery_date }}</th> --}}
                     </tr>
-                    <th><center><small>Brand Name</small></center></th>
                     <th><center><small>Generic Name</small></center></th>
+                    <th><center><small>Brand Name</small></center></th>
                     <th><center><small>Supplier</small></center></th>
                     <th><center><small>Quantity</small></center></th>
                     <th><center><small>Sold</small></center></th>
@@ -33,10 +33,10 @@
                 </tr>
             </thead>
             <tbody class="table-sm">
-                @foreach ($batch->inventories as $inventory)
+                @foreach ($batch->inventories->sortBy('product.genericNames.description') as $inventory)
                     <tr>
-                        <td><center>{{ $inventory->product->brand_name }}</center></td>
                         <td><center>{{ $inventory->product->genericNames->description }}</center></td>
+                        <td><center>{{ $inventory->product->brand_name }}</center></td>
                         <td><center><a href="/suppliers/{{$inventory->supplier->id}}">{{ $inventory->supplier->name }}</a></center></td>
                         <td><center>{{ $inventory->quantity }}</center></td>
                         <td><center>{{ $inventory->sold }}</center></td>

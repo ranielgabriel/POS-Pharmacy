@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Product;
 use App\DrugType;
 use App\GenericName;
 use App\Inventory;
 use App\Supplier;
 use App\Manufacturer;
+use App\User;
+use App\Cart;
 use Carbon\Carbon;
 
 class ProductsController extends Controller
@@ -39,8 +42,20 @@ class ProductsController extends Controller
 
         ->get();
 
-        // return the view index from products folder.
-        return view('products.index')->with('products' , $products);
+        $user = User::find(Auth::id());
+
+        if($user != null){
+            $cart = Cart::
+            // find(Auth::id());
+            where('user_id','=', $user->id)
+            ->get();
+
+            // return the view index from products folder.
+            return view('products.index')->with(['products' => $products, 'user' => $user, 'cart' => $cart]);
+        }else{
+            // return the view index from products folder.
+            return view('products.index')->with(['products' => $products, 'user' => $user,]);
+        }
     }
 
     /**
