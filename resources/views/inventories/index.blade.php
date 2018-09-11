@@ -14,9 +14,9 @@
 
     {{-- <div class="responsive" id="tableSearchContainer"></div> --}}
     @foreach ($batches as $batch)
-    <div class="responsive py-2" id="tableContainer">
+    <div class="table-responsive py-2" id="tableContainer">
         <table class="table table-striped table-bordered">
-            <thead>
+            <thead class="thead-dark">
                 <tr>
                     <tr>
                         <th colspan="8"><small>Batch Number: </small>{{ $batch->id }}</th>
@@ -32,12 +32,12 @@
                     <th><center><small>Expiration Date</small></center></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="table-sm">
                 @foreach ($batch->inventories as $inventory)
                     <tr>
                         <td><center>{{ $inventory->product->brand_name }}</center></td>
                         <td><center>{{ $inventory->product->genericNames->description }}</center></td>
-                        <td><center>{{ $inventory->supplier->name }}</center></td>
+                        <td><center><a href="/suppliers/{{$inventory->supplier->id}}">{{ $inventory->supplier->name }}</a></center></td>
                         <td><center>{{ $inventory->quantity }}</center></td>
                         <td><center>{{ $inventory->sold }}</center></td>
                         <td><center>{{ $inventory->quantity - $inventory->sold }}</center></td>

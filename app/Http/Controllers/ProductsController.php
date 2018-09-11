@@ -25,16 +25,19 @@ class ProductsController extends Controller
         // Order by brand name
         orderBy('brand_name','asc')
         // Status should not be In-stock and Out-of-stock
-        ->where('status', '!=', 'In-stock')
-        ->where('status', '!=', 'Out-of-stock')
-        
+
+        // ->where('status', '!=', 'In-stock')
+        // ->where('status', '!=', 'Out-of-stock')
+
         // Return together with genericNames, drugtypes, and inventories
         ->with('genericNames')
         ->with('drugTypes')
         ->with('inventories')
 
         // paginate with 30 products per page
-        ->paginate(30);
+        // ->paginate(30);
+
+        ->get();
 
         // return the view index from products folder.
         return view('products.index')->with('products' , $products);

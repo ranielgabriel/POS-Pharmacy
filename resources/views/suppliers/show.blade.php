@@ -40,7 +40,7 @@
                 </div>
             </div>
         <hr>
-        <a class="btn btn-info" href="/suppliers">Back</a>
+        <a class="btn btn-info" href="/inventories">Back</a>
     </div>
 
 </div>

@@ -8,13 +8,13 @@
     <a class="btn btn-primary" href="/suppliers/create">Add Supplier</a>
 
     <div class="form-group col-md-12 py-2">
-        {{Form::text('search', '', ['id' => 'search', 'class' => 'form-control', 'placeholder' => 'Search... (Supplier Name / Contact Person)'])}}
+        {{Form::text('search', '', ['id' => 'search', 'class' => 'form-control', 'placeholder' => 'Search... (Supplier Name / LTO Number /Contact Person / Email)'])}}
     </div>
 
     <div class="responsive" id="tableSearchContainer"></div>
-    <div class="responsive" id="tableContainer">
-        <table class="table table-striped table-bordered table-hover">
-            <thead>
+    <div class="table-responsive" id="tableContainer">
+        <table class="table table-striped table-hover">
+            <thead class="thead-dark">
                 <tr>
                     <th><center><small>Name</small></center></th>
                     <th><center><small>Address</small></center></th>

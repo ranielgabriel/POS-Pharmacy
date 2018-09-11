@@ -7,12 +7,12 @@
     <a class="btn btn-primary" href="/products/create">Add Product</a>
 
     <div class="form-group col-md-12 py-2">
-        {{Form::text('search', '', ['id' => 'search', 'class' => 'form-control', 'placeholder' => 'Search... (Brand Name / Generic Name)'])}}
+        {{Form::text('search', '', ['id' => 'search', 'class' => 'form-control', 'placeholder' => 'Search... (Generic Name / Brand Name / Drug Type / Status)'])}}
     </div>
     <div class="responsive" id="tableSearchContainer"></div>
-    <div class="responsive" id="tableContainer">
-        <table class="table table-striped table-bordered table-hover nowrap" id="tableProducts">
-            <thead>
+    <div class="table-responsive" id="tableContainer">
+        <table class="table table-striped  table-hover nowrap">
+            <thead class="thead-dark">
                 <tr>
                     <th><small class="">Generic Name</small></th>
                     <th><small class="">Brand Name</small></th>
@@ -26,34 +26,42 @@
                     <th><small class="">Distributor's Price</small></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="tableProducts" class="table-sm">
                 @foreach ($products->sortBy('genericNames.description') as $product)
                     <tr class="">
                         <td>{{ $product->genericNames->description }}</td>
-                        <td><a class="link-unstyled" href="/products/{{$product->id}}">{{ $product->brand_name }}</a></td>
+                        <td><a class="" href="/products/{{$product->id}}"><strong>{{ $product->brand_name }}</strong></a></td>
                         <td>{{ $product->drugTypes->description }}</td>
                         <td>
                             {{ $product->inventories->sum('quantity') - $product->inventories->sum('sold') }}
                         </td>
-                        <td><p class="text-success">{{ $product->status }}</p></td>
+                        @if($product->status == 'In-stock')
+                            <td><p class="text-warning">{{ $product->status }}</p></td>
+                        @elseif($product->status == 'Selling')
+                            <td><p class="text-success">{{ $product->status }}</p></td>
+                        @elseif($product->status == 'Out-of-stock')
+                            <td><p class="text-danger">{{ $product->status }}</p></td>
+                        @endif
                         <td>&#8369 {{ $product->purchase_price }}</td>
                         <td>&#8369 {{ $product->special_price }}</td>
                         <td>&#8369 {{ $product->walk_in_price }}</td>
                         <td>&#8369 {{ $product->promo_price }}</td>
                         <td>&#8369 {{ $product->distributor_price }}</td>
-                        <td>
-                            <center>
-                                <button class="btn btn-success modalSellClass" data-toggle="modal" data-target="#modalSell" data-product-id={{ $product->id }}>
-                                    <span class="fa fa-cart-arrow-down"></span>
-                                </button>
-                            </center>
-                        </td>
+                        @if($product->status == 'Selling')
+                            <td>
+                                <center>
+                                    <button class="btn btn-success modalSellClass" data-toggle="modal" data-target="#modalSell" data-product-id={{ $product->id }}>
+                                        <span class="fa fa-cart-arrow-down"></span>
+                                    </button>
+                                </center>
+                            </td>
+                        @endif
                     </tr>
                 @endforeach()
             </tbody>
         </table>
     </div>
-{{ $products->links() }}
+{{-- {{ $products->links() }} --}}
 @endsection()
 
 @section('formLogic')
@@ -64,14 +72,18 @@
 
         $('#search').val('');
         $('#search').keyup(function () {
-            if ($(this).val() != '') {
-                searchProducts($(this).val());
-                $('.pagination').hide();
-            } else {
-                $('#tableContainer').show();
-                $('#tableSearchContainer').hide();
-                $('.pagination').show();
-            }
+                var value = $(this).val().toLowerCase();
+                $("#tableProducts tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+            // if ($(this).val() != '') {
+            //     searchProducts($(this).val());
+            //     $('.pagination').hide();
+            // } else {
+            //     $('#tableContainer').show();
+            //     $('#tableSearchContainer').hide();
+            //     $('.pagination').show();
+            // }
         });
 
         $(".modalSellClass").click(function () {

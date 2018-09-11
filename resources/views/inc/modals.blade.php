@@ -31,7 +31,7 @@
                 <div class="row">
                     <div class="form-group col-md-4">
                     <small>{{Form::label('marketPrice', 'Market')}}</small>
-                    {{Form::number('marketPrice', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Market Price' , 'step' => 1, 'id' => 'marketPrice', 'readonly'])}}
+                    {{Form::number('purchasePrice', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Purchase Price' , 'step' => 1, 'id' => 'purchasePrice', 'readonly'])}}
                     </div>
                     <div class="form-group col-md-4">
                     <small>{{Form::label('specialPrice', 'Special')}}</small>
