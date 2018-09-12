@@ -12,17 +12,17 @@
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="/products/">Products</a>
+                    <a class="nav-link" href="/products/"><span class="fa fa-archive"></span>&nbsp;Products</a>
                 </li>
                 @auth
                     <li class="nav-item">
-                        <a class="nav-link" href="/suppliers/">Suppliers</a>
+                        <a class="nav-link" href="/suppliers/"><span class="fa fa-address-card"></span>&nbsp;Suppliers</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/inventories/">Inventories</a>
+                        <a class="nav-link" href="/inventories/"><span class="fa fa-list-alt"></span>&nbsp;Inventories</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/cart/{{ Auth::user()->id}}">Cart</a>
+                        <a class="nav-link" href="/cart/{{ Auth::user()->id}}"><span class="fa fa-shopping-cart"></span>&nbsp;Cart</a>
                     </li>
                 @endauth
             </ul>
