@@ -8,15 +8,20 @@
             <h3>Supplier Information</h3>
                 <div class="col-md-12">
                     <div class="form-group col-md-12">
-                        <div class="form-group  col-md-12">
+                        <div class="form-group col-md-12">
                             {{Form::label('supplierName', 'Supplier Name')}}
                             {{Form::text('supplierName', '', ['class' => 'form-control', 'placeholder' => 'Supplier Name'])}}
                         </div>
-                        <div class="form-group  col-md-12">
+                        <div class="form-group col-md-12">
                             {{Form::label('address', 'Address')}}
-                            {{Form::text('address', '', ['class' => 'form-control', 'placeholder' => 'Address'])}}
+                            {{Form::text('address', '', ['class' => "form-control $errors->has('address') ? ' is-invalid' : '' ", 'placeholder' => 'Address'])}}
+                            @if ($errors->has('address'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('address') }}</strong>
+                                </span>
+                            @endif
                         </div>
-                        <div class="form-group  col-md-12">
+                        <div class="form-group col-md-12">
                             {{Form::label('ltoNumber', 'LTO Number')}}
                             {{Form::number('ltoNumber', '' , ['class' => 'form-control', 'placeholder' => 'LTO Number'])}}
                         </div>

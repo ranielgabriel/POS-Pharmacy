@@ -56,7 +56,7 @@
                 </div>
             <hr>
             <a class="btn btn-info" href="/products"><span class="fa fa-arrow-left"></span>&nbsp;Back</a>
-            <a id="btnCheckout" class="btn btn-primary" href="#" data-toggle="modal" data-target="#modalCart">Checkout</a>
+            <button id="btnCheckout" class="btn btn-primary" data-toggle="modal" data-target="#modalCart">Checkout</button>
         @endif
     </div>
 
@@ -72,7 +72,7 @@
                 <div class="modal-body">
                     <div class="table-responsive rounded">
                         <table class="table table-striped table-hover table-bordered">
-                            <thead class="thead-darktable-sm">
+                            <thead class="thead-dark table-sm">
                                 <tr class="text-center small">
                                     <th>Generic Name</th>
                                     <th>Brand Name</th>
@@ -107,8 +107,6 @@
 @section('formLogic')
     <script>
         $('document').ready(function(){
-
-
 
             console.log('Page is ready.');
             var tableRowCount = $('#tableCart tr').length;
@@ -145,6 +143,7 @@
 
             $("#btnCheckout").click(function(){
                 console.log('Checkout is clicked.');
+                // console.log(checkAllFields());
                 $('#modalCartTBody').html('');
                 // console.log(tableRowCount);
                 var code = '';
@@ -167,6 +166,19 @@
                 $('#modalCartTBody').append(code);
                 $('#totalAmount').html("&#8369; " + totalAmount.toFixed(2));
             });
+
+            // function checkAllFields(){
+            //     var check = true;
+            //     for(var i = 1; i <= tableRowCount; i++){
+            //         if($('#expirationDate'+i).val() == '' && $('#quantity'+i).val() == '' && $('#price'+i).val() == ''){
+            //             check = true;
+            //         }else{
+            //             check = false;
+            //         }
+            //         console.log(i + '. Expiration Date:' + $('#expirationDate'+i).val() + ' Quantity: ' + $('#quantity'+i).val() + ' Price: ' + $('#price'+i).val());
+            //     }
+            //     return check;
+            // }
 
             function searchProductQuantityInfo(productId, expirationDate, rowIndex) {
                 $.ajax({
