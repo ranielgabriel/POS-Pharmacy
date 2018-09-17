@@ -106,10 +106,11 @@
 
 @section('formLogic')
     <script>
+        var tableRowCount;
         $('document').ready(function(){
 
             console.log('Page is ready.');
-            var tableRowCount = $('#tableCart tr').length;
+            tableRowCount = $('#tableCart tr').length;
 
             $("#tableCart tr .expirationSelect").on({
                 change:  function(){
@@ -136,13 +137,18 @@
             $(".quantityNumber").keyup(function(){
                 if($(this).val() > $(this).attr('max')){
                     $(this).val($(this).attr('max'));
-
                     return;
                 }
             });
 
             $("#btnCheckout").click(function(){
                 console.log('Checkout is clicked.');
+                
+                if(checkAllFields()){
+                    alert('Please choose the expiration date, quantity, and price of the item(s).');
+                    return false;
+                }
+
                 // console.log(checkAllFields());
                 $('#modalCartTBody').html('');
                 // console.log(tableRowCount);
@@ -166,44 +172,47 @@
                 $('#modalCartTBody').append(code);
                 $('#totalAmount').html("&#8369; " + totalAmount.toFixed(2));
             });
-
-            // function checkAllFields(){
-            //     var check = true;
-            //     for(var i = 1; i <= tableRowCount; i++){
-            //         if($('#expirationDate'+i).val() == '' && $('#quantity'+i).val() == '' && $('#price'+i).val() == ''){
-            //             check = true;
-            //         }else{
-            //             check = false;
-            //         }
-            //         console.log(i + '. Expiration Date:' + $('#expirationDate'+i).val() + ' Quantity: ' + $('#quantity'+i).val() + ' Price: ' + $('#price'+i).val());
-            //     }
-            //     return check;
-            // }
-
-            function searchProductQuantityInfo(productId, expirationDate, rowIndex) {
-                $.ajax({
-                    url: '/searchProductQuantityInfo',
-                    type: 'POST',
-                    data: {
-                        _token: "{{ csrf_token() }}",
-                        productId: productId,
-                        expirationDate: expirationDate
-                    },
-                    success: function (msg) {
-
-                        // if the response is not null
-                        if (msg['inventories'] != null) {
-                            // console.log(msg);
-                            $("#quantity"+rowIndex).val(msg['inventories']['quantity'] - msg['inventories']['sold']);
-                            $("#quantity"+rowIndex).attr({
-                                "max" : (msg['inventories']['quantity'] - msg['inventories']['sold']),
-                                "min" : 0,
-                                "disabled" : false
-                            });
-                        }
-                    }
-                });
-            }
         });
+
+        function checkAllFields(){
+            var check = true;
+            for(var i = 1; i <= tableRowCount; i++){
+                if($('#expirationDate'+i).val() == ''){
+                    return true;
+                }else if($('#quantity'+i).val() == ''){
+                    return true;
+                }else if($('#price'+i).val() == ''){
+                    return true;
+                }
+                console.log(i + '. Expiration Date:' + $('#expirationDate'+i).val() + ' Quantity: ' + $('#quantity'+i).val() + ' Price: ' + $('#price'+i).val());
+            }
+            return false;
+        }
+
+        function searchProductQuantityInfo(productId, expirationDate, rowIndex) {
+            $.ajax({
+                url: '/searchProductQuantityInfo',
+                type: 'POST',
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    productId: productId,
+                    expirationDate: expirationDate
+                },
+                success: function (msg) {
+
+                    // if the response is not null
+                    if (msg['inventories'] != null) {
+                        // console.log(msg);
+                        $("#quantity"+rowIndex).val(msg['inventories']['quantity'] - msg['inventories']['sold']);
+                        $("#quantity"+rowIndex).attr({
+                            "max" : (msg['inventories']['quantity'] - msg['inventories']['sold']),
+                            "min" : 0,
+                            "disabled" : false
+                        });
+                    }
+                }
+            });
+        }
+        
     </script>
 @endsection

@@ -20,26 +20,26 @@
                     @php
                         // echo json_encode($productsToDisplay);getProductInfo
                     @endphp
-                    {{Form::select('brandName', $productsToDisplay , null, ['class' => 'form-control', 'placeholder' => 'Pick a product...', 'id' => 'brandName'])}}
+                    {{Form::select('brandName', $productsToDisplay , null, ['class' => 'form-control', 'placeholder' => 'Pick a product...', 'id' => 'brandName', 'required'])}}
                     {{-- {{Form::text('brandName', '', ['class' => 'form-control', 'placeholder' => 'Brand Name', 'id' => 'brandName'])}} --}}
                     </div>
                     <div class="form-group  col-md-3">
                     {{Form::label('genericName', 'Generic Name')}}
-                    {{Form::text('genericName', '', ['class' => 'form-control', 'placeholder' => 'Generic Name', 'readonly', 'id' => 'genericName'])}}
+                    {{Form::text('genericName', '', ['class' => 'form-control', 'placeholder' => 'Generic Name', 'readonly', 'id' => 'genericName', 'required'])}}
                     </div>
                     <div class="form-group  col-md-2">
                     {{Form::label('manufacturer', 'Manufacturer')}}
-                    {{Form::text('manufacturer', '', ['class' => 'form-control', 'placeholder' => 'Manufacturer', 'readonly', 'id' => 'manufacturer'])}}
+                    {{Form::text('manufacturer', '', ['class' => 'form-control', 'placeholder' => 'Manufacturer', 'readonly', 'id' => 'manufacturer', 'required'])}}
                     </div>
                     <div class="form-group col-md-2">
                     {{Form::label('drugType', 'Drug Type')}}
                     {{-- {{Form::select('drugType', ['L' => 'Large', 'S' => 'Small'], null, ['class' => 'form-control', 'placeholder' => 'Pick a type...'])}} --}}
-                    {{Form::text('drugType', '', ['class' => 'form-control', 'placeholder' => 'Drug Type', 'type' => 'text', 'readonly', 'id' => 'drugType'])}}
+                    {{Form::text('drugType', '', ['class' => 'form-control', 'placeholder' => 'Drug Type', 'type' => 'text', 'readonly', 'id' => 'drugType', 'required'])}}
                         {{-- <input id="drugType" type="text" name="myCountry" placeholder="Country"> --}}
                     </div>
                     <div class="form-group col-md-2">
                     {{Form::label('quantity', 'Quantity')}}
-                    {{Form::number('quantity', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Quantity', 'readonly', 'id' => 'quantity'])}}
+                    {{Form::number('quantity', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Quantity', 'readonly', 'id' => 'quantity', 'required'])}}
                     </div>
                 </div>
             </div>
@@ -50,23 +50,23 @@
                 <div class="col-md-12 row">
                     <div class="form-group col-md-2">
                     {{Form::label('purchasePrice', 'Purchase Price')}}
-                    {{Form::number('purchasePrice', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Purchase Price' , 'step' => 'any', 'id' => 'purchasePrice'])}}
+                    {{Form::number('purchasePrice', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Purchase Price' , 'step' => 'any', 'id' => 'purchasePrice', 'required'])}}
                     </div>
                     <div class="form-group col-md-2">
                     {{Form::label('specialPrice', 'Special Price')}}
-                    {{Form::number('specialPrice', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Special Price' , 'step' => 'any', 'id' => 'specialPrice'])}}
+                    {{Form::number('specialPrice', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Special Price' , 'step' => 'any', 'id' => 'specialPrice', 'required'])}}
                     </div>
                     <div class="form-group col-md-2">
                     {{Form::label('walkInPrice', 'Walk-In Price')}}
-                    {{Form::number('walkInPrice', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Walk-In Price' , 'step' => 'any', 'id' => 'walkInPrice'])}}
+                    {{Form::number('walkInPrice', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Walk-In Price' , 'step' => 'any', 'id' => 'walkInPrice', 'required'])}}
                     </div>
                     <div class="form-group col-md-2">
                     {{Form::label('promoPrice', 'Promo Price')}}
-                    {{Form::number('promoPrice', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Promo Price' , 'step' => 'any', 'id' => 'promoPrice'])}}
+                    {{Form::number('promoPrice', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Promo Price' , 'step' => 'any', 'id' => 'promoPrice', 'required'])}}
                     </div>
                     <div class="form-group col-md-2">
                     {{Form::label('distributorPrice', 'Distributor\'s Price')}}
-                    {{Form::number('distributorPrice', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Distributor\'s Price' , 'step' => 'any', 'id' => 'distributorPrice'])}}
+                    {{Form::number('distributorPrice', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Distributor\'s Price' , 'step' => 'any', 'id' => 'distributorPrice', 'required'])}}
                     </div>
                 </div>
             </div>
