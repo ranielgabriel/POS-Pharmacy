@@ -54,8 +54,12 @@
                             @endforeach
                         </tbody>
                     </table>
-
                 </div>
+            <hr>
+            <div class="row col-md-12 form-inline">
+                {{Form::label('customerName', 'Sold to:', ['class' => 'col-md-1'])}}
+                {{Form::text('customerName', '', ['class' => 'form-control col-md-11', 'placeholder' => 'Name of Customer', 'id' => 'customerName'])}}
+            </div>
             <hr>
             <a class="btn btn-info" href="/products"><span class="fa fa-arrow-left"></span>&nbsp;Back</a>
             <button id="btnCheckout" class="btn btn-primary" data-toggle="modal" data-target="#modalCart">Checkout</button>
@@ -67,7 +71,7 @@
             <div class="modal-content modal-lg">
                 <div class="modal-header">
                     <h4 class="modal-title">
-                        Confirmation
+                        Selling to: <strong id="nameOfCustomer">Sample Name</strong>
                     </h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
@@ -155,6 +159,7 @@
 
                 // console.log(checkAllFields());
                 $('#modalCartTBody').html('');
+                $('#nameOfCustomer').html($('#customerName').val());
                 // console.log(tableRowCount);
                 var code = '';
                 var totalAmount=0;
@@ -189,7 +194,7 @@
                 $('#modalCartTBody').append(code);
                 $('#totalAmount').html("&#8369; " + Number(totalAmount.toFixed(2)).toLocaleString('en'));
                 // inventoryList["totalAmount"] = parseFloat(totalAmount.toFixed(2));
-                console.log(inventoryList);
+                // console.log(inventoryList);
             });
 
             $("#btnConfirm").click(function(){
@@ -245,7 +250,8 @@
                 type: 'POST',
                 data: {
                     _token: "{{ csrf_token() }}",
-                    inventoryList: inventoryList
+                    inventoryList: inventoryList,
+                    customerName: $('#customerName').val()
                 },
                 success: function (msg) {
                     // if the response is not null

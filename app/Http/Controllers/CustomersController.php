@@ -3,9 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Customer;
+use App\User;
 
 class CustomersController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +21,11 @@ class CustomersController extends Controller
      */
     public function index()
     {
-        //
+        $customers = Customer::orderBy('id','asc')
+        ->get();
+
+        $user = User::find(Auth::user()->id);
+        return view('customers.index')->with(['customers' => $customers, 'user' => $user]);
     }
 
     /**
@@ -23,7 +35,7 @@ class CustomersController extends Controller
      */
     public function create()
     {
-        //
+        return view('customers.create');
     }
 
     /**
@@ -34,7 +46,25 @@ class CustomersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // validate request
+        $this->validate($request,[
+            'name' => 'required|string',
+            'contactNumber' => 'nullable|string',
+            'address' => 'nullable|string',
+            'details' => 'nullable|string|max:255'
+        ]);
+
+        // create new customer
+        $customer = new Customer();
+        $customer = Customer::create([
+            'name' => $request->input('name'),
+            'contact_number' => $request->input('contactNumber'),
+            'address' => $request->input('address'),
+            'details' => $request->input('details'),
+        ]);
+
+        // redirect to index of products
+        return redirect('/customers')->with('success', 'Customer successfully added.');
     }
 
     /**

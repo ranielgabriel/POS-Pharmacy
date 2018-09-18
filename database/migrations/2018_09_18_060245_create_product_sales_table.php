@@ -15,8 +15,9 @@ class CreateProductSalesTable extends Migration
     {
         Schema::create('product_sales', function (Blueprint $table) {
             $table->increments('id');
-            $table->decimal('subtotal', 10, 2);
             $table->integer('product_id');
+            $table->integer('quantity');
+            $table->decimal('price', 10, 2);
             $table->integer('sales_id');
             $table->timestamps();
         });

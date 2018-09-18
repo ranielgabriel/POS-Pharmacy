@@ -25,6 +25,7 @@ Route::resource('/products', 'ProductsController');
 Route::resource('/inventories', 'InventoriesController');
 Route::resource('/suppliers', 'SuppliersController');
 Route::resource('/cart', 'CartsController');
+Route::resource('/customers', 'CustomersController');
 
 // Post
 Route::post('/searchProducts','AjaxController@searchProducts');

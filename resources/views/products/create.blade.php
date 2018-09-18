@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <div class="container container-fluid relative">
+    <div class="container container-fluid">
         <h1>Add a Product</h1>
         <hr>
         {!! Form::open(['action' => 'ProductsController@store', 'method' => 'POST', 'autocomplete' => 'off']) !!}
@@ -18,28 +18,25 @@
                         <?php $productsToDisplay[$product->id] = $product->brand_name;?>
                     @endforeach
                     @php
-                        // echo json_encode($productsToDisplay);getProductInfo
                     @endphp
+
                     {{Form::select('brandName', $productsToDisplay , null, ['class' => 'form-control', 'placeholder' => 'Pick a product...', 'id' => 'brandName', 'required'])}}
-                    {{-- {{Form::text('brandName', '', ['class' => 'form-control', 'placeholder' => 'Brand Name', 'id' => 'brandName'])}} --}}
                     </div>
                     <div class="form-group  col-md-3">
-                    {{Form::label('genericName', 'Generic Name')}}
-                    {{Form::text('genericName', '', ['class' => 'form-control', 'placeholder' => 'Generic Name', 'readonly', 'id' => 'genericName', 'required'])}}
+                        {{Form::label('genericName', 'Generic Name')}}
+                        {{Form::text('genericName', '', ['class' => 'form-control', 'placeholder' => 'Generic Name', 'readonly', 'id' => 'genericName', 'required'])}}
                     </div>
                     <div class="form-group  col-md-2">
-                    {{Form::label('manufacturer', 'Manufacturer')}}
-                    {{Form::text('manufacturer', '', ['class' => 'form-control', 'placeholder' => 'Manufacturer', 'readonly', 'id' => 'manufacturer', 'required'])}}
+                        {{Form::label('manufacturer', 'Manufacturer')}}
+                        {{Form::text('manufacturer', '', ['class' => 'form-control', 'placeholder' => 'Manufacturer', 'readonly', 'id' => 'manufacturer', 'required'])}}
                     </div>
                     <div class="form-group col-md-2">
-                    {{Form::label('drugType', 'Drug Type')}}
-                    {{-- {{Form::select('drugType', ['L' => 'Large', 'S' => 'Small'], null, ['class' => 'form-control', 'placeholder' => 'Pick a type...'])}} --}}
-                    {{Form::text('drugType', '', ['class' => 'form-control', 'placeholder' => 'Drug Type', 'type' => 'text', 'readonly', 'id' => 'drugType', 'required'])}}
-                        {{-- <input id="drugType" type="text" name="myCountry" placeholder="Country"> --}}
+                        {{Form::label('drugType', 'Drug Type')}}
+                        {{Form::text('drugType', '', ['class' => 'form-control', 'placeholder' => 'Drug Type', 'type' => 'text', 'readonly', 'id' => 'drugType', 'required'])}}
                     </div>
                     <div class="form-group col-md-2">
-                    {{Form::label('quantity', 'Quantity')}}
-                    {{Form::number('quantity', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Quantity', 'readonly', 'id' => 'quantity', 'required'])}}
+                        {{Form::label('quantity', 'Quantity')}}
+                        {{Form::number('quantity', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Quantity', 'readonly', 'id' => 'quantity', 'required'])}}
                     </div>
                 </div>
             </div>
@@ -49,24 +46,24 @@
                 <h3>Prices</h3>
                 <div class="col-md-12 row">
                     <div class="form-group col-md-2">
-                    {{Form::label('purchasePrice', 'Purchase Price')}}
-                    {{Form::number('purchasePrice', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Purchase Price' , 'step' => 'any', 'id' => 'purchasePrice', 'required'])}}
+                        {{Form::label('purchasePrice', 'Purchase Price')}}
+                        {{Form::number('purchasePrice', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Purchase Price' , 'step' => 'any', 'id' => 'purchasePrice', 'required'])}}
                     </div>
                     <div class="form-group col-md-2">
-                    {{Form::label('specialPrice', 'Special Price')}}
-                    {{Form::number('specialPrice', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Special Price' , 'step' => 'any', 'id' => 'specialPrice', 'required'])}}
+                        {{Form::label('specialPrice', 'Special Price')}}
+                        {{Form::number('specialPrice', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Special Price' , 'step' => 'any', 'id' => 'specialPrice', 'required'])}}
                     </div>
                     <div class="form-group col-md-2">
-                    {{Form::label('walkInPrice', 'Walk-In Price')}}
-                    {{Form::number('walkInPrice', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Walk-In Price' , 'step' => 'any', 'id' => 'walkInPrice', 'required'])}}
+                        {{Form::label('walkInPrice', 'Walk-In Price')}}
+                        {{Form::number('walkInPrice', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Walk-In Price' , 'step' => 'any', 'id' => 'walkInPrice', 'required'])}}
                     </div>
                     <div class="form-group col-md-2">
-                    {{Form::label('promoPrice', 'Promo Price')}}
-                    {{Form::number('promoPrice', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Promo Price' , 'step' => 'any', 'id' => 'promoPrice', 'required'])}}
+                        {{Form::label('promoPrice', 'Promo Price')}}
+                        {{Form::number('promoPrice', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Promo Price' , 'step' => 'any', 'id' => 'promoPrice', 'required'])}}
                     </div>
                     <div class="form-group col-md-2">
-                    {{Form::label('distributorPrice', 'Distributor\'s Price')}}
-                    {{Form::number('distributorPrice', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Distributor\'s Price' , 'step' => 'any', 'id' => 'distributorPrice', 'required'])}}
+                        {{Form::label('distributorPrice', 'Distributor\'s Price')}}
+                        {{Form::number('distributorPrice', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Distributor\'s Price' , 'step' => 'any', 'id' => 'distributorPrice', 'required'])}}
                     </div>
                 </div>
             </div>
@@ -91,46 +88,11 @@
         // Hide containers
         $('#pricesContainer').hide();
 
-        // For searching Batch #
-        // $('#batchNumber').keyup(function(){
-        //     getBatch($(this).val());
-        // });
-
         // For searching Brand Name
         $('#brandName').change(function(){
             searchProductInfo($(this).val());
             // console.log($(this).val());
         });
-
-        // Function for getting the batch
-        function getBatch(batchNumber){
-            $.ajax({
-                url: '/searchBatch',
-                type: 'POST',
-                data: {
-                    _token: "{{ csrf_token() }}",
-                    batchNumber: batchNumber
-                },
-                success: function (msg) {
-
-                    // if the response is not null
-                    if(msg['inventories'] != null){
-
-                        // show the product information container
-                        $('#productInformationContainer').show();
-
-                        // get the products
-                        productsToShow = msg['products'];
-                        console.log(productsToShow);
-                        // console.log(msg);
-                    }else{
-
-                        // hide the product information container
-                        $('#productInformationContainer').hide();
-                    }
-                }
-            });
-        }
 
         // Function for getting the product information
         function searchProductInfo(productId){

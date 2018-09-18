@@ -52,24 +52,6 @@
                                     </tr>
                                 @endif
 
-                        {{-- <div class="col-md-12 row">
-                            <div class="form-group col-md-3">
-                                {{Form::label('expirationDate', 'Expiration Date')}}
-                                {{Form::date('expirationDate', $inventory->expiration_date, ['class' => 'form-control', 'placeholder' => 'Expiration Date', 'disabled' => true])}}
-                            </div>
-                            <div class="form-group col-md-2">
-                                {{Form::label('quantity', 'Quantity')}}
-                                {{Form::number('quantity', $inventory->quantity, ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Quantity', 'disabled' => true])}}
-                            </div>
-                            <div class="form-group col-md-2">
-                                {{Form::label('remainingQuantity', 'Remaining Quantity')}}
-                                {{Form::number('remainingQuantity', $inventory->quantity - $inventory->sold, ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Remaining Quantity', 'disabled' => true])}}
-                            </div>
-                            <div class="form-group col-md-2">
-                                {{Form::label('sold', 'Sold')}}
-                                {{Form::number('sold', $inventory->sold, ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Sold', 'disabled' => true])}}
-                            </div>
-                        </div> --}}
                         @endif
                     @endforeach
                 </tbody>

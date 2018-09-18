@@ -14,6 +14,7 @@ use App\Manufacturer;
 use App\Supplier;
 use App\Batch;
 use App\Cart;
+use App\Customer;
 
 class AjaxController extends Controller
 {
@@ -283,7 +284,7 @@ class AjaxController extends Controller
 
             $cart = Cart::find($item['cartId']);
             $cart->delete();
-            
+
             $product = Product::find($item['productId']);
             if(($product->inventories->sum('quantity') - $product->inventories->sum('sold')) == 0){
                 $product->status = 'Out-of-stock';
@@ -295,6 +296,10 @@ class AjaxController extends Controller
 
             // $productList[$size] = $product;
         }
+
+        $customer = Customer::firstOrCreate([
+            'name' => $request->input('customerName')
+        ]);
 
         // $inventory = new Inventory();
         // $inventory = Inventory::find($request->input('id'));

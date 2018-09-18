@@ -12,6 +12,7 @@
                     <a class="btn btn-primary" href="/products/create"><span class="fa fa-plus"></span>&nbsp;Product</a>
                 @endif
             @endguest
+
             <div class="input-group mb-3 my-2">
                 <div class="input-group-prepend">
                     <span class="input-group-text"><span class="fa fa-search"></span></span>
@@ -19,7 +20,6 @@
                 {{Form::text('search', '', ['id' => 'search', 'class' => 'form-control', 'placeholder' => 'Search... (Generic Name / Brand Name / Drug Type / Status)'])}}
             </div>
 
-            <div class="responsive" id="tableSearchContainer"></div>
             <div class="table-responsive rounded" id="tableContainer">
                 <table class="table table-striped table-hover table-bordered">
                     <thead class="thead-dark table-sm">
@@ -44,6 +44,7 @@
                         </tr>
                     </thead>
                     <tbody id="tableProducts" class="table-sm">
+                        
                         @foreach ($products->sortBy('genericNames.description') as $product)
                             <tr class="align-middle text-center">
                                 <td class="align-middle">{{ $product->genericNames->description }}</td>
@@ -95,6 +96,7 @@
                                 @endauth
                             </tr>
                         @endforeach()
+
                     </tbody>
                 </table>
             </div>
@@ -181,14 +183,6 @@
                     $("#tableProducts tr").filter(function() {
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
-                // if ($(this).val() != '') {
-                //     searchProducts($(this).val());
-                //     $('.pagination').hide();
-                // } else {
-                //     $('#tableContainer').show();
-                //     $('#tableSearchContainer').hide();
-                //     $('.pagination').show();
-                // }
             });
 
             $(".modalSellClass").click(function () {
@@ -237,27 +231,6 @@
                         }
                     }
                 });
-            }
-
-            function searchProducts(productToSearch) {
-                if (productToSearch != null) {
-                    $.ajax({
-                        url: '/searchProducts',
-                        type: 'POST',
-                        data: {
-                            _token: "{{ csrf_token() }}",
-                            name: productToSearch
-                        },
-                        success: function (msg) {
-                            $('#tableContainer').hide();
-                            $('#tableSearchContainer').show();
-                            $('#tableSearchContainer').html('');
-                            $('#tableSearchContainer').append(msg.code);
-
-                            // console.log(msg);
-                        }
-                    });
-                }
             }
         });
     </script>
