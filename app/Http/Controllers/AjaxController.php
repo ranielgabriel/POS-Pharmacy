@@ -13,6 +13,7 @@ use App\DrugType;
 use App\Manufacturer;
 use App\Supplier;
 use App\Batch;
+use App\Cart;
 
 class AjaxController extends Controller
 {
@@ -265,6 +266,46 @@ class AjaxController extends Controller
         ->select('name')
         ->get();
         return response($suppliers);
+    }
+
+    // This function insert sale(s) from the database.
+    public function insertSale(Request $request){
+
+        $object = $request->input('inventoryList');
+        // $size = 0;
+        // $inventoryList = array();
+        // $productList = array();
+        
+        foreach($object as $item){
+            $inventory = Inventory::find($item['inventoryId']);
+            $inventory->sold = $inventory->sold + $item['inventorySold'];
+            $inventory->save();
+
+            $cart = Cart::find($item['cartId']);
+            $cart->delete();
+            
+            $product = Product::find($item['productId']);
+            if(($product->inventories->sum('quantity') - $product->inventories->sum('sold')) == 0){
+                $product->status = 'Out-of-stock';
+                $product->save();
+            }
+            // $size++;
+            // $inventoryList[$size] = $inventory;
+            // $inventoryList[$size]["cart"] = $cart;
+
+            // $productList[$size] = $product;
+        }
+
+        // $inventory = new Inventory();
+        // $inventory = Inventory::find($request->input('id'));
+        // $inventory->sold = $inventory->sold + $request->input('sold');
+        // $inventory->save();
+
+        return response()->json([
+            // 'inventoryList' => $inventoryList
+            // 'productList' => $productList,
+            'message' => 'Purchase successful.'
+        ]);
     }
 
 }

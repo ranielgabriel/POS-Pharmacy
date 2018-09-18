@@ -13,10 +13,8 @@ class CreateSalesTransactionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('sales_transactions', function (Blueprint $table) {
+        Schema::create('sales', function (Blueprint $table) {
             $table->increments('id');
-            $table->decimal('retail_price', 10, 2);
-            $table->decimal('wholesale_price', 10, 2);
             $table->integer('customer_id');
             $table->timestamps();
         });

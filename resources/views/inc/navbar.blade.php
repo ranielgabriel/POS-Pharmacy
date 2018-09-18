@@ -22,7 +22,7 @@
                         <a class="nav-link" href="/inventories/"><span class="fa fa-list-alt"></span>&nbsp;Inventories</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/cart/{{ Auth::user()->id}}"><span class="fa fa-shopping-cart"></span>&nbsp;Cart</a>
+                        <a class="nav-link" href="/cart/{{ Auth::user()->id }}"><span class="fa fa-shopping-cart"></span>&nbsp;Cart</a>
                     </li>
                 @endauth
             </ul>

@@ -34,7 +34,7 @@
                     </tr>
                 </thead>
                 <tbody class="table-sm">
-                    @foreach ($product->inventories->sortByDesc('expiration_date') as $inventory)
+                    @foreach ($product->inventories->sortBy('expiration_date') as $inventory)
                         @if ($inventory->quantity != $inventory->sold)
                                 @php
                                     $now = DateTime::createFromFormat('Y-m-d', date('Y-m-d'));

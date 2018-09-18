@@ -114,6 +114,11 @@ class InventoriesController extends Controller
             'generic_name_id' => $genericName->id,
             'drug_type_id' => $drugType->id
         ]);
+        if($product->status == 'Out-of-stock'){
+            $product->status = 'In-stock';
+            $product->save();
+        }
+        
 
         // create an inventory
         $inventory = new Inventory();

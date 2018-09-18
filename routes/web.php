@@ -33,6 +33,7 @@ Route::post('/searchProductInfo','AjaxController@searchProductInfo');
 Route::post('/searchProductQuantityInfo','AjaxController@searchProductQuantityInfo');
 Route::post('/searchSupplierInfo','AjaxController@searchSupplierInfo');
 Route::post('/searchSupplier','AjaxController@searchSupplier');
+Route::post('/insertSale','AjaxController@insertSale');
 
 // Get
 Route::get('/getDrugTypes','AjaxController@getDrugTypes');

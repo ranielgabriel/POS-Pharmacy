@@ -27,6 +27,8 @@
                             {{Form::hidden('_method', 'DELETE')}}
                                 <tr class="text-center">
                                     <td class="align-middle" hidden id="productId{{$loop->iteration}}">{{$item->product_id}}</td>
+                                    <td class="align-middle" hidden id="inventoryId{{$loop->iteration}}"></td>
+                                    <td class="align-middle" hidden id="cartId{{$loop->iteration}}">{{$item->id}}</td>
                                     <td class="align-middle"><small id="genericName{{$loop->iteration}}">{{$item->product->genericNames->description}}</small></td>
                                     <td class="align-middle"><small id="brandName{{$loop->iteration}}" class="text-center">{{$item->product->brand_name}}</small></td>
                                     <td class="align-middle"><small id="manufacturer{{$loop->iteration}}" class="text-center">{{$item->product->manufacturers->name}}</small></td>
@@ -96,7 +98,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <a class="btn btn-success col-md-12" href="#" role="button"><strong>Confirm</strong>&nbsp;<span class="fa fa-check"></span></a>
+                    <a class="btn btn-success col-md-12" href="#" role="button" id="btnConfirm"><strong>Confirm</strong>&nbsp;<span class="fa fa-check"></span></a>
                 </div>
             </div>
 
@@ -107,6 +109,8 @@
 @section('formLogic')
     <script>
         var tableRowCount;
+        var inventoryList = {};
+
         $('document').ready(function(){
 
             console.log('Page is ready.');
@@ -135,7 +139,7 @@
             });
 
             $(".quantityNumber").keyup(function(){
-                if($(this).val() > $(this).attr('max')){
+                if(parseInt($(this).val()) > parseInt($(this).attr('max'))){
                     $(this).val($(this).attr('max'));
                     return;
                 }
@@ -155,8 +159,19 @@
                 var code = '';
                 var totalAmount=0;
                 for(var i = 1; i <= tableRowCount; i++){
+                    inventory = {
+                        productId : parseInt($('#productId'+i).html()),
+                        cartId : parseInt($('#cartId'+i).html()),
+                        inventoryId : parseInt($('#inventoryId'+i).html()),
+                        inventorySold : parseInt($('#quantity'+i).val()),
+                        subTotal : parseFloat($('#price'+i).val())
+                    };
+
                     subTotal = $('#quantity'+i).val() * $('#price'+i).val();
+
                     totalAmount += parseFloat(subTotal.toFixed(2));
+
+                    // console.log($('#inventoryId'+i).html());
                     code += "<tr class='align-middle small'>" +
                     "<td class='align-middle'>" + $('#genericName'+i).html() + "</td>" +
                     "<td class='align-middle'>" + $('#brandName'+i).html() + "</td>" +
@@ -164,13 +179,21 @@
                     "<td class='align-middle'>" + $('#drugType'+i).html() + "</td>" +
                     "<td class='align-middle'>" + $('#expirationDate'+i).val() + "</td>" +
                     // "<td>" + $('#quantity'+i).val() + "</td>" +
-                    "<td class='align-middle'>" + $('#quantity'+i).val()  + " x &#8369; " + $('#price'+i).val() + "</td>" +
-                    "<td class='align-middle'>&#8369; " + subTotal.toFixed(2) + "</td>" +
+                    "<td class='align-middle'>" + $('#quantity'+i).val()  + " x &#8369; " + Number($('#price'+i).val()).toLocaleString('en') + "</td>" +
+                    "<td class='align-middle'>&#8369; " + Number(subTotal.toFixed(2)).toLocaleString('en') + "</td>" +
                     "</tr>";
+                    
+                    inventoryList[i] = inventory;
                 }
                 // console.log(totalAmount);
                 $('#modalCartTBody').append(code);
-                $('#totalAmount').html("&#8369; " + totalAmount.toFixed(2));
+                $('#totalAmount').html("&#8369; " + Number(totalAmount.toFixed(2)).toLocaleString('en'));
+                // inventoryList["totalAmount"] = parseFloat(totalAmount.toFixed(2));
+                console.log(inventoryList);
+            });
+
+            $("#btnConfirm").click(function(){
+                insertSale(inventoryList);
             });
         });
 
@@ -202,14 +225,33 @@
 
                     // if the response is not null
                     if (msg['inventories'] != null) {
-                        // console.log(msg);
+
                         $("#quantity"+rowIndex).val(msg['inventories']['quantity'] - msg['inventories']['sold']);
                         $("#quantity"+rowIndex).attr({
                             "max" : (msg['inventories']['quantity'] - msg['inventories']['sold']),
                             "min" : 0,
                             "disabled" : false
                         });
+
+                        $("#inventoryId"+rowIndex).html(msg['inventories']['id']);
                     }
+                }
+            });
+        }
+
+        function insertSale(inventoryList){
+            $.ajax({
+                url: '/insertSale',
+                type: 'POST',
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    inventoryList: inventoryList
+                },
+                success: function (msg) {
+                    // if the response is not null
+                    // console.log(msg);
+                    alert(msg['message']);
+                    window.location.href = "/products";
                 }
             });
         }
