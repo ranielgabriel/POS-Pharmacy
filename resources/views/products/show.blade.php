@@ -5,10 +5,19 @@
         <div class="col-md-12">
             
             <a class="btn btn-info" href="/products"><span class="fa fa-arrow-left"></span>&nbsp;Back</a>
-            <div class="row float-right">
-                <a class="btn btn-info mx-1" href="/products/{{ $product->id }}/edit"><span class="fa fa-edit"></span>&nbsp;Update</a>
-                <a class="btn btn-danger mx-1" href="/products"><span class="fa fa-trash"></span>&nbsp;Delete</a>
-            </div>
+
+            @auth
+                @if (Auth::user()->role == 'Administrator')
+                    <div class="row float-right">
+                        <a class="btn btn-info mx-1" href="/products/{{ $product->id }}/edit"><span class="fa fa-edit"></span>&nbsp;Update</a>
+                        {!!Form::open(['action' => ['ProductsController@destroy', $product->id], 'method' => 'POST',])!!}
+                        {{Form::hidden('_method', 'DELETE')}}
+                        {{Form::button('<span class="fa fa-trash"></span>&nbsp;Delete', ['type' => 'submit', 'class' => 'btn btn-danger'])}}
+                        {!!Form::close()!!}
+                    </div>
+                @endif
+            @endauth
+
             <hr>
 
             <h3>Product Information</h3>

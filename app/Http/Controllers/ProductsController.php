@@ -225,7 +225,13 @@ class ProductsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product = Product::find($id);
+        $product->delete();
+
+        DB::table('inventories')->where('product_id', '=', $id)->delete();
+        DB::table('carts')->where('product_id', '=', $id)->delete();
+
+        return redirect('/products')->with('success', '"' . $product->genericNames->description .' ' . $product->brand_name . '" successfully deleted.');
     }
 
 }

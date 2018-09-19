@@ -31,11 +31,12 @@ class InventoriesController extends Controller
         $batches = Batch::
         // Order by Id
         orderBy('id','des')
+        ->whereHas('inventories')
         // Paginate by 10 batches per page
         ->paginate(10);
 
         // return the view index from inventories folder
-        return view('inventories.index')->with('batches',$batches);
+        return view('inventories.index')->with('batches', $batches);
     }
 
     /**
