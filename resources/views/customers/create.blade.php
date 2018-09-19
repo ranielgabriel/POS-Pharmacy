@@ -10,16 +10,16 @@
             <h3>Customer Information</h3>
             <div class="col-md-12 row">
                 <div class="form-group col-md-3">
-                {{Form::label('name', 'Name')}}
-                {{Form::text('name', '', ['class' => 'form-control', 'placeholder' => 'Name',])}}
+                    {{Form::label('name', 'Name')}}
+                    {{Form::text('name', '', ['class' => 'form-control', 'placeholder' => 'Name',])}}
                 </div>
                 <div class="form-group col-md-3">
-                {{Form::label('contactNumber', 'Contact Number')}}
-                {{Form::text('contactNumber', '', ['class' => 'form-control', 'placeholder' => 'Contact Number',])}}
+                    {{Form::label('contactNumber', 'Contact Number')}}
+                    {{Form::text('contactNumber', '', ['class' => 'form-control', 'placeholder' => 'Contact Number',])}}
                 </div>
                 <div class="form-group col-md-6">
-                {{Form::label('address', 'Address')}}
-                {{Form::text('address', '', ['class' => 'form-control', 'placeholder' => 'Address',])}}
+                    {{Form::label('address', 'Address')}}
+                    {{Form::text('address', '', ['class' => 'form-control', 'placeholder' => 'Address',])}}
                 </div>
             </div>
 

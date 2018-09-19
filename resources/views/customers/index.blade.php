@@ -22,28 +22,20 @@
                             <th class="align-middle">Customer Name</th>
                             <th class="align-middle">Contact No.</th>
                             <th class="align-middle">Address</th>
-                            @if (Auth::user()->role == 'Administrator')
-                                <th class="align-middle" colspan="2">Actions</th>
-                            @endif
                         </tr>
                     </thead>
-                    <tbody id="tableCustomers" class="table-sm">
+                    <tbody id="tableCustomers" class="table-sm" style="cursor: pointer;">
                         @foreach ($customers as $customer)
-                            <tr class="align-middle text-center">
+                            <tr class="align-middle text-center modalCustomerClass" data-customer-id="{{ $customer->id }}">
                                 <td class="align-middle">{{ $customer->name }}</td>
                                 <td class="align-middle">{{ $customer->contact_number }}</td>
                                 <td class="align-middle">{{ $customer->address }}</td>
-                                @if (Auth::user()->role == 'Administrator')
-                                    <td class="align-middle"><a class="btn btn-info" href="#"><span class="fa fa-edit"></span>&nbsp;Update</a></td>
-                                    <td class="align-middle"><a class="btn btn-danger" href="#"><span class="fa fa-trash"></span>&nbsp;Delete</a></td>
-                                @endif
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
-        {{$customers->links()}}
     </div>
 @endsection
 
@@ -57,6 +49,12 @@
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
             });
+
+            $('.modalCustomerClass').click(function(){
+                var customerId = $(this).data('customer-id');
+                window.location.href = ('/customers/' + customerId);
+            });
+
         });
     </script>
 @endsection

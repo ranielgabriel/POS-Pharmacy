@@ -7,7 +7,7 @@
         <div class="col-md-12">
             <div id="productInformationContainer" class="container">
 
-                <h3>Product Information</h3>
+                <h3 class="text-center">Product Information</h3>
                 <div class="col-md-12 row">
                     <div class="form-group  col-md-6">
                         {{Form::label('genericName', 'Generic Name')}}
@@ -36,7 +36,7 @@
 
             <div id="pricesContainer" class="container">
                 <hr>
-                <h3>Prices</h3>
+                <h3 class="text-center">Prices</h3>
                 <div class="col-md-12 row">
                     <div class="form-group col-md-2">
                         {{Form::label('purchasePrice', 'Purchase Price')}}

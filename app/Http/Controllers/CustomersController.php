@@ -20,8 +20,8 @@ class CustomersController extends Controller
      */
     public function index()
     {
-        $customers = Customer::orderBy('id','asc')
-        ->paginate(25);
+        $customers = Customer::orderBy('name','asc')
+        ->get();
 
         $user = User::find(Auth::user()->id);
         return view('customers.index')->with(['customers' => $customers, 'user' => $user]);
@@ -74,7 +74,8 @@ class CustomersController extends Controller
      */
     public function show($id)
     {
-        //
+        $customer = Customer::find($id);
+        return view('customers.show')->with('customer', $customer);
     }
 
     /**
@@ -85,7 +86,8 @@ class CustomersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $customer = Customer::find($id);
+        return view('customers.edit')->with('customer',$customer);
     }
 
     /**
@@ -97,7 +99,22 @@ class CustomersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // validate request
+        $this->validate($request,[
+            'name' => 'required|string',
+            'contactNumber' => 'nullable|string',
+            'address' => 'nullable|string',
+            'details' => 'nullable|string|max:255'
+        ]);
+
+        $customer = Customer::find($id);
+        $customer->name = $request->input('name');
+        $customer->contact_number = $request->input('contactNumber');
+        $customer->address = $request->input('address');
+        $customer->details = $request->input('details');
+        $customer->save();
+
+        return redirect('/customers/' . $id)->with('success', 'Customer successfully updated.');
     }
 
     /**
@@ -108,6 +125,9 @@ class CustomersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $customer = Customer::find($id);
+        $customer->delete();
+
+        return redirect('/customers')->with('success', 'Customer deleted successfully.');
     }
 }

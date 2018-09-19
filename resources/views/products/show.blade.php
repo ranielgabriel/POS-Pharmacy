@@ -1,9 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <div class="col-md-12 responsive">
-        
         <div class="col-md-12">
-            
             <a class="btn btn-info" href="/products"><span class="fa fa-arrow-left"></span>&nbsp;Back</a>
 
             @auth
@@ -48,7 +46,7 @@
 
             @auth
             <hr>
-            <h3>Prices</h3>
+            <h3 class="text-center">Prices</h3>
             <div class="col-md-12 row">
                 <div class="col-md-2">
                     {{Form::label('purchasePrice', 'Purchase Price')}}

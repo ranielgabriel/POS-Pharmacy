@@ -3,7 +3,7 @@
     <div class="container container-fluid">
         <div class="col-md-12">
 
-            <a class="btn btn-info" href="/inventories"><span class="fa fa-arrow-left"></span>&nbsp;Back</a>
+            <a class="btn btn-info" href="/suppliers"><span class="fa fa-arrow-left"></span>&nbsp;Back</a>
             @if (Auth::user()->role == 'Administrator')
                 <div class="row float-right">
                     <a class="btn btn-info mx-1" href="/suppliers/{{ $supplier->id }}/edit"><span class="fa fa-edit"></span>&nbsp;Update</a>
