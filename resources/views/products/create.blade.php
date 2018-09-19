@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <div class="container container-fluid">
-        <h1>Add a Product</h1>
+        <h1 class="text-center">Add a Product</h1>
         <hr>
         {!! Form::open(['action' => 'ProductsController@store', 'method' => 'POST', 'autocomplete' => 'off']) !!}
         <div class="col-md-12">

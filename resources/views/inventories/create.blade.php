@@ -5,7 +5,7 @@
         <hr>
         {!! Form::open(['action' => 'InventoriesController@store', 'method' => 'POST', 'autocomplete' => 'off']) !!}
         <div class="col-md-12">
-            <h3>Inventory Information</h3>
+            <h3 class="text-center">Inventory Information</h3>
 
             <div class="col-md-12 row">
                 <div class="form-group col-md-2">

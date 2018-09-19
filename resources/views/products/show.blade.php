@@ -20,23 +20,29 @@
 
             <hr>
 
-            <h3>Product Information</h3>
+            <h3 class="text-center">Product Information</h3>
             <div class="col-md-12 row">
-                <div class="form-group  col-md-3">
-                {{Form::label('genericName', 'Generic Name')}}
-                {{Form::text('genericName', $product->genericNames->description, ['class' => 'form-control', 'placeholder' => 'Generic Name', 'disabled' => true])}}
+                <div class="form-group col-md-6">
+                    {{Form::label('genericName', 'Generic Name')}}
+                    {{Form::text('genericName', $product->genericNames->description, ['class' => 'form-control', 'placeholder' => 'Generic Name', 'disabled' => true])}}
                 </div>
-                <div class="form-group col-md-3">
-                {{Form::label('brandName', 'Brand Name')}}
-                {{Form::text('brandName', $product->brand_name, ['class' => 'form-control', 'placeholder' => 'Brand Name', 'disabled' => true])}}
+                <div class="form-group col-md-6">
+                    {{Form::label('brandName', 'Brand Name')}}
+                    {{Form::text('brandName', $product->brand_name, ['class' => 'form-control', 'placeholder' => 'Brand Name', 'disabled' => true])}}
                 </div>
-                <div class="form-group  col-md-3">
-                {{Form::label('manufacturer', 'Manufacturer')}}
-                {{Form::text('manufacturer', $product->manufacturers->name , ['class' => 'form-control', 'placeholder' => 'Manufacturer', 'disabled' => true])}}
+            </div>
+            <div class="col-md-12 row">
+                <div class="form-group  col-md-4">
+                    {{Form::label('manufacturer', 'Manufacturer')}}
+                    {{Form::text('manufacturer', $product->manufacturers->name , ['class' => 'form-control', 'placeholder' => 'Manufacturer', 'disabled' => true])}}
                 </div>
-                <div class="form-group col-md-3">
-                {{Form::label('drugType', 'Drug Type')}}
-                {{Form::text('drugType', $product->drugTypes->description , ['class' => 'form-control', 'placeholder' => 'Drug Type', 'disabled' => true])}}
+                <div class="form-group col-md-4">
+                    {{Form::label('drugType', 'Drug Type')}}
+                    {{Form::text('drugType', $product->drugTypes->description , ['class' => 'form-control', 'placeholder' => 'Drug Type', 'disabled' => true])}}
+                </div>
+                <div class="form-group col-md-4">
+                    {{Form::label('status', 'Status')}}
+                    {{Form::text('status', $product->status , ['class' => 'form-control', 'placeholder' => 'Status', 'disabled' => true])}}
                 </div>
             </div>
 
@@ -44,25 +50,50 @@
             <hr>
             <h3>Prices</h3>
             <div class="col-md-12 row">
-                <div class="form-group col-md-2">
-                {{Form::label('purchasePrice', 'Purchase Price')}}
-                {{Form::number('purchasePrice', $product->purchase_price, ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Market Price' , 'step' => 1, 'disabled' => true])}}
+                <div class="col-md-2">
+                    {{Form::label('purchasePrice', 'Purchase Price')}}
+                    <div class="input-group mb-3 my-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">&#8369;</span>
+                        </div>
+                            {{Form::number('purchasePrice', $product->purchase_price, ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Market Price' , 'step' => 1, 'disabled' => true])}}
+                    </div>
                 </div>
-                <div class="form-group col-md-2">
-                {{Form::label('specialPrice', 'Special Price')}}
-                {{Form::number('specialPrice', $product->special_price, ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Special Price' , 'step' => 1, 'disabled' => true])}}
+                <div class="col-md-2">
+                    {{Form::label('specialPrice', 'Special Price')}}
+                    <div class="input-group mb-3 my-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">&#8369;</span>
+                        </div>
+                    {{Form::number('specialPrice', $product->special_price, ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Special Price' , 'step' => 1, 'disabled' => true])}}
+                    </div>
                 </div>
-                <div class="form-group col-md-2">
-                {{Form::label('walkInPrice', 'Walk-In Price')}}
-                {{Form::number('walkInPrice', $product->walk_in_price, ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Walk-In Price' , 'step' => 1, 'disabled' => true])}}
+                <div class="col-md-2">
+                    {{Form::label('walkInPrice', 'Walk-In Price')}}
+                    <div class="input-group mb-3 my-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">&#8369;</span>
+                        </div>
+                    {{Form::number('walkInPrice', $product->walk_in_price, ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Walk-In Price' , 'step' => 1, 'disabled' => true])}}
+                    </div>
                 </div>
-                <div class="form-group col-md-2">
-                {{Form::label('promoPrice', 'Promo Price')}}
-                {{Form::number('promoPrice', $product->promo_price, ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Promo Price' , 'step' => 1, 'disabled' => true])}}
+                <div class="col-md-2">
+                    {{Form::label('promoPrice', 'Promo Price')}}
+                    <div class="input-group mb-3 my-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">&#8369;</span>
+                        </div>
+                    {{Form::number('promoPrice', $product->promo_price, ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Promo Price' , 'step' => 1, 'disabled' => true])}}
+                    </div>
                 </div>
-                <div class="form-group col-md-2">
-                {{Form::label('distributorPrice', 'Distributor\'s Price')}}
-                {{Form::number('distributorPrice', $product->distributor_price, ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Distributor\'s Price' , 'step' => 1, 'disabled' => true])}}
+                <div class="col-md-2">
+                    {{Form::label('distributorPrice', 'Distributor\'s Price')}}
+                    <div class="input-group mb-3 my-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">&#8369;</span>
+                        </div>
+                    {{Form::number('distributorPrice', $product->distributor_price, ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Distributor\'s Price' , 'step' => 1, 'disabled' => true])}}
+                    </div>
                 </div>
             </div>
             <hr>

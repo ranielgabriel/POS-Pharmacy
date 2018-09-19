@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Supplier;
 
 class SuppliersController extends Controller
@@ -89,7 +90,8 @@ class SuppliersController extends Controller
      */
     public function edit($id)
     {
-        //
+        $supplier = Supplier::find($id);
+        return view('suppliers.edit')->with('supplier', $supplier);
     }
 
     /**
@@ -101,7 +103,29 @@ class SuppliersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // validate request
+        $this->validate($request,[
+            'supplierName' => 'required',
+            'address' => 'required',
+            'ltoNumber' => 'required',
+            'expirationDate' => 'required|date|after:today',
+            'contactPerson' => 'required',
+            'contactNumber' => 'required',
+            'emailAddress' => 'required|email'
+        ]);
+        
+        $supplier = Supplier::find($id);
+        $supplier->name = $request->input('supplierName');
+        $supplier->address = $request->input('address');
+        $supplier->email_address = $request->input('emailAddress');
+        $supplier->lto_number = $request->input('ltoNumber');
+        $supplier->expiration_date = $request->input('expirationDate');
+        $supplier->contact_person = $request->input('contactPerson');
+        $supplier->contact_number = $request->input('contactNumber');
+        $supplier->save();
+
+        return redirect('/suppliers/' . $id)->with('success', 'Supplier information has been updated.');
+
     }
 
     /**
@@ -112,6 +136,11 @@ class SuppliersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $supplier = Supplier::find($id);
+        $supplier->delete();
+
+        DB::table('inventories')->where('supplier_id', '=', $id)->delete();
+
+        return redirect('/suppliers')->with('success', 'Supplier has been deleted successfully.');
     }
 }

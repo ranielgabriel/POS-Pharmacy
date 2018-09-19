@@ -3,7 +3,7 @@
 @section('content')
     <div class="col-md-12 responsive">
         <div class="form-group">
-            <h1 class="">Products</h1>
+            <h1 class="text-center"><span class="fa fa-archive">&nbsp;</span>Products</h1>
             @guest
 
             @else
@@ -38,7 +38,7 @@
                                 <th class="align-middle">Walk-In Price</th>
                                 <th class="align-middle">Promo Price</th>
                                 <th class="align-middle">Distributor's Price</th>
-                                <th class="align-middle">Action</th>
+                                <th class="align-middle">Cart</th>
                             @endauth
                         </tr>
                     </thead>

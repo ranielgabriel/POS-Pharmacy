@@ -2,9 +2,9 @@
 @section('content')
     <div class="col-md-12 responsive">
         <div class="form-group">
-            <h1 class="">Customers</h1>
+            <h1 class="text-center"><span class="fa fa-users">&nbsp;</span>Customers</h1>
 
-            @if($user->role == 'Administrator')
+            @if(Auth::user()->role == 'Administrator')
                 <a class="btn btn-primary" href="/customers/create"><span class="fa fa-plus"></span>&nbsp;Customer</a>
             @endif
 
@@ -22,7 +22,9 @@
                             <th class="align-middle">Customer Name</th>
                             <th class="align-middle">Contact No.</th>
                             <th class="align-middle">Address</th>
-                            <th class="align-middle" colspan="2">Actions</th>
+                            @if (Auth::user()->role == 'Administrator')
+                                <th class="align-middle" colspan="2">Actions</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody id="tableCustomers" class="table-sm">
@@ -31,14 +33,17 @@
                                 <td class="align-middle">{{ $customer->name }}</td>
                                 <td class="align-middle">{{ $customer->contact_number }}</td>
                                 <td class="align-middle">{{ $customer->address }}</td>
-                                <td class="align-middle"><a class="btn btn-info" href="#"><span class="fa fa-edit"></span>&nbsp;Update</a></td>
-                                <td class="align-middle"><a class="btn btn-danger" href="#"><span class="fa fa-trash"></span>&nbsp;Delete</a></td>
+                                @if (Auth::user()->role == 'Administrator')
+                                    <td class="align-middle"><a class="btn btn-info" href="#"><span class="fa fa-edit"></span>&nbsp;Update</a></td>
+                                    <td class="align-middle"><a class="btn btn-danger" href="#"><span class="fa fa-trash"></span>&nbsp;Delete</a></td>
+                                @endif
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
+        {{$customers->links()}}
     </div>
 @endsection
 

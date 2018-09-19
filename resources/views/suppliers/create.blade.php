@@ -5,7 +5,7 @@
         <hr>
         {!! Form::open(['action' => 'SuppliersController@store', 'method' => 'POST', 'autocomplete' => 'off']) !!}
         <div class="col-md-12">
-            <h3>Supplier Information</h3>
+            <h3 class="text-center">Supplier Information</h3>
                 <div class="col-md-12">
                     <div class="form-group col-md-12">
                         <div class="form-group col-md-12">

@@ -4,7 +4,7 @@
     <div class="col-md-12 responsive">
 
         <div class="form-group">
-        <h1 class="">Inventories</h1>
+        <h1 class="text-center"><span class="fa fa-list-alt">&nbsp;</span>Inventories</h1>
         <a class="btn btn-primary" href="/inventories/create"><span class="fa fa-plus"></span>&nbsp;Inventory</a>
 
         {{-- <div class="form-group col-md-12 py-2">

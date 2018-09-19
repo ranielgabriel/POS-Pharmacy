@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <div class="container container-fluid">
-    <h1>Add a Customer</h1>
+    <h1 class="text-center">Add a Customer</h1>
     <hr>
     {!! Form::open(['action' => 'CustomersController@store', 'method' => 'POST', 'autocomplete' => 'off']) !!}
     <div class="col-md-12">
@@ -25,7 +25,7 @@
 
             <div class="form-group col-md-12">
                 {{Form::label('details', 'Details')}}
-                {{Form::textarea('details', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Details',])}}
+                {{Form::textarea('details', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Details', 'style' => 'resize:none'])}}
             </div>
         </div>
 

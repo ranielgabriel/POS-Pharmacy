@@ -6,7 +6,7 @@
                 <strong>Oops!</strong> You don't have anything in your cart. <a href="/products/" class="alert-link">Click here to add something in your cart.</a>.
             </div>
         @else
-            <h1>Cart</h1>
+            <h1 class="text-center"><span class="fa fa-shopping-cart">&nbsp;</span>Cart</h1>
                 <div class="table-responsive rounded">
                     <table class="table table-striped table-hover">
                         <thead class="thead-dark text-center small">
@@ -153,7 +153,7 @@
                 console.log('Checkout is clicked.');
                 
                 if(checkAllFields()){
-                    alert('Please choose the expiration date, quantity, and price of the item(s).');
+                    alert('Please select an expiration date, quantity, price of item(s), and write the name of the customer.');
                     return false;
                 }
 
@@ -203,7 +203,11 @@
         });
 
         function checkAllFields(){
-            var check = true;
+
+            if($('#customerName').val() == ''){
+                return true;
+            }
+
             for(var i = 1; i <= tableRowCount; i++){
                 if($('#expirationDate'+i).val() == ''){
                     return true;

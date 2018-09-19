@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <div class="col-md-12">
-        <h3>Update Product Information</h3>
+        <h3 class="text-center">Update Product Information</h3>
         <hr>
         {!! Form::open(['action' => ['ProductsController@update', $product->id], 'method' => 'POST', 'autocomplete' => 'off']) !!}
         <div class="col-md-12">
@@ -9,21 +9,27 @@
 
                 <h3>Product Information</h3>
                 <div class="col-md-12 row">
-                    <div class="form-group  col-md-3">
+                    <div class="form-group  col-md-6">
                         {{Form::label('genericName', 'Generic Name')}}
                         {{Form::text('genericName', $product->genericNames->description, ['class' => 'form-control', 'placeholder' => 'Generic Name', 'id' => 'genericName', 'required'])}}
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-6">
                         {{Form::label('brandName', 'Brand Name')}}
                         {{Form::text('brandName', $product->brand_name, ['class' => 'form-control', 'placeholder' => 'Brand Name', 'id' => 'brandName', 'required'])}}
                     </div>
-                    <div class="form-group  col-md-2">
+                </div>
+                <div class="col-md-12 row">
+                    <div class="form-group  col-md-4">
                         {{Form::label('manufacturer', 'Manufacturer')}}
                         {{Form::text('manufacturer', $product->manufacturers->name, ['class' => 'form-control', 'placeholder' => 'Manufacturer', 'id' => 'manufacturer', 'required'])}}
                     </div>
-                    <div class="form-group col-md-2">
+                    <div class="form-group col-md-4">
                         {{Form::label('drugType', 'Drug Type')}}
                         {{Form::text('drugType', $product->drugTypes->description, ['class' => 'form-control', 'placeholder' => 'Drug Type', 'type' => 'text', 'id' => 'drugType', 'required'])}}
+                    </div>
+                    <div class="form-group col-md-4">
+                        {{Form::label('status', 'Status')}}
+                        {{Form::select('status', ['Selling' => 'Selling', 'In-stock' => 'In-stock', 'Out-of-stock' => 'Out-of-stock'] , $product->status, ['class' => 'form-control', 'placeholder' => 'Pick a status...', 'required'])}}
                     </div>
                 </div>
             </div>
@@ -56,9 +62,9 @@
             </div>
 
             <hr>
-            <a class="btn btn-danger" href="/products/{{$product->id}}">Cancel</a>
+            <a class="btn btn-danger" href="/products/{{$product->id}}"><span class="fa fa-times"></span>&nbsp;Cancel</a>
             {{Form::hidden('_method', 'PUT')}}
-            <button type="submit" class="btn btn-primary"><span class="fa fa-check"></span>&nbsp;Update Product</button>
+            <button type="submit" class="btn btn-primary"><span class="fa fa-check"></span>&nbsp;Save Changes</button>
         </div>
         {!! Form::close() !!}
 

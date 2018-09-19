@@ -13,7 +13,6 @@ class CustomersController extends Controller
     {
         $this->middleware('auth');
     }
-
     /**
      * Display a listing of the resource.
      *
@@ -22,7 +21,7 @@ class CustomersController extends Controller
     public function index()
     {
         $customers = Customer::orderBy('id','asc')
-        ->get();
+        ->paginate(25);
 
         $user = User::find(Auth::user()->id);
         return view('customers.index')->with(['customers' => $customers, 'user' => $user]);
