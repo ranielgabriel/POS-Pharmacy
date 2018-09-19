@@ -98,9 +98,9 @@ class InventoriesController extends Controller
 
         // find if exist or create if not
         $manufacturer = new Manufacturer();
-        $manufacturer = Manufacturer::firstOrCreate([
-            'name' => $request->input('manufacturer')
-        ]);
+        $manufacturer = Manufacturer::firstOrCreate(
+            ['name' => $request->input('manufacturer')]
+        );
 
         // find
         $supplier = new Supplier();

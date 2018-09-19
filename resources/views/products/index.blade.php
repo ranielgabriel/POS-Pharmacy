@@ -4,7 +4,6 @@
     <div class="col-md-12 responsive">
         <div class="form-group">
             <h1 class="">Products</h1>
-
             @guest
 
             @else
@@ -168,7 +167,7 @@
             {!! Form::close() !!}
         </div>
     </div>
-    {{-- {{ $products->links() }} --}}
+    {{-- {{ $products->links() }} --}}  
 @endsection()
 
 @section('formLogic')

@@ -1,8 +1,16 @@
 @extends('layouts.app')
 @section('content')
     <div class="col-md-12 responsive">
-        {!! Form::open(['action' => 'ProductsController@store', 'method' => 'POST']) !!}
+        
         <div class="col-md-12">
+            
+            <a class="btn btn-info" href="/products"><span class="fa fa-arrow-left"></span>&nbsp;Back</a>
+            <div class="row float-right">
+                <a class="btn btn-info mx-1" href="/products/{{ $product->id }}/edit"><span class="fa fa-edit"></span>&nbsp;Update</a>
+                <a class="btn btn-danger mx-1" href="/products"><span class="fa fa-trash"></span>&nbsp;Delete</a>
+            </div>
+            <hr>
+
             <h3>Product Information</h3>
             <div class="col-md-12 row">
                 <div class="form-group  col-md-3">
@@ -24,6 +32,30 @@
             </div>
 
             @auth
+            <hr>
+            <h3>Prices</h3>
+            <div class="col-md-12 row">
+                <div class="form-group col-md-2">
+                {{Form::label('purchasePrice', 'Purchase Price')}}
+                {{Form::number('purchasePrice', $product->purchase_price, ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Market Price' , 'step' => 1, 'disabled' => true])}}
+                </div>
+                <div class="form-group col-md-2">
+                {{Form::label('specialPrice', 'Special Price')}}
+                {{Form::number('specialPrice', $product->special_price, ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Special Price' , 'step' => 1, 'disabled' => true])}}
+                </div>
+                <div class="form-group col-md-2">
+                {{Form::label('walkInPrice', 'Walk-In Price')}}
+                {{Form::number('walkInPrice', $product->walk_in_price, ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Walk-In Price' , 'step' => 1, 'disabled' => true])}}
+                </div>
+                <div class="form-group col-md-2">
+                {{Form::label('promoPrice', 'Promo Price')}}
+                {{Form::number('promoPrice', $product->promo_price, ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Promo Price' , 'step' => 1, 'disabled' => true])}}
+                </div>
+                <div class="form-group col-md-2">
+                {{Form::label('distributorPrice', 'Distributor\'s Price')}}
+                {{Form::number('distributorPrice', $product->distributor_price, ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Distributor\'s Price' , 'step' => 1, 'disabled' => true])}}
+                </div>
+            </div>
             <hr>
             <h3>Inventory Information</h3>
             <table class="table table-bordered table-striped table-hover">
@@ -56,35 +88,8 @@
                     @endforeach
                 </tbody>
             </table>
-            <hr>
-            <h3>Prices</h3>
-            <div class="col-md-12 row">
-                <div class="form-group col-md-2">
-                {{Form::label('purchasePrice', 'Purchase Price')}}
-                {{Form::number('purchasePrice', $product->purchase_price, ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Market Price' , 'step' => 1, 'disabled' => true])}}
-                </div>
-                <div class="form-group col-md-2">
-                {{Form::label('specialPrice', 'Special Price')}}
-                {{Form::number('specialPrice', $product->special_price, ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Special Price' , 'step' => 1, 'disabled' => true])}}
-                </div>
-                <div class="form-group col-md-2">
-                {{Form::label('walkInPrice', 'Walk-In Price')}}
-                {{Form::number('walkInPrice', $product->walk_in_price, ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Walk-In Price' , 'step' => 1, 'disabled' => true])}}
-                </div>
-                <div class="form-group col-md-2">
-                {{Form::label('promoPrice', 'Promo Price')}}
-                {{Form::number('promoPrice', $product->promo_price, ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Promo Price' , 'step' => 1, 'disabled' => true])}}
-                </div>
-                <div class="form-group col-md-2">
-                {{Form::label('distributorPrice', 'Distributor\'s Price')}}
-                {{Form::number('distributorPrice', $product->distributor_price, ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Distributor\'s Price' , 'step' => 1, 'disabled' => true])}}
-                </div>
-            </div>
             @endauth
-            <hr>
-            <a class="btn btn-info" href="/products"><span class="fa fa-arrow-left"></span>&nbsp;Back</a>
         </div>
-        {!! Form::close() !!}
 
     </div>
 @endsection

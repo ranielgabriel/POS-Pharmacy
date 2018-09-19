@@ -152,7 +152,11 @@ class ProductsController extends Controller
      */
     public function edit($id)
     {
-        //
+        // find the product
+        $product = Product::find($id);
+
+        // return the view show from products folder
+        return view('products.edit')->with('product', $product);
     }
 
     /**
@@ -164,7 +168,53 @@ class ProductsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $this->validate($request,[
+            'brandName' => 'required',
+            'genericName' => 'required',
+            'manufacturer' => 'required',
+            'drugType' => 'required',
+            'purchasePrice' => 'required',
+            'specialPrice' => 'required',
+            'walkInPrice' => 'required',
+            'promoPrice' => 'required',
+            'distributorPrice' => 'required'
+        ]);
+
+        $product = Product::find($id);
+        $product->brand_name = $request->input('brandName');
+        
+        // find if exist or create if not
+        $genericName = new GenericName();
+        $genericName = GenericName::firstOrCreate(
+            ['description' => $request->input('genericName')]
+        );
+
+        // find if exist or create if not
+        $drugType = new DrugType();
+        $drugType = DrugType::firstOrCreate(
+            ['description' => $request->input('drugType')]
+        );
+
+        // find if exist or create if not
+        $manufacturer = new Manufacturer();
+        $manufacturer = Manufacturer::firstOrCreate(
+            ['name' => $request->input('manufacturer')]
+        );
+
+        $product->generic_name_id = $genericName->id;
+        $product->manufacturer_id = $manufacturer->id;
+        $product->drug_type_id = $drugType->id;
+
+        $product->purchase_price = $request->input('purchasePrice');
+        $product->special_price = $request->input('specialPrice');
+        $product->walk_in_price = $request->input('walkInPrice');
+        $product->promo_price = $request->input('promoPrice');
+        $product->distributor_price = $request->input('distributorPrice');
+
+        $product->save();
+
+        return redirect('/products/' . $id)->with('success','Product successfully updated.');
     }
 
     /**

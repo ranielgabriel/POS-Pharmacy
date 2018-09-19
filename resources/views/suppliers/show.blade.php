@@ -2,6 +2,14 @@
 @section('content')
     <div class="container container-fluid">
         <div class="col-md-12">
+
+            <a class="btn btn-info" href="/inventories"><span class="fa fa-arrow-left"></span>&nbsp;Back</a>
+            <div class="row float-right">
+                <a class="btn btn-info mx-1" href="/suppliers/edit/{{ $supplier->id }}"><span class="fa fa-edit"></span>&nbsp;Update</a>
+                <a class="btn btn-danger mx-1" href="/suppliers"><span class="fa fa-trash"></span>&nbsp;Delete</a>
+            </div>
+            <hr>
+            
             <h3>Supplier Information</h3>
                 <div class="col-md-12">
                     <div class="form-group col-md-12">
@@ -39,8 +47,6 @@
                         </div>
                     </div>
                 </div>
-            <hr>
-            <a class="btn btn-info" href="/inventories"><span class="fa fa-arrow-left"></span>&nbsp;Back</a>
         </div>
 
     </div>
