@@ -18,6 +18,7 @@
                                 <th>Expiration Date</th>
                                 <th>Quantity</th>
                                 <th>Price</th>
+                                <th>Sub-Total</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -42,8 +43,9 @@
                                         @endif
                                     @endforeach
                                     <td class="align-middle">{{Form::select('expirationDate' . $loop->iteration, $expirationDatesToDisplay , null, ['class' => 'form-control expirationSelect', 'placeholder' => 'Pick an expiration date...', 'id' => 'expirationDate' . $loop->iteration])}}</td>
-                                    <td class="align-middle">{{Form::number('quantity' . $loop->iteration, null, ['class' => 'form-control quantityNumber', 'placeholder' => 'Quantity', 'min' => 0, 'step' => 1 , 'disabled', 'id' => 'quantity' . $loop->iteration])}}</td>
-                                    <td class="align-middle">{{Form::select('prices' . $loop->iteration, [$item->product->purchase_price => 'Purchase: &#8369; ' . $item->product->purchase_price, $item->product->promo_price => 'Promo: &#8369; ' . $item->product->promo_price, $item->product->special_price => 'Special: &#8369; ' . $item->product->special_price, $item->product->walk_in_price => 'Walk-in: &#8369; ' . $item->product->walk_in_price, $item->product->distributor_price => 'Distributor\'s: &#8369; ' . $item->product->distributor_price, ] , null, ['class' => 'form-control priceSelect', 'placeholder' => 'Pick a price...', 'id' => 'price' . $loop->iteration])}}</td>
+                                    <td class="align-middle">{{Form::number('quantity' . $loop->iteration, null, ['class' => 'form-control quantityNumber', 'placeholder' => 'Quantity', 'min' => 0, 'step' => 1 , 'disabled', 'data-loop-iteration' => $loop->iteration , 'id' => 'quantity' . $loop->iteration])}}</td>
+                                    <td class="align-middle">{{Form::select('prices' . $loop->iteration, [$item->product->purchase_price => 'Purchase: &#8369; ' . $item->product->purchase_price, $item->product->promo_price => 'Promo: &#8369; ' . $item->product->promo_price, $item->product->special_price => 'Special: &#8369; ' . $item->product->special_price, $item->product->walk_in_price => 'Walk-in: &#8369; ' . $item->product->walk_in_price, $item->product->distributor_price => 'Distributor\'s: &#8369; ' . $item->product->distributor_price, ] , null, ['class' => 'form-control priceSelect', 'placeholder' => 'Pick a price...', 'data-loop-iteration' => $loop->iteration, 'id' => 'price' . $loop->iteration])}}</td>
+                                    <td class="align-middle" id="subTotal{{$loop->iteration}}">&#8369; 0.00</td>
                                     <td class="align-middle">
                                         <center>
                                             {{Form::button('<span class="fa fa-times"></span>', ['type' => 'submit', 'class' => 'btn btn-danger'])}}
@@ -118,6 +120,7 @@
         $('document').ready(function(){
 
             console.log('Page is ready.');
+
             tableRowCount = $('#tableCart tr').length;
 
             $("#tableCart tr .expirationSelect").on({
@@ -143,10 +146,15 @@
             });
 
             $(".quantityNumber").keyup(function(){
+                computeSubTotal($(this).data('loop-iteration'));
                 if(parseInt($(this).val()) > parseInt($(this).attr('max'))){
                     $(this).val($(this).attr('max'));
                     return;
                 }
+            });
+
+            $(".priceSelect").change(function(){
+                computeSubTotal($(this).data('loop-iteration'));
             });
 
             $("#btnCheckout").click(function(){
@@ -169,7 +177,8 @@
                         cartId : parseInt($('#cartId'+i).html()),
                         inventoryId : parseInt($('#inventoryId'+i).html()),
                         inventorySold : parseInt($('#quantity'+i).val()),
-                        subTotal : parseFloat($('#price'+i).val())
+                        priceSold : parseFloat($('#price'+i).val()),
+                        subTotal : parseFloat($('#quantity'+i).val() * $('#price'+i).val())
                     };
 
                     subTotal = $('#quantity'+i).val() * $('#price'+i).val();
@@ -194,13 +203,18 @@
                 $('#modalCartTBody').append(code);
                 $('#totalAmount').html("&#8369; " + Number(totalAmount.toFixed(2)).toLocaleString('en'));
                 // inventoryList["totalAmount"] = parseFloat(totalAmount.toFixed(2));
-                // console.log(inventoryList);
+                console.log(inventoryList);
             });
 
             $("#btnConfirm").click(function(){
                 insertSale(inventoryList);
             });
         });
+
+        function computeSubTotal(loopIteration){
+            var subTotal = $('#quantity'+loopIteration).val() * $('#price'+loopIteration).val();
+            $('#subTotal'+loopIteration).html('&#8369; ' + Number(subTotal.toFixed(2)).toLocaleString('en'));
+        }
 
         function checkAllFields(){
 

@@ -12,7 +12,7 @@ class Manufacturer extends Model
 
     public $primaryKey = 'id';
 
-    public function products(){
+    public function product(){
         return $this->hasMany('App\Product');
     }
 }

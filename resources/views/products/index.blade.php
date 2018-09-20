@@ -161,7 +161,7 @@
                 </div>
                 <div class="modal-footer">
                     {{-- {{ Form::submit('Add to Cart', ['class' => 'btn btn-primary col-md-12'])}} --}}
-                    <button type="submit" class="btn btn-primary col-md-12">Add to Cart&nbsp;<span class="fa fa-cart-plus"></span></button>
+                    <button type="submit" class="btn btn-primary col-md-12" id="btnAddToCart">Add to Cart&nbsp;<span class="fa fa-cart-plus"></span></button>
                 </div>
             </div>
             {!! Form::close() !!}
@@ -175,6 +175,10 @@
         $('document').ready(function () {
             console.log('Page is ready');
             $('#tableSearchContainer').hide();
+            
+            if({!! $cart->count() !!} != 0){
+                $('#anchorCart').append('<span class="badge badge-pill badge-info">' + {!! $cart->count() !!} + '</span>');
+            }
 
             $('#search').val('');
             $('#search').keyup(function () {

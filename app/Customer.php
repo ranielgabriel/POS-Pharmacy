@@ -19,4 +19,8 @@ class Customer extends Model
 
     // Primary Key
     public $primaryKey = 'id';
+
+    public function sale(){
+        return $this->hasMany('App\Sale');
+    }
 }

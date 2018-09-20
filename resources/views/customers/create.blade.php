@@ -7,7 +7,7 @@
     <div class="col-md-12">
         <div id="productInformationContainer" class="container">
 
-            <h3>Customer Information</h3>
+            <h3 class="text-center">Customer Information</h3>
             <div class="col-md-12 row">
                 <div class="form-group col-md-3">
                     {{Form::label('name', 'Name')}}

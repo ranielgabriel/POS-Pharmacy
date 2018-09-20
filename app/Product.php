@@ -13,19 +13,25 @@ class Product extends Model
     'generic_name_id',
     'manufacturer_id',
     'drug_type_id'
-];
+    ];
 
     // Primary Key
     public $primaryKey = 'id';
 
     public function drugTypes(){
-        // Foreign key check is 'payment_method_id'
-        // Products table has a relationship of 1 : 1 in Drug_Types Table
         return $this->belongsTo('App\DrugType','drug_type_id');
     }
 
     public function inventories(){
         return $this->hasMany('App\Inventory');
+    }
+
+    public function productSale(){
+        return $this->hasMany('App\ProductSale');
+    }
+
+    public function returnInventories(){
+        return $this->hasMany('App\ReturnInventory');
     }
 
     public function manufacturers(){

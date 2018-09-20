@@ -10,7 +10,7 @@ class GenericName extends Model
     protected $fillable = ['description'];
     public $primaryKey = 'id';
 
-    public function products(){
+    public function product(){
         return $this->hasMany('App\Product');
     }
 }

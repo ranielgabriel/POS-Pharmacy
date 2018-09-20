@@ -15,10 +15,11 @@ class CreateProductSalesTable extends Migration
     {
         Schema::create('product_sales', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('sale_id');
             $table->integer('product_id');
+            $table->integer('inventory_id');
             $table->integer('quantity');
             $table->decimal('price', 10, 2);
-            $table->integer('sales_id');
             $table->timestamps();
         });
     }

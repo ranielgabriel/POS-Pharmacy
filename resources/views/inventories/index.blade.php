@@ -12,7 +12,6 @@
             {{Form::text('search', '', ['id' => 'search', 'class' => 'form-control', 'placeholder' => 'Search... (Brand Name / Generic Name)'])}}
         </div> --}}
 
-        {{-- <div class="responsive" id="tableSearchContainer"></div> --}}
         @foreach ($batches as $batch)
             @if ($batch->inventories->count() > 0)
                 <div class="table-responsive rounded my-2" id="tableContainer">
@@ -20,7 +19,6 @@
                         <thead class="thead-dark table-sm">
                             <tr class="">
                                 <th colspan="8" class="align-middle"><small>Batch Number: </small>{{ $batch->id }}</th>
-                                {{-- <th colspan="1"><small>Date of Delivery: </small>{{ $batch->delivery_date }}</th> --}}
                                 </tr>
                         </thead>
                         <thead class="thead-dark table-sm">
@@ -55,53 +53,53 @@
             @endif
         @endforeach
         </div>
+        {{ $batches->links()}}
     </div>
 
-    {{ $batches->links()}}
 
     <div id="modalSupplier" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">
-                            {{Form::label('supplierName', 'Supplier Name', ['id' => 'supplierName'])}}
-                        </h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    <div class="modal-body">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        {{Form::label('supplierName', 'Supplier Name', ['id' => 'supplierName'])}}
+                    </h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
                         <div class="form-group">
-                            <div class="form-group">
-                                <small>{{Form::label('address', 'Address')}}</small>
-                                {{Form::text('address', '', ['class' => 'form-control', 'placeholder' => 'Address', 'disabled' => true, 'id' => 'address'])}}
-                            </div>
-                            <div class="form-group">
-                                <small>{{Form::label('ltoNumber', 'LTO Number')}}</small>
-                                {{Form::number('ltoNumber', '' , ['class' => 'form-control', 'placeholder' => 'LTO Number', 'disabled' => true, 'id' => 'ltoNumber'])}}
-                            </div>
-                            <div class="form-group">
-                                <small>{{Form::label('expirationDate', 'Expiration Date')}}</small>
-                                {{Form::text('expirationDate', '' , ['class' => 'form-control', 'placeholder' => 'Expiration Date', 'disabled' => true, 'id' => 'expirationDate'])}}
-                            </div>
-                            <div class="form-group">
-                                <small>{{Form::label('contactPerson', 'Contact Person')}}</small>
-                                {{Form::text('contactPerson', '', ['class' => 'form-control', 'placeholder' => 'Contact Person', 'disabled' => true, 'id' => 'contactPerson'])}}
-                            </div>
-                            <div class="form-group">
-                                <small>{{Form::label('contactNumber', 'Contact Number')}}</small>
-                                {{Form::text('contactNumber', '' , ['class' => 'form-control', 'placeholder' => 'Contact Number', 'disabled' => true, 'id' => 'contactNumber'])}}
-                            </div>
-                            <div class="form-group">
-                                <small>{{Form::label('emailAddress', 'Email Address')}}</small>
-                                {{Form::text('emailAddress', '' , ['class' => 'form-control', 'placeholder' => 'Email Address', 'disabled' => true, 'id' => 'emailAddress'])}}
-                            </div>
+                            <small>{{Form::label('address', 'Address')}}</small>
+                            {{Form::text('address', '', ['class' => 'form-control', 'placeholder' => 'Address', 'disabled' => true, 'id' => 'address'])}}
+                        </div>
+                        <div class="form-group">
+                            <small>{{Form::label('ltoNumber', 'LTO Number')}}</small>
+                            {{Form::number('ltoNumber', '' , ['class' => 'form-control', 'placeholder' => 'LTO Number', 'disabled' => true, 'id' => 'ltoNumber'])}}
+                        </div>
+                        <div class="form-group">
+                            <small>{{Form::label('expirationDate', 'Expiration Date')}}</small>
+                            {{Form::text('expirationDate', '' , ['class' => 'form-control', 'placeholder' => 'Expiration Date', 'disabled' => true, 'id' => 'expirationDate'])}}
+                        </div>
+                        <div class="form-group">
+                            <small>{{Form::label('contactPerson', 'Contact Person')}}</small>
+                            {{Form::text('contactPerson', '', ['class' => 'form-control', 'placeholder' => 'Contact Person', 'disabled' => true, 'id' => 'contactPerson'])}}
+                        </div>
+                        <div class="form-group">
+                            <small>{{Form::label('contactNumber', 'Contact Number')}}</small>
+                            {{Form::text('contactNumber', '' , ['class' => 'form-control', 'placeholder' => 'Contact Number', 'disabled' => true, 'id' => 'contactNumber'])}}
+                        </div>
+                        <div class="form-group">
+                            <small>{{Form::label('emailAddress', 'Email Address')}}</small>
+                            {{Form::text('emailAddress', '' , ['class' => 'form-control', 'placeholder' => 'Email Address', 'disabled' => true, 'id' => 'emailAddress'])}}
                         </div>
                     </div>
-                    <div class="modal-footer" id="modalSupplierFooter">
-                        
-                    </div>
+                </div>
+                <div class="modal-footer" id="modalSupplierFooter">
+                    
                 </div>
             </div>
         </div>
+    </div>
     
 @endsection
 
@@ -139,7 +137,7 @@
                         $('#expirationDate').val(msg['supplier']['expiration_date']);
                         $('#contactPerson').val(msg['supplier']['contact_person']);
                         $('#contactNumber').val(msg['supplier']['contact_number']);
-
+                        $('#modalSupplierFooter').html('');
                         $('#modalSupplierFooter').append('<a class="btn btn-info col-md-12" href=/suppliers/' + msg['supplier']['id'] + '><span class="fa fa-info-circle">&nbsp;</span>View Supplier Information</a>');
                     }
                 }

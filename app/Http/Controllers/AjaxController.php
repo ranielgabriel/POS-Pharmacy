@@ -15,6 +15,8 @@ use App\Supplier;
 use App\Batch;
 use App\Cart;
 use App\Customer;
+use App\Sale;
+use App\ProductSale;
 
 class AjaxController extends Controller
 {
@@ -276,7 +278,15 @@ class AjaxController extends Controller
         // $size = 0;
         // $inventoryList = array();
         // $productList = array();
-        
+
+        $customer = Customer::firstOrCreate([
+            'name' => $request->input('customerName')
+        ]);
+
+        $sale = Sale::create([
+            'customer_id' => $customer->id
+        ]);
+
         foreach($object as $item){
             $inventory = Inventory::find($item['inventoryId']);
             $inventory->sold = $inventory->sold + $item['inventorySold'];
@@ -290,16 +300,21 @@ class AjaxController extends Controller
                 $product->status = 'Out-of-stock';
                 $product->save();
             }
+
+            $productSale = ProductSale::create([
+                'product_id' => $product->id,
+                'sale_id' => $sale->id,
+                'inventory_id' => $inventory->id,
+                'quantity' => $item['inventorySold'],
+                'price' => $item['priceSold']
+            ]);
+
             // $size++;
             // $inventoryList[$size] = $inventory;
             // $inventoryList[$size]["cart"] = $cart;
 
             // $productList[$size] = $product;
         }
-
-        $customer = Customer::firstOrCreate([
-            'name' => $request->input('customerName')
-        ]);
 
         // $inventory = new Inventory();
         // $inventory = Inventory::find($request->input('id'));

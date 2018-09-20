@@ -1,85 +1,68 @@
 @extends('layouts.app')
+
 @section('content')
-    <div class="container container-fluid">
-        <h1 class="text-center">Add a Product</h1>
+    <div class="col-md-12">
+        <h1 class="text-center">Add a Return</h1>
         <hr>
-        {!! Form::open(['action' => 'ProductsController@store', 'method' => 'POST', 'autocomplete' => 'off']) !!}
+        {!! Form::open(['action' => 'ReturnInventoriesController@store', 'method' => 'POST', 'autocomplete' => 'off']) !!}
         <div class="col-md-12">
             <div id="productInformationContainer" class="container">
 
-                <h3 class="text-center">Product Information</h3>
-                <div class="col-md-12 row">
-                    <div class="form-group col-md-3" id="productIdContainer">
-                        {{Form::label('productId', 'Product Id')}}
-                        {{Form::number('productId', '', ['class' => 'form-control', 'placeholder' => 'Product Id', 'readonly', 'id' => 'productId', 'required'])}}
+                    <h3 class="text-center">Product Information</h3>
+                    <div class="col-md-12 row">
+                        <div class="form-group col-md-3" id="productIdContainer">
+                            {{Form::label('productId', 'Product Id')}}
+                            {{Form::number('productId', '', ['class' => 'form-control', 'placeholder' => 'Product Id', 'readonly', 'id' => 'productId', 'required'])}}
+                        </div>
+                        <div class="form-group col-md-6">
+                        {{Form::label('brandName', 'Brand Name')}}
+                        @php
+                            $productsToDisplay = array();
+                        @endphp
+                        
+                        @foreach ($products as $product)
+                            <?php $productsToDisplay[$product->id] = $product->brand_name;?>
+                        @endforeach
+                        
+                        {{Form::select('brandName', $productsToDisplay , null, ['class' => 'form-control', 'placeholder' => 'Pick a product...', 'id' => 'brandName', 'required'])}}
+                        </div>
+                        <div class="form-group  col-md-6">
+                            {{Form::label('genericName', 'Generic Name')}}
+                            {{Form::text('genericName', '', ['class' => 'form-control', 'placeholder' => 'Generic Name', 'readonly', 'id' => 'genericName', 'required'])}}
+                        </div>
                     </div>
-                    <div class="form-group col-md-3">
-                    {{Form::label('brandName', 'Brand Name')}}
-                    @php
-                        $productsToDisplay = array();
-                    @endphp
-                    @foreach ($products as $product)
-                        <?php $productsToDisplay[$product->id] = $product->brand_name;?>
-                    @endforeach
-                    @php
-                    @endphp
-
-                    {{Form::select('brandName', $productsToDisplay , null, ['class' => 'form-control', 'placeholder' => 'Pick a product...', 'id' => 'brandName', 'required'])}}
-                    </div>
-                    <div class="form-group  col-md-3">
-                        {{Form::label('genericName', 'Generic Name')}}
-                        {{Form::text('genericName', '', ['class' => 'form-control', 'placeholder' => 'Generic Name', 'readonly', 'id' => 'genericName', 'required'])}}
-                    </div>
-                    <div class="form-group  col-md-2">
-                        {{Form::label('manufacturer', 'Manufacturer')}}
-                        {{Form::text('manufacturer', '', ['class' => 'form-control', 'placeholder' => 'Manufacturer', 'readonly', 'id' => 'manufacturer', 'required'])}}
-                    </div>
-                    <div class="form-group col-md-2">
-                        {{Form::label('drugType', 'Drug Type')}}
-                        {{Form::text('drugType', '', ['class' => 'form-control', 'placeholder' => 'Drug Type', 'type' => 'text', 'readonly', 'id' => 'drugType', 'required'])}}
-                    </div>
-                    <div class="form-group col-md-2">
-                        {{Form::label('quantity', 'Quantity')}}
-                        {{Form::number('quantity', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Quantity', 'readonly', 'id' => 'quantity', 'required'])}}
-                    </div>
-                </div>
-            </div>
-
-            <div id="pricesContainer" class="container">
-                <hr>
-                <h3>Prices</h3>
-                <div class="col-md-12 row">
-                    <div class="form-group col-md-2">
-                        {{Form::label('purchasePrice', 'Purchase Price')}}
-                        {{Form::number('purchasePrice', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Purchase Price' , 'step' => 'any', 'id' => 'purchasePrice', 'required'])}}
-                    </div>
-                    <div class="form-group col-md-2">
-                        {{Form::label('specialPrice', 'Special Price')}}
-                        {{Form::number('specialPrice', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Special Price' , 'step' => 'any', 'id' => 'specialPrice', 'required'])}}
-                    </div>
-                    <div class="form-group col-md-2">
-                        {{Form::label('walkInPrice', 'Walk-In Price')}}
-                        {{Form::number('walkInPrice', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Walk-In Price' , 'step' => 'any', 'id' => 'walkInPrice', 'required'])}}
-                    </div>
-                    <div class="form-group col-md-2">
-                        {{Form::label('promoPrice', 'Promo Price')}}
-                        {{Form::number('promoPrice', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Promo Price' , 'step' => 'any', 'id' => 'promoPrice', 'required'])}}
-                    </div>
-                    <div class="form-group col-md-2">
-                        {{Form::label('distributorPrice', 'Distributor\'s Price')}}
-                        {{Form::number('distributorPrice', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Distributor\'s Price' , 'step' => 'any', 'id' => 'distributorPrice', 'required'])}}
+                    <div class="col-md-12 row">
+                        <div class="form-group col-md-3">
+                            {{Form::label('quantity', 'Quantity')}}
+                            {{Form::number('quantity', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Quantity', 'id' => 'quantity', 'required'])}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{Form::label('expirationDate', 'Expiration Date')}}
+                            <select name="expirationDate" id="expirationDate" required class="form-control"></select>
+                            {{-- {{Form::select('expirationDate', $expirationDatesToDisplay , null, ['class' => 'form-control expirationSelect', 'placeholder' => 'Pick an expiration date...', 'id' => 'expirationDate'])}} --}}
+                        </div>
+                        <div class="form-group  col-md-3">
+                            {{Form::label('manufacturer', 'Manufacturer')}}
+                            {{Form::text('manufacturer', '', ['class' => 'form-control', 'placeholder' => 'Manufacturer', 'readonly', 'id' => 'manufacturer', 'required'])}}
+                        </div>
+                        <div class="form-group col-md-3">
+                            {{Form::label('drugType', 'Drug Type')}}
+                            {{Form::text('drugType', '', ['class' => 'form-control', 'placeholder' => 'Drug Type', 'type' => 'text', 'readonly', 'id' => 'drugType', 'required'])}}
+                        </div>
                     </div>
                 </div>
-            </div>
 
             <hr>
-            <a class="btn btn-info" href="/products">Cancel</a>
-            {{ Form::submit('Add Product', ['class' => 'btn btn-primary'])}}
+
+            <a class="btn btn-info" href="/returns">Cancel</a>
+            {{ Form::submit('Add Return', ['class' => 'btn btn-primary'])}}
         </div>
+
         {!! Form::close() !!}
 
     </div>
 @endsection
+
 
 @section('formLogic')
     <script>
@@ -91,8 +74,6 @@
             // Initial Variables;
             var productsToShow;
 
-            // Hide containers
-            $('#pricesContainer').hide();
 
             // For searching Brand Name
             $('#brandName').change(function(){
@@ -114,41 +95,28 @@
                         // if the response is not null
                         if(msg['product'] != null){
 
-                            var quantity = 0;
+                            // var quantity = 0;
+                            var optionOutput = '<option value="" disabled selected>Pick an expiration date...</option>';
 
                             for (var i = 0; i < msg['inventories'].length; i++) {
-
-                                var remainingQuantity = msg['inventories'][i]['quantity'] - msg['inventories'][i]['sold'];
-
-                                if(remainingQuantity > 0){
-                                    quantity += remainingQuantity;
-                                }
+                                optionOutput += '<option value="' + msg['inventories'][i]['expiration_date'] + '">' + msg['inventories'][i]['expiration_date'] + '</option>';
                             }
-                            $('#pricesContainer').show();
 
                             $('#productId').val(msg['product']['id']);
                             $('#genericName').val(msg['genericNames']['description']);
                             $('#manufacturer').val(msg['manufacturers']['name']);
                             $('#drugType').val(msg['drugTypes']['description']);
-                            $('#purchasePrice').val(msg['product']['purchase_price']);
-                            $('#specialPrice').val(msg['product']['special_price']);
-                            $('#walkInPrice').val(msg['product']['walk_in_price']);
-                            $('#promoPrice').val(msg['product']['promo_price']);
-                            $('#distributorPrice').val(msg['product']['distributor_price']);
                             $('#quantity').val(quantity);
 
+                            $('#expirationDate').html(''); 
+                            $('#expirationDate').append(optionOutput);
                         }else{
-                            $('#pricesContainer').hide();
-                            
+
+                            $('#expirationDate').html(''); 
                             $('#productId').val('');
                             $('#genericName').val('');
                             $('#manufacturer').val('');
                             $('#drugType').val('');
-                            $('#purchasePrice').val('');
-                            $('#specialPrice').val('');
-                            $('#walkInPrice').val('');
-                            $('#promoPrice').val('');
-                            $('#distributorPrice').val('');
                             $('#quantity').val('');
                         }
                     }

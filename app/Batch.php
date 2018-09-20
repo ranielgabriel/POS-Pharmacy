@@ -19,7 +19,6 @@ class Batch extends Model
 
     // Relationship connections
     public function inventories(){
-        // Foreign key check is 'product_id'
         return $this->hasMany('App\Inventory', 'batch_number');
     }
 }

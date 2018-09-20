@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="container container-fluid">
+        <h1 class="text-center">Add a Supplier</h1>
         <hr>
         {!! Form::open(['action' => 'SuppliersController@store', 'method' => 'POST', 'autocomplete' => 'off']) !!}
         <div class="col-md-12">

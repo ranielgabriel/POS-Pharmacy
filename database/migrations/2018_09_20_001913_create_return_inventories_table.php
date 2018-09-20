@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePaymentsTable extends Migration
+class CreateReturnInventoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,12 @@ class CreatePaymentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('return_inventories', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('payment_method_id');
-            $table->integer('sales_transaction_id');
+            $table->integer('product_id');
+            $table->integer('quantity');
+            $table->integer('sold')->default(0);
+            $table->date('expiration_date');
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ class CreatePaymentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('return_inventories');
     }
 }

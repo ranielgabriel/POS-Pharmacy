@@ -119,7 +119,6 @@ class InventoriesController extends Controller
             $product->status = 'In-stock';
             $product->save();
         }
-        
 
         // create an inventory
         $inventory = new Inventory();

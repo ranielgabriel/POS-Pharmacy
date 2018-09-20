@@ -97,6 +97,7 @@ class ProductsController extends Controller
     {
         // validate request
         $this->validate($request,[
+            'productId' => 'required',
             'brandName' => 'required',
             'genericName' => 'required',
             'manufacturer' => 'required',
@@ -110,7 +111,7 @@ class ProductsController extends Controller
         ]);
 
         // find the product
-        $product = Product::find($request->input('brandName'));
+        $product = Product::find($request->input('productId'));
 
         // change the status to selling
         $product->status = 'Selling';
@@ -126,7 +127,7 @@ class ProductsController extends Controller
         $product->save();
 
         // redirect to index of products
-        return redirect('/products')->with('success', 'Product successfully added.');
+        return redirect('/products')->with('success', 'Product successfully added to selling.');
     }
 
     /**
@@ -178,7 +179,8 @@ class ProductsController extends Controller
             'specialPrice' => 'required',
             'walkInPrice' => 'required',
             'promoPrice' => 'required',
-            'distributorPrice' => 'required'
+            'distributorPrice' => 'required',
+            'status' => 'required',
         ]);
 
         $product = Product::find($id);
@@ -201,6 +203,8 @@ class ProductsController extends Controller
         $manufacturer = Manufacturer::firstOrCreate(
             ['name' => $request->input('manufacturer')]
         );
+
+        $product->status = $request->input('status');
 
         $product->generic_name_id = $genericName->id;
         $product->manufacturer_id = $manufacturer->id;

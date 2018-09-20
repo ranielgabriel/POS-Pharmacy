@@ -15,7 +15,7 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('manufacturer_id');
+            $table->integer('manufacturer_id');
             $table->string('brand_name');
             $table->string('status')->default('In-stock');
             $table->decimal('purchase_price', 10, 2)->default(0);

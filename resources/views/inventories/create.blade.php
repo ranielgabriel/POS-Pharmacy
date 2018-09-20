@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <div class="col-md-12">
-        <h1>Add an Inventory</h1>
+        <h1 class="text-center">Add an Inventory</h1>
         <hr>
         {!! Form::open(['action' => 'InventoriesController@store', 'method' => 'POST', 'autocomplete' => 'off']) !!}
         <div class="col-md-12">
@@ -33,7 +33,7 @@
 
             <div id="supplierInformation">
                 <hr>
-                <h3>Supplier Information</h3>
+                <h3 class="text-center">Supplier Information</h3>
                 <div class="col-md-12">
                     <div class="row col-md-12">
                         <div class="form-group  col-md-6">
@@ -68,7 +68,7 @@
 
             <div id="productInformation">
                 <hr>
-                <h3>Product Information</h3>
+                <h3 class="text-center">Product Information</h3>
                 <div class="col-md-12 row">
                     <div class="form-group  col-md-4">
                         {{Form::label('genericName', 'Generic Name')}}

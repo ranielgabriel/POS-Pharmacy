@@ -31,6 +31,15 @@
             @yield('content')
         </main>
     </div>
+    <script>
+        // Prevent "Enter" key in submit
+        $(window).keydown(function(event){
+            if(event.keyCode == 13) {
+                event.preventDefault();
+                return false;
+            }
+        });
+    </script>
     @yield('formLogic')
 </body>
 </html>

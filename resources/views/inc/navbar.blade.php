@@ -16,16 +16,22 @@
                 </li>
                 @auth
                     <li class="nav-item">
-                        <a class="nav-link" href="/suppliers/"><span class="fa fa-address-card"></span>&nbsp;Suppliers</a>
+                        <a class="nav-link" href="/suppliers/"><span class="fa fa-address-card">&nbsp;</span>Suppliers</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/inventories/"><span class="fa fa-list-alt"></span>&nbsp;Inventories</a>
+                        <a class="nav-link" href="/inventories/"><span class="fa fa-list-alt">&nbsp;</span>Inventories</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/customers/"><span class="fa fa-users"></span>&nbsp;Customers</a>
+                        <a class="nav-link" href="/returns/"><span class="fa fa-exchange">&nbsp;</span>Returns</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/cart/{{ Auth::user()->id }}"><span class="fa fa-shopping-cart"></span>&nbsp;Cart</a>
+                        <a class="nav-link" href="/customers/"><span class="fa fa-users">&nbsp;</span>Customers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/sales/">&#8369; Sales</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/cart/{{ Auth::user()->id }}" id="anchorCart"><span class="fa fa-shopping-cart">&nbsp;</span>Cart</a>
                     </li>
                 @endauth
             </ul>

@@ -16,7 +16,7 @@ class DrugType extends Model
     public $primaryKey = 'id';
 
     // Relationship connections
-    public function products(){
+    public function product(){
         // Foreign key check is 'product_id'
         return $this->hasMany('App\Product');
     }
