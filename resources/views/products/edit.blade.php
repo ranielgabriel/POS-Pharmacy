@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <div class="col-md-12">
+    <div class="col-md-12 responsive">
         <h3 class="text-center">Update Product Information</h3>
         <hr>
         {!! Form::open(['action' => ['ProductsController@update', $product->id], 'method' => 'POST', 'autocomplete' => 'off']) !!}

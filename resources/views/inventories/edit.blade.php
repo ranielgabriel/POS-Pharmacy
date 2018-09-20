@@ -1,16 +1,16 @@
 @extends('layouts.app')
 @section('content')
-    <div class="col-md-12">
-        <h1 class="text-center">Add an Inventory</h1>
+    <div class="col-md-12 responsive">
+        <h3 class="text-center">Update Inventory Information</h3>
         <hr>
-        {!! Form::open(['action' => 'InventoriesController@store', 'method' => 'POST', 'autocomplete' => 'off']) !!}
+        {!! Form::open(['action' => ['InventoriesController@update', $inventory->id], 'method' => 'POST', 'autocomplete' => 'off']) !!}
         <div class="col-md-12">
             <h3 class="text-center">Inventory Information</h3>
 
             <div class="col-md-12 row">
                 <div class="form-group col-md-2">
                 {{Form::label('batchNumber', 'Batch Number')}}
-                {{Form::number('batchNumber', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Batch Number', 'required', 'id' => 'batchNumber'])}}
+                {{Form::number('batchNumber', $inventory->batch_number, ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Batch Number', 'required', 'id' => 'batchNumber'])}}
                 </div>
                 <div class="form-group col-md-3">
                     {{Form::label('supplierName', 'Name of Supplier')}}
@@ -23,12 +23,11 @@
                     @php
                         // echo json_encode($productsToDisplay);getProductInfo
                     @endphp
-                    {{-- {{Form::select('supplierName', $suppliersToDisplay , null, ['class' => 'form-control', 'placeholder' => 'Pick a supplier...', 'required', 'id' => 'supplierName'])}} --}}
-                    {{Form::text('supplierName', '', ['class' => 'form-control', 'placeholder' => 'Supplier Name', 'id' => 'supplierName', 'required'])}}
+                    {{Form::select('supplierName', $suppliersToDisplay , $inventory->supplier->id, ['class' => 'form-control', 'placeholder' => 'Pick a supplier...', 'required', 'id' => 'supplierName'])}}
                 </div>
                 <div class="form-group col-md-3">
                 {{Form::label('deliveryDate', 'Delivery Date')}}
-                {{Form::date('deliveryDate', date('Y-m-d'), ['class' => 'form-control', 'placeholder' => 'Delivery Date', 'required', 'id' => 'deliveryDate'])}}
+                {{Form::date('deliveryDate', $inventory->delivery_date, ['class' => 'form-control', 'placeholder' => 'Delivery Date', 'required', 'id' => 'deliveryDate'])}}
                 </div>
             </div>
 
@@ -39,29 +38,29 @@
                     <div class="row col-md-12">
                         <div class="form-group  col-md-6">
                             {{Form::label('address', 'Address')}}
-                            {{Form::text('address', '', ['class' => 'form-control', 'placeholder' => 'Address', 'id' => 'address','required'])}}
+                            {{Form::text('address', $inventory->supplier->address, ['class' => 'form-control', 'placeholder' => 'Address', 'id' => 'address','disabled' => true,'required'])}}
                         </div>
                         <div class="form-group  col-md-3">
                             {{Form::label('ltoNumber', 'LTO Number')}}
-                            {{Form::number('ltoNumber', '' , ['class' => 'form-control', 'placeholder' => 'LTO Number', 'id' => 'ltoNumber','required'])}}
+                            {{Form::number('ltoNumber', $inventory->supplier->lto_number , ['class' => 'form-control', 'placeholder' => 'LTO Number', 'id' => 'ltoNumber','disabled' => true,'required'])}}
                         </div>
                         <div class="form-group col-md-3">
-                            {{Form::label('ltoNumberExpirationDate', 'Expiration Date')}}
-                            {{Form::date('ltoNumberExpirationDate', '', ['class' => 'form-control', 'placeholder' => 'Expiration Date', 'id' => 'ltoNumberExpirationDate','required'])}}
+                            {{Form::label('expirationDate', 'Expiration Date')}}
+                            {{Form::text('expirationDate', $inventory->supplier->expiration_date, ['class' => 'form-control', 'placeholder' => 'Expiration Date', 'id' => 'expirationDate', 'disabled' => true,'required'])}}
                         </div>
                     </div>
                     <div class="row col-md-12">
                         <div class="form-group col-md-6">
                             {{Form::label('contactPerson', 'Contact Person')}}
-                            {{Form::text('contactPerson', '', ['class' => 'form-control', 'placeholder' => 'Contact Person', 'id' => 'contactPerson','required'])}}
+                            {{Form::text('contactPerson', $inventory->supplier->contact_person, ['class' => 'form-control', 'placeholder' => 'Contact Person', 'id' => 'contactPerson','disabled' => true,'required'])}}
                         </div>
                         <div class="form-group col-md-3">
                             {{Form::label('contactNumber', 'Contact Number')}}
-                            {{Form::text('contactNumber', '', ['class' => 'form-control', 'placeholder' => 'Contact Number', 'id' => 'contactNumber','required'])}}
+                            {{Form::text('contactNumber', $inventory->supplier->contact_number, ['class' => 'form-control', 'placeholder' => 'Contact Number', 'id' => 'contactNumber','disabled' => true,'required'])}}
                         </div>
                         <div class="form-group col-md-3">
                             {{Form::label('emailAddress', 'Email Address')}}
-                            {{Form::text('emailAddress', '', ['class' => 'form-control', 'placeholder' => 'Email Address', 'id' => 'emailAddress','required'])}}
+                            {{Form::text('emailAddress', $inventory->supplier->email_address, ['class' => 'form-control', 'placeholder' => 'Email Address', 'id' => 'emailAddress','disabled' => true,'required'])}}
                         </div>
                     </div>
                 </div>
@@ -73,37 +72,37 @@
                 <div class="col-md-12 row">
                     <div class="form-group  col-md-4">
                         {{Form::label('genericName', 'Generic Name')}}
-                        {{Form::text('genericName', '', ['class' => 'form-control', 'placeholder' => 'Generic Name','required',  'id' => 'genericName'])}}
+                        {{Form::text('genericName', $inventory->product->genericNames->description, ['class' => 'form-control', 'placeholder' => 'Generic Name','required',  'id' => 'genericName'])}}
                     </div>
                     <div class="form-group col-md-4">
                         {{Form::label('brandName', 'Brand Name')}}
-                        {{Form::text('brandName', '', ['class' => 'form-control', 'placeholder' => 'Brand Name','required', 'id' => 'brandName'])}}
+                        {{Form::text('brandName', $inventory->product->brand_name, ['class' => 'form-control', 'placeholder' => 'Brand Name','required', 'id' => 'brandName'])}}
                     </div>
                     <div class="form-group  col-md-4">
                         {{Form::label('manufacturer', 'Manufacturer')}}
-                        {{Form::text('manufacturer', '', ['class' => 'form-control', 'placeholder' => 'Manufacturer','required',  'id' => 'manufacturer'])}}
+                        {{Form::text('manufacturer', $inventory->product->manufacturers->name, ['class' => 'form-control', 'placeholder' => 'Manufacturer','required',  'id' => 'manufacturer'])}}
                     </div>
                 </div>
                 <div class="col-md-12 row">
                     <div class="form-group col-md-4">
                         {{Form::label('drugType', 'Drug Type')}}
-                        {{Form::text('drugType', '', ['class' => 'form-control', 'placeholder' => 'Drug Type','required', 'id' => 'drugType', 'type' => 'text', ])}}
+                        {{Form::text('drugType', $inventory->product->drugTypes->description, ['class' => 'form-control', 'placeholder' => 'Drug Type','required', 'id' => 'drugType', 'type' => 'text', ])}}
                     </div>
                     <div class="form-group col-md-4">
                         {{Form::label('expirationDate', 'Expiration Date')}}
-                        {{Form::date('expirationDate', '', ['class' => 'form-control', 'placeholder' => 'Expiration Date','required', 'id' => 'expirationDate' ])}}
+                        {{Form::date('expirationDate', $inventory->expiration_date, ['class' => 'form-control', 'placeholder' => 'Expiration Date','required', 'id' => 'expirationDate' ])}}
                     </div>
                     <div class="form-group col-md-4">
                         {{Form::label('quantity', 'Quantity')}}
-                        {{Form::number('quantity', '', ['class' => 'form-control', 'min' => 0, 'placeholder' => 'Quantity','required', 'id' => 'quantity'  ])}}
+                        {{Form::number('quantity', $inventory->quantity, ['class' => 'form-control', 'min' => 0, 'placeholder' => 'Quantity','required', 'id' => 'quantity'  ])}}
                     </div>
                 </div>
             </div>
 
             <hr>
-
-            <a class="btn btn-info" href="/inventories">Cancel</a>
-            {{ Form::submit('Add Inventory', ['class' => 'btn btn-primary'])}}
+            <a class="btn btn-danger" href="/inventories/{{$inventory->batch_number}}"><span class="fa fa-times"></span>&nbsp;Cancel</a>
+            {{Form::hidden('_method', 'PUT')}}
+            <button type="submit" class="btn btn-primary"><span class="fa fa-check"></span>&nbsp;Save Changes</button>
         </div>
 
         {!! Form::close() !!}
@@ -116,23 +115,21 @@
         var drugTypes = [],
             genericNames = [],
             manufacturers = [],
-            suppliers = [],
-            brandNames = [];
+            suppliers = [];
         $('document').ready(function () {
 
-            $('#supplierInformation').hide();
-            $('#productInformation').hide();
+            // $('#supplierInformation').hide();
+            // $('#productInformation').hide();
 
             $('#batchNumber').keyup(function(){
-                hideShowProductInformation();
+                // hideShowProductInformation();
             });
             $('#deliveryDate').change(function(){
-                hideShowProductInformation();
+                // hideShowProductInformation();
             });
-            $('#supplierName').keyup(function(){
-                hideShowSupplierInformation();
-                searchSupplierInfo($(this).val());
-                console.log($(this).val());
+            $('#supplierName').change(function(){
+                // hideShowSupplierInformation();
+                searchSupplierInfo($(this).val())
             });
 
             getArrayAutocomplete();
@@ -140,7 +137,6 @@
             autocomplete(document.getElementById("genericName"), genericNames);
             autocomplete(document.getElementById("manufacturer"), manufacturers);
             autocomplete(document.getElementById("supplierName"), suppliers);
-            autocomplete(document.getElementById("brandName"), brandNames);
         });
 
 
@@ -213,23 +209,6 @@
                     }
                 }
             });
-
-            $.ajax({
-                url: '/getBrandNames',
-                type: 'GET',
-                data: {
-                    _token: "{{ csrf_token() }}"
-                },
-                success: function (msg) {
-                    for (var i = 0; i < msg.length; i++) {
-                        var obj = msg[i];
-                        for (var key in obj) {
-                            // console.log(obj[key]);
-                            brandNames.push(obj[key]);
-                        }
-                    }
-                }
-            });
         }
 
         function hideShowProductInformation() {
@@ -260,20 +239,20 @@
                 type: 'POST',
                 data: {
                     _token: "{{ csrf_token() }}",
-                    name: name
+                    id: name
                 },
                 success: function (msg) {
                     if (msg != '') {
                         $('#address').val(msg['supplier']['address']);
                         $('#ltoNumber').val(msg['supplier']['lto_number']);
-                        $('#ltoNumberExpirationDate').val(msg['supplier']['expiration_date']);
+                        $('#expirationDate').val(msg['supplier']['expiration_date']);
                         $('#contactPerson').val(msg['supplier']['contact_person']);
                         $('#contactNumber').val(msg['supplier']['contact_number']);
                         $('#emailAddress').val(msg['supplier']['email_address']);
                     } else {
                         $('#address').val(null);
                         $('#ltoNumber').val(null);
-                        $('#ltoNumberExpirationDate').val(null);
+                        $('#expirationDate').val(null);
                         $('#contactPerson').val(null);
                         $('#contactNumber').val(null);
                         $('#emailAddress').val(null);

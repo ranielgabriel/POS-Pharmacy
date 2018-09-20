@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <div class="container container-fluid">
+    <div class="col-md-12 responsive">
         <div class="col-md-12">
 
             <a class="btn btn-info" href="/suppliers"><span class="fa fa-arrow-left"></span>&nbsp;Back</a>

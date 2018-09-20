@@ -35,11 +35,13 @@ Route::post('/searchBatch','AjaxController@searchBatch');
 Route::post('/searchProductInfo','AjaxController@searchProductInfo');
 Route::post('/searchProductQuantityInfo','AjaxController@searchProductQuantityInfo');
 Route::post('/searchSupplierInfo','AjaxController@searchSupplierInfo');
+Route::post('/searchSupplierInfoById','AjaxController@searchSupplierInfoById');
 Route::post('/searchSupplier','AjaxController@searchSupplier');
 Route::post('/insertSale','AjaxController@insertSale');
 
 // Get
 Route::get('/getDrugTypes','AjaxController@getDrugTypes');
 Route::get('/getGenericNames','AjaxController@getGenericNames');
+Route::get('/getBrandNames','AjaxController@getBrandNames');
 Route::get('/getManufacturers','AjaxController@getManufacturers');
 Route::get('/getSuppliers','AjaxController@getSuppliers');

@@ -75,7 +75,11 @@ class CustomersController extends Controller
     public function show($id)
     {
         $customer = Customer::find($id);
-        return view('customers.show')->with('customer', $customer);
+        if($customer == null){
+            return redirect('/customers')->with('error', 'The customer you want to see does not exist.');
+        }else{
+            return view('customers.show')->with('customer', $customer);
+        }
     }
 
     /**
@@ -87,7 +91,11 @@ class CustomersController extends Controller
     public function edit($id)
     {
         $customer = Customer::find($id);
-        return view('customers.edit')->with('customer',$customer);
+        if($customer == null){
+            return redirect('/customers')->with('error', 'The customer you want to see does not exist.');
+        }else{
+            return view('customers.edit')->with('customer', $customer);
+        }
     }
 
     /**

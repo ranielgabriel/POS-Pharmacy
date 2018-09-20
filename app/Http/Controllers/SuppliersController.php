@@ -79,7 +79,11 @@ class SuppliersController extends Controller
     public function show($id)
     {
         $supplier = Supplier::find($id);
-        return view('suppliers.show')->with('supplier', $supplier);
+        if($supplier == null){
+            return redirect('/suppliers')->with('error','The supplier you want see does not exist.');
+        }else{
+            return view('suppliers.show')->with('supplier', $supplier);
+        }
     }
 
     /**
@@ -91,7 +95,11 @@ class SuppliersController extends Controller
     public function edit($id)
     {
         $supplier = Supplier::find($id);
-        return view('suppliers.edit')->with('supplier', $supplier);
+        if($supplier == null){
+            return redirect('/suppliers')->with('error','The supplier you want see does not exist.');
+        }else{
+            return view('suppliers.edit')->with('supplier', $supplier);
+        }
     }
 
     /**

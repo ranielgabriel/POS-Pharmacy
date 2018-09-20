@@ -1,32 +1,26 @@
 @extends('layouts.app')
-
 @section('content')
     <div class="col-md-12 responsive">
-
-        <div class="form-group">
-        <h1 class="text-center"><span class="fa fa-list-alt">&nbsp;</span>Inventories</h1>
-        @if (Auth::user()->role == 'Administrator')
-            <a class="btn btn-primary" href="/inventories/create"><span class="fa fa-plus"></span>&nbsp;Inventory</a>
-        @endif
-        <div class="input-group my-3">
-            <input type="text" class="form-control" placeholder="Search" id="searchBatchNumber">
-            <div class="input-group-append">
-                <button class="btn btn-primary" id="btnSearchBatch" type="">Go</button> 
-            </div>
-        </div>
-
-        @foreach ($batches as $batch)
-            @if ($batch->inventories->count() > 0)
+        <div class="col-md-12">
+            <div class="form-group">
+                <a class="btn btn-info" href="/inventories"><span class="fa fa-arrow-left"></span>&nbsp;Back</a>
+                
+                <hr>
+                <h3 class="text-center">Batch Information</h3>
                 <div class="table-responsive rounded my-2" id="tableContainer">
                     <table class="table table-striped table-bordered table-hover">
                         <thead class="thead-dark table-sm">
                             <tr class="">
-                                <th colspan="8" class="align-middle"><small>Batch Number: </small>{{ $batch->id }}</th>
-                                </tr>
+                                @if (Auth::user()->role == 'Administrator')
+                                    <th colspan="10" class="align-middle"><small>Batch Number: </small>{{ $batch->id }}</th>
+                                @else
+                                    <th colspan="8" class="align-middle"><small>Batch Number: </small>{{ $batch->id }}</th>
+                                @endif
+                            </tr>
                         </thead>
                         <thead class="thead-dark table-sm">
                             <tr class="text-center small">
-        
+
                                 <th>Generic Name</th>
                                 <th>Brand Name</th>
                                 <th>Supplier</th>
@@ -35,6 +29,9 @@
                                 <th>Remaining Stocks</th>
                                 <th>Delivery Date</th>
                                 <th>Expiration Date</th>
+                                @if (Auth::user()->role == 'Administrator')
+                                    <th colspan="2">Actions</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody class="table-sm">
@@ -48,15 +45,23 @@
                                     <td class="align-middle">{{ $inventory->quantity - $inventory->sold }}</td>
                                     <td class="align-middle">{{ $inventory->delivery_date }}</td>
                                     <td class="align-middle">{{ $inventory->expiration_date }}</td>
+                                    @if (Auth::user()->role == 'Administrator')
+                                        <td><a class="btn btn-info mx-1" href="/inventories/{{ $inventory->id }}/edit"><span class="fa fa-edit"></span>&nbsp;Update</a></td>
+                                        <td>
+                                            {!!Form::open(['action' => ['InventoriesController@destroy', $inventory->id], 'method' => 'POST',])!!}
+                                            {{Form::hidden('_method', 'DELETE')}}
+                                            {{Form::button('<span class="fa fa-trash"></span>&nbsp;Delete', ['type' => 'submit', 'class' => 'btn btn-danger'])}}
+                                            {!!Form::close()!!}
+                                        </td>
+                                    @endif
+                                        
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
-            @endif
-        @endforeach
+            </div>
         </div>
-        {{ $batches->links()}}
     </div>
 
 
@@ -104,53 +109,4 @@
         </div>
     </div>
     
-@endsection
-
-@section('formLogic')
-    <script>
-        $('document').ready(function(){
-            console.log('Page is ready');
-
-            $(".modalSupplierClass").click(function () {
-                var supplierId = $(this).data('supplier-id');
-                searchSupplierInfoById(supplierId);
-            });
-            
-            $('#btnSearchBatch').click(function(){
-                console.log('imclick.');
-                window.location.href = '/inventories/' + $('#searchBatchNumber').val();
-            });
-
-        });
-
-        function searchSupplierInfoById(supplierId) {
-            $.ajax({
-                url: '/searchSupplierInfoById',
-                type: 'POST',
-                data: {
-                    _token: "{{ csrf_token() }}",
-                    id: supplierId
-                },
-                success: function (msg) {
-                    console.log(msg);
-
-                    // if the response is not null
-
-                    if (msg['supplier'] != null) {
-
-                        // modalSupplier
-                        $('#supplierName').html(msg['supplier']['name']);
-                        $('#address').val(msg['supplier']['address']);
-                        $('#emailAddress').val(msg['supplier']['email_address']);
-                        $('#ltoNumber').val(msg['supplier']['lto_number']);
-                        $('#expirationDate').val(msg['supplier']['expiration_date']);
-                        $('#contactPerson').val(msg['supplier']['contact_person']);
-                        $('#contactNumber').val(msg['supplier']['contact_number']);
-                        $('#modalSupplierFooter').html('');
-                        $('#modalSupplierFooter').append('<a class="btn btn-info col-md-12" href=/suppliers/' + msg['supplier']['id'] + '><span class="fa fa-info-circle">&nbsp;</span>View Supplier Information</a>');
-                    }
-                }
-            });
-        }
-    </script>
 @endsection

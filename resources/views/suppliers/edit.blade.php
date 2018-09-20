@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <div class="container container-fluid">
+    <div class="col-md-12 responsive">
         <h3 class="text-center">Update Supplier Information</h3>
         <hr>
         {!! Form::open(['action' => ['SuppliersController@update', $supplier->id], 'method' => 'POST', 'autocomplete' => 'off']) !!}

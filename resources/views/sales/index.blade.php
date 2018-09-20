@@ -6,11 +6,6 @@
         <div class="form-group">
         <h1 class="text-center">&#8369; Sales</h1>
 
-        {{-- <div class="form-group col-md-12 py-2">
-            {{Form::label('search', 'Search')}}
-            {{Form::text('search', '', ['id' => 'search', 'class' => 'form-control', 'placeholder' => 'Search... (Brand Name / Generic Name)'])}}
-        </div> --}}
-
         @foreach ($sales as $sale)
             <div class="table-responsive rounded my-2" id="tableContainer">
                 <table class="table table-striped table-bordered table-hover">

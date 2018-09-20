@@ -226,9 +226,25 @@ class AjaxController extends Controller
     // This function is for searching a specific supplier
     // This returns every information about the supplier.
     public function searchSupplierInfo(Request $request){
+        if($request->name != null){
+            $supplier = Supplier::where('name', '=', $request->name)
+            ->get()
+            ->first();
+            
+            if($supplier != null){
+                return response()->json([
+                    'supplier' => $supplier
+                ]);
+            }
+        }
+    }
+
+    // This function is for searching a specific supplier
+    // This returns every information about the supplier.
+    public function searchSupplierInfoById(Request $request){
         if($request->id != null){
             $supplier = Supplier::find($request->id);
-
+            
             return response()->json([
                 'supplier' => $supplier
             ]);
@@ -251,6 +267,15 @@ class AjaxController extends Controller
         ->select('description')
         ->get();
         return response($genericNames);
+    }
+
+    // This function gets the list of all the brand names from the database.
+    // This returns a list of brand names
+    public function getBrandNames(){
+        $brandNames = Product::orderBy('brand_name','asc')
+        ->select('brand_name')
+        ->get();
+        return response($brandNames);
     }
 
     // This function gets the list of all the manufcturers from the database.

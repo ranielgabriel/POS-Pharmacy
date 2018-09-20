@@ -141,8 +141,12 @@ class ProductsController extends Controller
         // find the product
         $product = Product::find($id);
 
-        // return the view show from products folder
-        return view('products.show')->with('product', $product);
+        if($product == null){
+            return redirect('/products')->with('error','The product you want to see does not exist.');
+        }else{
+            // return the view show from products folder
+            return view('products.show')->with('product', $product);
+        }
     }
 
     /**
@@ -156,8 +160,12 @@ class ProductsController extends Controller
         // find the product
         $product = Product::find($id);
 
-        // return the view show from products folder
-        return view('products.edit')->with('product', $product);
+        if($product == null){
+            return redirect('/products')->with('error','The product you want to see does not exist.');
+        }else{
+            // return the view show from products folder
+            return view('products.edit')->with('product', $product);
+        }
     }
 
     /**
