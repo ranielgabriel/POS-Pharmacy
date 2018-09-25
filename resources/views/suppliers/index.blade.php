@@ -35,7 +35,7 @@
                                 <td class="align-middle">{{ $supplier->name }}</td>
                                 <td class="align-middle">{{ $supplier->address }}</td>
                                 <td class="align-middle">{{ $supplier->lto_number }}</td>
-                                <td class="align-middle">{{ $supplier->expiration_date }}</td>
+                                <td class="align-middle">{{ Carbon\Carbon::parse($supplier->expiration_date)->toFormattedDateString() }}</td>
                                 <td class="align-middle">{{ $supplier->contact_person }}</td>
                                 <td class="align-middle">{{ $supplier->contact_number }}</td>
                                 <td class="align-middle">{{ $supplier->email_address }}</td>

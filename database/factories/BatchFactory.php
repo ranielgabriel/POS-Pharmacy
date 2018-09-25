@@ -4,6 +4,6 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Batch::class, function (Faker $faker) {
     return [
-        'id' => $faker->numberBetween($min = 1, $max = 100)
+        'id' => $faker->unique()->numberBetween($min = 1, $max = 100)
     ];
 });

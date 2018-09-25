@@ -2,16 +2,19 @@
 
 @section('content')
     <div class="col-md-12 responsive">
-
         <div class="form-group">
-        <h1 class="text-center">&#8369; Sales</h1>
+        <h1 class="text-center">&#8369; Daily Sales</h1>
         @include('inc.salesnav')
+        <div class="form-inline col-md-12 my-2">
+            {{Form::label('dailySalesDate', 'Date', ['class' => 'col-md-1'])}}
+            {{Form::date('dailySalesDate', '', ['class' => 'form-control col-md-11', 'placeholder' => 'Date', 'required', 'id' => 'dailySalesDate'])}}
+        </div>
         @foreach ($sales as $sale)
             <div class="table-responsive rounded my-2" id="tableContainer">
                 <table class="table table-striped table-bordered table-hover">
                     <thead class="thead-dark table-sm">
                         <tr class="align-middle">
-                            <th colspan="8" class="align-middle small">Sale number: {{ $sale->id }}<b class="float-right align-middle small">Date: {{ Carbon\Carbon::parse($sale->sale_date)->toFormattedDateString() }}</b></th>
+                            <th colspan="8" class="align-middle small">Sale number: {{ $sale->id }}<b class="float-right align-middle small">Date: {{ $sale->created_at}}</b></th>
                         </tr>
                         <tr>
                             <th class="align-middle small" colspan="8">Sold to: {{ $sale->customer->name }}</th>
@@ -60,6 +63,21 @@
             </div>
         @endforeach
         </div>
-        {{ $sales->links()}}
+        {{ $sales->links() }}
     </div>
+@endsection
+
+@section('formLogic')
+    <script>
+        $(document).ready(function (){
+            console.log('Page is ready.');
+
+            var splitPathname = window.location.pathname.split('/');
+            $('#dailySalesDate').val(splitPathname[3]);
+
+            $('#dailySalesDate').change(function (){
+                window.location.replace('/sales/daily/' + $(this).val());
+            });
+        });
+    </script>
 @endsection

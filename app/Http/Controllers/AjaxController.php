@@ -309,6 +309,7 @@ class AjaxController extends Controller
         ]);
 
         $sale = Sale::create([
+            'sale_date' => date('Y-m-d'),
             'customer_id' => $customer->id
         ]);
 

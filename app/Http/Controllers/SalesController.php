@@ -16,7 +16,7 @@ class SalesController extends Controller
      */
     public function index()
     {
-        $sales = Sale::orderBy('created_at','desc')
+        $sales = Sale::orderBy('sale_date','desc')
         ->with('productSale')
         ->paginate(10);
 
@@ -92,5 +92,23 @@ class SalesController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function daily($date){
+        $sales = Sale::orderBy('created_at','desc')
+        ->where('sale_date','LIKE','%' . $date . '%')
+        ->with('productSale')
+        ->paginate(25);
+        return view('sales.daily')->with('sales', $sales);
+    }
+
+
+    public function monthly($date){
+
+        $sales = Sale::orderBy('created_at','desc')
+        ->where('sale_date','LIKE','%' . $date . '%')
+        ->with('productSale')
+        ->paginate(25);
+        return view('sales.monthly')->with(['sales'=> $sales]);
     }
 }

@@ -112,12 +112,12 @@
                                 @endphp
                                 @if($inventory->expiration_date > $now->format('Y-m-d'))
                                     <tr class="table-success">
-                                        <td><center>{{$inventory->expiration_date}}</center></td>
+                                        <td><center>{{Carbon\Carbon::parse($inventory->expiration_date)->toFormattedDateString()}}</center></td>
                                         <td><center>{{$inventory->quantity - $inventory->sold}}</center></td>
                                     </tr>
                                 @else
                                     <tr class="table-danger">
-                                        <td><center>{{$inventory->expiration_date}}</center></td>
+                                        <td><center>{{Carbon\Carbon::parse($inventory->expiration_date)->toFormattedDateString()}}</center></td>
                                         <td><center>{{$inventory->quantity - $inventory->sold}}</center></td>
                                     </tr>
                                 @endif

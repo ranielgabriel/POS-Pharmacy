@@ -176,9 +176,11 @@
             console.log('Page is ready');
             $('#tableSearchContainer').hide();
             
-            if({!! $cart->count() !!} != 0){
-                $('#anchorCart').append('<span class="badge badge-pill badge-info">' + {!! $cart->count() !!} + '</span>');
-            }
+            @auth()
+                if({!! $cart->count() !!} != 0){
+                    $('#anchorCart').append('<span class="badge badge-pill badge-info">' + {!! $cart->count() !!} + '</span>');
+                }
+            @endauth
 
             $('#search').val('');
             $('#search').keyup(function () {

@@ -43,8 +43,8 @@
                                     <td class="align-middle">{{ $inventory->quantity }}</td>
                                     <td class="align-middle">{{ $inventory->sold }}</td>
                                     <td class="align-middle">{{ $inventory->quantity - $inventory->sold }}</td>
-                                    <td class="align-middle">{{ $inventory->delivery_date }}</td>
-                                    <td class="align-middle">{{ $inventory->expiration_date }}</td>
+                                    <td class="align-middle">{{ Carbon\Carbon::parse($inventory->delivery_date)->toFormattedDateString() }}</td>
+                                    <td class="align-middle">{{ Carbon\Carbon::parse($inventory->expiration_date)->toFormattedDateString() }}</td>
                                     @if (Auth::user()->role == 'Administrator')
                                         <td><a class="btn btn-info mx-1" href="/inventories/{{ $inventory->id }}/edit"><span class="fa fa-edit"></span>&nbsp;Update</a></td>
                                         <td>

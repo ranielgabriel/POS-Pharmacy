@@ -9,7 +9,8 @@ class Sale extends Model
     // Table Name
     protected $table = 'sales';
     protected $fillable = [
-    'customer_id',
+        'customer_id',
+        'sale_date'
     ];
 
     // Primary Key

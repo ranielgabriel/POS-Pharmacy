@@ -39,6 +39,9 @@ Route::post('/searchSupplierInfoById','AjaxController@searchSupplierInfoById');
 Route::post('/searchSupplier','AjaxController@searchSupplier');
 Route::post('/insertSale','AjaxController@insertSale');
 
+Route::get('/sales/daily/{date}','SalesController@daily');
+Route::get('/sales/monthly/{date}','SalesController@monthly');
+
 // Get
 Route::get('/getDrugTypes','AjaxController@getDrugTypes');
 Route::get('/getGenericNames','AjaxController@getGenericNames');

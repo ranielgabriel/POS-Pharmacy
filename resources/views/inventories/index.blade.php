@@ -46,8 +46,8 @@
                                     <td class="align-middle">{{ $inventory->quantity }}</td>
                                     <td class="align-middle">{{ $inventory->sold }}</td>
                                     <td class="align-middle">{{ $inventory->quantity - $inventory->sold }}</td>
-                                    <td class="align-middle">{{ $inventory->delivery_date }}</td>
-                                    <td class="align-middle">{{ $inventory->expiration_date }}</td>
+                                    <td class="align-middle">{{ Carbon\Carbon::parse($inventory->delivery_date)->toFormattedDateString() }}</td>
+                                    <td class="align-middle">{{ Carbon\Carbon::parse($inventory->expiration_date)->toFormattedDateString() }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

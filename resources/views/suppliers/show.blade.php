@@ -32,7 +32,7 @@
                     </div>
                     <div class="form-group col-md-12">
                         {{Form::label('expirationDate', 'Expiration Date')}}
-                        {{Form::text('expirationDate', $supplier->expiration_date , ['class' => 'form-control', 'placeholder' => 'Expiration Date', 'disabled' => true])}}
+                        {{Form::text('expirationDate', Carbon\Carbon::parse($supplier->expiration_date)->toFormattedDateString() , ['class' => 'form-control', 'placeholder' => 'Expiration Date', 'disabled' => true])}}
                     </div>
                     <div class="form-group col-md-12">
                         {{Form::label('contactPerson', 'Contact Person')}}

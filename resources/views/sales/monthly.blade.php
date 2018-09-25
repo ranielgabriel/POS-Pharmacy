@@ -2,10 +2,13 @@
 
 @section('content')
     <div class="col-md-12 responsive">
-
         <div class="form-group">
-        <h1 class="text-center">&#8369; Sales</h1>
+        <h1 class="text-center">&#8369; Monthly Sales</h1>
         @include('inc.salesnav')
+        <div class="form-inline col-md-12 my-2">
+            {{Form::label('dailySalesDate', 'Date', ['class' => 'col-md-1'])}}
+            {{Form::input('month', 'monthSalesDate', '', ['class' => 'form-control col-md-11', 'id' => 'monthSalesDate'])}}
+        </div>
         @foreach ($sales as $sale)
             <div class="table-responsive rounded my-2" id="tableContainer">
                 <table class="table table-striped table-bordered table-hover">
@@ -60,6 +63,21 @@
             </div>
         @endforeach
         </div>
-        {{ $sales->links()}}
+        {{ $sales->links() }}
     </div>
+@endsection
+
+@section('formLogic')
+    <script>
+        $(document).ready(function(){
+            console.log('Page is ready');
+
+            var splitPathname = window.location.pathname.split('/');
+            $('#monthSalesDate').val(splitPathname[3]);
+
+            $('#monthSalesDate').change(function (){
+                window.location.replace('/sales/monthly/' + $(this).val());
+            });
+        });
+    </script>
 @endsection

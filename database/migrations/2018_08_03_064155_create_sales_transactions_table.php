@@ -16,6 +16,7 @@ class CreateSalesTransactionsTable extends Migration
         Schema::create('sales', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('customer_id');
+            $table->date('sale_date');
             $table->timestamps();
         });
     }
