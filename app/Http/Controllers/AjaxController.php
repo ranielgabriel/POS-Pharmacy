@@ -155,8 +155,12 @@ class AjaxController extends Controller
     public function searchProductQuantityInfo(Request $request){
         if($request->productId != null){
 
-            $inventories = Inventory::where('product_id','=',$request->productId)
-            ->where('expiration_date','=',$request->expirationDate)
+            $inventories = Inventory::
+            where([
+                ['product_id','=',$request->productId],
+                ['expiration_date', '=', $request->expirationDate]
+            ])
+            ->whereColumn('quantity','!=','sold')
             ->get()
             ->first();
 

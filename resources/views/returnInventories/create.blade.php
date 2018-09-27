@@ -14,7 +14,11 @@
                             {{Form::label('productId', 'Product Id')}}
                             {{Form::number('productId', '', ['class' => 'form-control', 'placeholder' => 'Product Id', 'readonly', 'id' => 'productId', 'required'])}}
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-3" id="saleIdContainer">
+                            {{Form::label('saleId', 'Sale #')}}
+                            {{Form::number('saleId', '', ['class' => 'form-control', 'placeholder' => 'Sale #','min' => 0,'step'=>1, 'id' => 'saleId', 'required'])}}
+                        </div>
+                        <div class="form-group col-md-3">
                         {{Form::label('brandName', 'Brand Name')}}
                         @php
                             $productsToDisplay = array();
@@ -38,8 +42,8 @@
                         </div>
                         <div class="form-group col-md-3">
                             {{Form::label('expirationDate', 'Expiration Date')}}
-                            <select name="expirationDate" id="expirationDate" required class="form-control"></select>
-                            {{-- {{Form::select('expirationDate', $expirationDatesToDisplay , null, ['class' => 'form-control expirationSelect', 'placeholder' => 'Pick an expiration date...', 'id' => 'expirationDate'])}} --}}
+                            {{-- <select name="expirationDate" id="expirationDate" required class="form-control"></select> --}}
+                            {{Form::text('expirationDate', '', ['class' => 'form-control expirationSelect', 'placeholder' => 'Expiration date', 'id' => 'expirationDate', 'readonly'])}}
                         </div>
                         <div class="form-group  col-md-3">
                             {{Form::label('manufacturer', 'Manufacturer')}}

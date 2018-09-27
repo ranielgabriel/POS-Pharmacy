@@ -263,6 +263,8 @@
                             "disabled" : false
                         });
 
+                        console.log(msg['inventories']);
+
                         $("#inventoryId"+rowIndex).html(msg['inventories']['id']);
                     }
                 }
