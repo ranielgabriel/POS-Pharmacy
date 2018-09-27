@@ -32,14 +32,14 @@ class ProductsController extends Controller
     {
         $products = Product::
         // Order by brand name
-        orderBy('brand_name','asc')
+        // orderBy('brand_name','asc')
         // Status should not be In-stock and Out-of-stock
 
         // ->where('status', '!=', 'In-stock')
         // ->where('status', '!=', 'Out-of-stock')
 
         // Return together with genericNames, drugtypes, and inventories
-        ->with('genericNames')
+        with('genericNames')
         ->with('drugTypes')
         ->with('inventories')
 

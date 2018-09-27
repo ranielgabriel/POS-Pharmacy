@@ -23,7 +23,7 @@ class CartsController extends Controller
      */
     public function index()
     {
-        return view('cart.index');
+        //
     }
 
     /**

@@ -137,13 +137,15 @@ class AjaxController extends Controller
         if($request->id != null){
 
             $product = Product::find($request->id);
-
+            $inventories = Inventory::where('product_id','=',$product->id)
+            ->orderBy('expiration_date')
+            ->get();
             return response()->json([
                 'product' => $product,
                 'genericNames' => $product->genericNames,
                 'manufacturers' => $product->manufacturers,
                 'drugTypes' => $product->drugTypes,
-                'inventories' => $product->inventories
+                'inventories' => $inventories
             ]);
         }
     }
@@ -315,8 +317,10 @@ class AjaxController extends Controller
 
         foreach($object as $item){
             $inventory = Inventory::find($item['inventoryId']);
-            $inventory->sold = $inventory->sold + $item['inventorySold'];
-            $inventory->save();
+            if($inventory->quantity >= $inventory->sold + $item['inventorySold']){
+                $inventory->sold = $inventory->sold + $item['inventorySold'];
+                $inventory->save();
+            }
 
             $cart = Cart::find($item['cartId']);
             $cart->delete();
@@ -327,7 +331,7 @@ class AjaxController extends Controller
                 $product->save();
             }
 
-            $productSale = ProductSale::create([
+            $productSale = ProductSale::firstOrCreate([
                 'product_id' => $product->id,
                 'sale_id' => $sale->id,
                 'inventory_id' => $inventory->id,

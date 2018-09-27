@@ -8,9 +8,10 @@
         @else
             <h1 class="text-center"><span class="fa fa-shopping-cart">&nbsp;</span>Cart</h1>
                 <div class="table-responsive rounded">
-                    <table class="table table-striped table-hover">
+                    <table class="table table-striped table-hover" id="myTable">
                         <thead class="thead-dark text-center small">
                             <tr class="align-middle">
+                                <th></th>
                                 <th>Generic Name</th>
                                 <th>Brand Name</th>
                                 <th>Manufacturer</th>
@@ -23,13 +24,15 @@
                             </tr>
                         </thead>
                         <tbody class="table-sm" id="tableCart">
-                            @foreach ($cart as $item)
+                            @foreach ($cart->sortBy('product.brand_name')->sortBy('product.genericNames.description') as $item)
                             {!!Form::open(['action' => ['CartsController@destroy', $item->id], 'method' => 'POST',])!!}
                             {{Form::hidden('_method', 'DELETE')}}
                                 <tr class="text-center">
                                     <td class="align-middle" hidden id="productId{{$loop->iteration}}">{{$item->product_id}}</td>
                                     <td class="align-middle" hidden id="inventoryId{{$loop->iteration}}"></td>
                                     <td class="align-middle" hidden id="cartId{{$loop->iteration}}">{{$item->id}}</td>
+                                    <td class="align-middle"><a data-product-id="{{$item->product_id}}" class="btn btn-primary addProductToCart" href="#" role="button"><span class="fa fa-plus-circle"></span></a></td>
+                                    {{-- <td class="align-middle">{{ link_to_action('CartsController@store', $title = 'Add', $parameters = ['productId' => $item->product_id, 'userId' => Auth::user()->id], $attributes = ['class' => 'btn btn-primary']) }}</td> --}}
                                     <td class="align-middle"><small id="genericName{{$loop->iteration}}">{{$item->product->genericNames->description}}</small></td>
                                     <td class="align-middle"><small id="brandName{{$loop->iteration}}" class="text-center">{{$item->product->brand_name}}</small></td>
                                     <td class="align-middle"><small id="manufacturer{{$loop->iteration}}" class="text-center">{{$item->product->manufacturers->name}}</small></td>
@@ -38,7 +41,7 @@
                                         $expirationDatesToDisplay = array();
                                     @endphp
                                     @foreach ($item->product->inventories->sortBy('expiration_date') as $inventory)
-                                        @if($inventory->quantity != $inventory->sold)
+                                        @if($inventory->quantity > $inventory->sold)
                                             <?php $expirationDatesToDisplay[$inventory->expiration_date] = $inventory->expiration_date;?>
                                         @endif
                                     @endforeach
@@ -209,6 +212,10 @@
             $("#btnConfirm").click(function(){
                 insertSale(inventoryList);
             });
+
+            $('.addProductToCart').click(function (){
+                addProductToCart($(this).data('product-id'));
+            });
         });
 
         function computeSubTotal(loopIteration){
@@ -276,6 +283,21 @@
                     // console.log(msg);
                     alert(msg['message']);
                     window.location.href = "/products";
+                }
+            });
+        }
+
+        function addProductToCart(productId){
+            $.ajax({
+                url: '/cart',
+                type: 'POST',
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    productId: productId,
+                    userId: {{ Auth::user()->id }}
+                },
+                success: function (msg) {
+                    location.reload();
                 }
             });
         }

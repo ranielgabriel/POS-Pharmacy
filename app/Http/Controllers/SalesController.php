@@ -3,12 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Sale;
 use App\Inventory;
 use App\ProductSale;
 
 class SalesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +23,7 @@ class SalesController extends Controller
     {
         $sales = Sale::orderBy('sale_date','desc')
         ->with('productSale')
-        ->paginate(10);
+        ->paginate(30);
 
         // $sales = ProductSale::orderBy('id')
         // // ->with('productSale')
@@ -98,7 +103,7 @@ class SalesController extends Controller
         $sales = Sale::orderBy('created_at','desc')
         ->where('sale_date','LIKE','%' . $date . '%')
         ->with('productSale')
-        ->paginate(25);
+        ->get();
         return view('sales.daily')->with('sales', $sales);
     }
 
@@ -108,7 +113,20 @@ class SalesController extends Controller
         $sales = Sale::orderBy('created_at','desc')
         ->where('sale_date','LIKE','%' . $date . '%')
         ->with('productSale')
-        ->paginate(25);
+        ->get();
+
+        // $sales = DB::table('sales')
+        // ->join('product_sales', 'sales.id', '=', 'product_sales.sale_id')
+        // ->join('products', 'product_sales.product_id', '=', 'products.id')
+        // ->join('generic_names', 'products.generic_name_id', '=', 'generic_names.id')
+        // ->join('drug_types', 'products.drug_type_id', '=', 'drug_types.id')
+        // ->join('inventories', 'products.id', '=', 'inventories.product_id')
+        // ->join('suppliers', 'inventories.supplier_id', '=', 'suppliers.id')
+        // ->select('sales.*','product_sales.*','products.brand_name','generic_names.description as genericNamesDescription','drug_types.description as drugTypesDescription')
+        // ->orderBy('generic_names.description','asc')
+        // ->where('sale_date','LIKE','%' . $date . '%')
+        // ->get();
+
         return view('sales.monthly')->with(['sales'=> $sales]);
     }
 }

@@ -9,15 +9,15 @@
             {{Form::label('dailySalesDate', 'Date', ['class' => 'col-md-1'])}}
             {{Form::input('month', 'monthSalesDate', '', ['class' => 'form-control col-md-11', 'id' => 'monthSalesDate'])}}
         </div>
-        @foreach ($sales as $sale)
             <div class="table-responsive rounded my-2" id="tableContainer">
                 <table class="table table-striped table-bordered table-hover">
                     <thead class="thead-dark table-sm">
-                        <tr class="align-middle">
-                            <th colspan="8" class="align-middle small">Sale number: {{ $sale->id }}<b class="float-right align-middle small">Date: {{ Carbon\Carbon::parse($sale->sale_date)->toFormattedDateString() }}</b></th>
-                        </tr>
-                        <tr>
-                            <th class="align-middle small" colspan="8">Sold to: {{ $sale->customer->name }}</th>
+                        <tr class="text-center small">
+                            @if ($sales->first() != null)
+                                <th colspan="8" class="align-middle small">Sales for {{ Carbon\Carbon::parse($sales->first()->sale_date)->format('F Y') }}</th>    
+                            @else
+                                <th colspan="8" class="align-middle small">No sales</th>    
+                            @endif
                         </tr>
                     </thead>
                     <thead class="thead-dark table-sm">
@@ -32,26 +32,29 @@
                             <th>Subtotal</th>
                         </tr>
                     </thead>
-                    <tbody class="table-sm">
+                    <tbody class="table-sm" id="myTable">
                         @php
                             $totalAmount = 0;
                             setlocale(LC_MONETARY,"en");
                         @endphp
-                        @foreach($sale->productSale as $productSale)
-                            <tr class="align-middle text-center small">
-                                <td class="align-middle">{{ $productSale->product->genericNames->description }}</td>
-                                <td class="align-middle">{{ $productSale->product->brand_name }}</td>
-                                <td class="align-middle">{{ $productSale->product->drugTypes->description }}</td>
-                                <td class="align-middle"><a class="modalSupplierClass" href="#" role="button" data-toggle="modal" data-target="#modalSupplier" data-supplier-id="{{ $productSale->inventory->supplier->id}}">{{ $productSale->inventory->supplier->name }}</a></td>
-                                <td class="align-middle">{{ Carbon\Carbon::parse($productSale->inventory->expiration_date)->toFormattedDateString() }}</td>
-                                <td class="align-middle">{{ $productSale->quantity }}</td>
-                                <td class="align-middle">&#8369; {{ number_format($productSale->price, 2, '.', ',') }}</td>
-                                <td class="align-middle">&#8369; {{ number_format($productSale->quantity * $productSale->price, 2, '.', ',') }}</td>
-                                <?php
-                                    $totalAmount += $productSale->quantity * $productSale->price;
-                                ?>
-                            </tr>
+                        @foreach ($sales as $sale)
+                            @foreach($sale->productSale as $productSale)
+                                <tr class="align-middle text-center small">
+                                    <td class="align-middle">{{ $productSale->product->genericNames->description }}</td>
+                                    <td class="align-middle">{{ $productSale->product->brand_name }}</td>
+                                    <td class="align-middle">{{ $productSale->product->drugTypes->description }}</td>
+                                    <td class="align-middle"><a class="modalSupplierClass" href="#" role="button" data-toggle="modal" data-target="#modalSupplier" data-supplier-id="{{ $productSale->inventory->supplier->id}}">{{ $productSale->inventory->supplier->name }}</a></td>
+                                    <td class="align-middle">{{ Carbon\Carbon::parse($productSale->inventory->expiration_date)->toFormattedDateString() }}</td>
+                                    <td class="align-middle">{{ $productSale->quantity }}</td>
+                                    <td class="align-middle">&#8369; {{ number_format($productSale->price, 2, '.', ',') }}</td>
+                                    <td class="align-middle">&#8369; {{ number_format($productSale->quantity * $productSale->price, 2, '.', ',') }}</td>
+                                    <?php
+                                        $totalAmount += $productSale->quantity * $productSale->price;
+                                    ?>
+                                </tr>
+                            @endforeach
                         @endforeach
+
                     </tbody>
                     <tfoot class="thead-dark small table-sm">
                         <tr>
@@ -61,9 +64,8 @@
                     </tfoot>
                 </table>
             </div>
-        @endforeach
         </div>
-        {{ $sales->links() }}
+        {{-- {{ $sales->links() }} --}}
     </div>
 @endsection
 
@@ -78,6 +80,63 @@
             $('#monthSalesDate').change(function (){
                 window.location.replace('/sales/monthly/' + $(this).val());
             });
+
+            sortTable(0);
         });
+
+        function sortTable(n) {
+            var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+            table = document.getElementById("myTable");
+            switching = true;
+            // Set the sorting direction to ascending:
+            dir = "asc";
+            /* Make a loop that will continue until
+            no switching has been done: */
+            while (switching) {
+                // Start by saying: no switching is done:
+                switching = false;
+                rows = table.rows;
+                /* Loop through all table rows (except the
+                first, which contains table headers): */
+                for (i = 0; i < (rows.length - 1); i++) {
+                    // Start by saying there should be no switching:
+                    shouldSwitch = false;
+                    /* Get the two elements you want to compare,
+                    one from current row and one from the next: */
+                    x = rows[i].getElementsByTagName("TD")[n];
+                    y = rows[i + 1].getElementsByTagName("TD")[n];
+                    /* Check if the two rows should switch place,
+                    based on the direction, asc or desc: */
+                    if (dir == "asc") {
+                        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                            // If so, mark as a switch and break the loop:
+                            shouldSwitch = true;
+                            break;
+                        }
+                    } else if (dir == "desc") {
+                        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                            // If so, mark as a switch and break the loop:
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                }
+                if (shouldSwitch) {
+                    /* If a switch has been marked, make the switch
+                    and mark that a switch has been done: */
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                    // Each time a switch is done, increase this count by 1:
+                    switchcount++;
+                } else {
+                    /* If no switching has been done AND the direction is "asc",
+                    set the direction to "desc" and run the while loop again. */
+                    if (switchcount == 0 && dir == "asc") {
+                        dir = "desc";
+                        switching = true;
+                    }
+                }
+            }
+        }
     </script>
 @endsection

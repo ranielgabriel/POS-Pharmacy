@@ -44,7 +44,7 @@
                     </thead>
                     <tbody id="tableProducts" class="table-sm">
                         
-                        @foreach ($products->sortBy('genericNames.description') as $product)
+                        @foreach ($products->sortBy('product.brand_name')->sortBy('genericNames.description') as $product)
                             <tr class="align-middle text-center">
                                 <td class="align-middle">{{ $product->genericNames->description }}</td>
                                 <td class="align-middle"><a class="" href="/products/{{$product->id}}"><strong>{{ $product->brand_name }}</strong></a></td>
@@ -176,7 +176,7 @@
             console.log('Page is ready');
             $('#tableSearchContainer').hide();
             
-            @auth()
+            @auth
                 if({!! $cart->count() !!} != 0){
                     $('#anchorCart').append('<span class="badge badge-pill badge-info">' + {!! $cart->count() !!} + '</span>');
                 }
