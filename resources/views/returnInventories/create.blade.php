@@ -10,6 +10,10 @@
 
                     <h3 class="text-center">Product Information</h3>
                     <div class="col-md-12 row">
+                        <div class="form-group col-md-3" id="inventoryIdContainer">
+                            {{Form::label('inventoryId', 'Inventory Id')}}
+                            {{Form::number('inventoryId', '', ['class' => 'form-control', 'placeholder' => 'Inventory Id', 'readonly', 'id' => 'inventoryId', 'required'])}}
+                        </div>
                         <div class="form-group col-md-3" id="productIdContainer">
                             {{Form::label('productId', 'Product Id')}}
                             {{Form::number('productId', '', ['class' => 'form-control', 'placeholder' => 'Product Id', 'readonly', 'id' => 'productId', 'required'])}}
@@ -20,15 +24,8 @@
                         </div>
                         <div class="form-group col-md-3">
                         {{Form::label('brandName', 'Brand Name')}}
-                        @php
-                            $productsToDisplay = array();
-                        @endphp
-                        
-                        @foreach ($products as $product)
-                            <?php $productsToDisplay[$product->id] = $product->brand_name;?>
-                        @endforeach
-                        
-                        {{Form::select('brandName', $productsToDisplay , null, ['class' => 'form-control', 'placeholder' => 'Pick a product...', 'id' => 'brandName', 'required'])}}
+                        {{-- {{Form::select('brandName', [] , null, ['class' => 'form-control', 'placeholder' => 'Pick a product...', 'id' => 'brandName', 'required'])}} --}}
+                        <select name="brandName" class="form-control" id="brandName" disabled required><option disabled value="" selected>Choose a product...</option></select>
                         </div>
                         <div class="form-group  col-md-6">
                             {{Form::label('genericName', 'Generic Name')}}
@@ -38,7 +35,7 @@
                     <div class="col-md-12 row">
                         <div class="form-group col-md-3">
                             {{Form::label('quantity', 'Quantity')}}
-                            {{Form::number('quantity', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Quantity', 'id' => 'quantity', 'required'])}}
+                            {{Form::number('quantity', '', ['class' => 'form-control', 'min' => 0 ,'placeholder' => 'Quantity', 'id' => 'quantity', 'required', 'disabled'])}}
                         </div>
                         <div class="form-group col-md-3">
                             {{Form::label('expirationDate', 'Expiration Date')}}
@@ -74,54 +71,132 @@
             console.log('Page is ready.');
 
             $('#productIdContainer').hide();
+            $('#inventoryIdContainer').hide();
 
             // Initial Variables;
             var productsToShow;
 
-
             // For searching Brand Name
             $('#brandName').change(function(){
-                searchProductInfo($(this).val());
+                searchProductSaleInfo($(this).val(), $('#saleId').val());
+                if($(this).val() != ''){
+                    $('#quantity').attr({
+                        'disabled': false
+                    });
+                }else{
+                    $('#quantity').attr({
+                        'disabled': true
+                    });
+                }
                 // console.log($(this).val());
             });
 
+            $('#saleId').keyup(function (){
+                searchBySaleId($(this).val());
+
+                $('#expirationDate').val(''); 
+                $('#productId').val('');
+                $('#genericName').val('');
+                $('#manufacturer').val('');
+                $('#drugType').val('');
+                $('#quantity').val('');
+
+                    
+                $('#quantity').attr({
+                    'disabled': true
+                });
+                
+                // if($(this).val() != ''){
+                //     $('#brandName').attr({
+                //         'disabled': false
+                //     });
+                // }else{
+                //     $('#brandName').attr({
+                //         'disabled': true
+                //     });
+                // }
+            })
+
+            $("#quantity").keyup(function(){
+                if(parseInt($(this).val()) > parseInt($(this).attr('max'))){
+                    $(this).val($(this).attr('max'));
+                    return;
+                }
+            });
+
             // Function for getting the product information
-            function searchProductInfo(productId){
+            function searchProductSaleInfo(productId, saleId){
                 $.ajax({
-                    url: '/searchProductInfo',
+                    url: '/searchProductSaleInfo',
                     type: 'POST',
                     data: {
                         _token: "{{ csrf_token() }}",
-                        id: productId
+                        id: productId,
+                        saleId: saleId
                     },
                     success: function (msg) {
 
                         // if the response is not null
                         if(msg['product'] != null){
-
-                            // var quantity = 0;
-                            var optionOutput = '<option value="" disabled selected>Pick an expiration date...</option>';
-
-                            for (var i = 0; i < msg['inventories'].length; i++) {
-                                optionOutput += '<option value="' + msg['inventories'][i]['expiration_date'] + '">' + msg['inventories'][i]['expiration_date'] + '</option>';
-                            }
+                            console.log(msg);
 
                             $('#productId').val(msg['product']['id']);
                             $('#genericName').val(msg['genericNames']['description']);
                             $('#manufacturer').val(msg['manufacturers']['name']);
                             $('#drugType').val(msg['drugTypes']['description']);
-                            $('#quantity').val(quantity);
+                            $('#quantity').attr({
+                                'max': msg['productSale']['quantity'],
+                                'min': 0
+                            });
+                            $('#quantity').val(msg['productSale']['quantity']);
 
-                            $('#expirationDate').html(''); 
-                            $('#expirationDate').append(optionOutput);
+                            $('#expirationDate').val(msg['inventory']['expiration_date']);
+                            $('#inventoryId').val(msg['inventory']['id']);
                         }else{
 
-                            $('#expirationDate').html(''); 
+                            $('#expirationDate').val(''); 
                             $('#productId').val('');
                             $('#genericName').val('');
                             $('#manufacturer').val('');
                             $('#drugType').val('');
                             $('#quantity').val('');
+                            $('#inventoryId').val('');
+                        }
+                    }
+                });
+            }
+
+            function searchBySaleId(saleId){
+                $.ajax({
+                    url: '/searchBySaleId',
+                    type: 'POST',
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        saleId: saleId
+                    },
+                    success: function (msg) {
+
+                        $('#brandName').html('<option disabled value="" selected>Choose a product...</option>');
+
+                        if(msg['sales'] != '' && msg['sales'] != null){
+                            console.log(msg);
+                            $('#brandName').attr({
+                                "disabled": false
+                            });
+
+                            $('#brandName').html('');
+                            
+                            var optionOutput = '<option disabled value="" selected>Choose a product...</option>';
+
+                            for (var i = 0; i < msg['sales'].length; i++) {
+                                optionOutput += '<option value="' + msg['sales'][i]['product']['id'] + '">' + msg['sales'][i]['product']['brand_name'] + '</option>';
+                            }
+
+                            $('#brandName').append(optionOutput);
+                        }else{
+                            $('#brandName').attr({
+                                'disabled': true
+                            });
                         }
                     }
                 });

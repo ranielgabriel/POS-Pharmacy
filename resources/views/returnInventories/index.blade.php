@@ -28,25 +28,25 @@
                             <th class="align-middle">Drug Type</th>
                             <th class="align-middle">Manufacturer</th>
                             <th class="align-middle">Expiration Date</th>
-                            <th class="align-middle">Returned Stocks</th>
+                            <th class="align-middle">Remaining Stocks</th>
+                            <th class="align-middle">Sold</th>
                             <th class="align-middle">Status</th>
                         </tr>
                     </thead>
                     <tbody id="tableReturns" class="table-sm">
-                        @foreach ($returnInventories as $item)
+                        @foreach ($returnInventories->sortBy('product.brand_name')->sortBy('product.genericNames.description') as $item)
                             <tr class="text-center">
                                 <td class="align-middle">{{ $item->product->genericNames->description }}</td>
                                 <td class="align-middle">{{ $item->product->brand_name }}</td>
                                 <td class="align-middle">{{ $item->product->drugTypes->description }}</td>
                                 <td class="align-middle">{{ $item->product->manufacturers->name }}</td>
-                                <td class="align-middle">{{ $item->expiration_date }}</td>
+                                <td class="align-middle">{{ Carbon\Carbon::parse($item->expiration_date)->toFormattedDateString() }}</td>
                                 <td class="align-middle">{{ $item->quantity }}</td>
-                                @if($item->product->status == 'In-stock')
-                                    <td class="align-middle"><center><span class="badge badge-warning">{{ $item->product->status }}</span></center></td>
-                                @elseif($item->product->status == 'Selling')
-                                    <td class="align-middle"><center><span class="badge badge-success">{{ $item->product->status }}</span></center></td>
-                                @elseif($item->product->status == 'Out-of-stock')
-                                    <td class="align-middle"><center><span class="badge badge-danger">{{ $item->product->status }}</span></center></td>
+                                <td class="align-middle">{{ $item->sold }}</td>
+                                @if($item->quantity == $item->sold)
+                                    <td class="align-middle"><center><span class="badge badge-success"> Sold </span></center></td>
+                                @else
+                                    <td class="align-middle"><center><span class="badge badge-warning"> Selling </span></center></td>
                                 @endif
                             </tr>    
                         @endforeach

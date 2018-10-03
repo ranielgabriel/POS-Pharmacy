@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\ReturnInventory;
 use App\User;
 use App\Product;
 use App\Supplier;
@@ -12,6 +11,11 @@ use App\Inventory;
 
 class ReturnInventoriesController extends Controller
 {
+    public function __construct()
+    {
+        // $this->middleware('auth', ['except' => ['index', 'show']]);
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +25,8 @@ class ReturnInventoriesController extends Controller
     {
         $user = User::find(Auth::user()->id);
 
-        $returnInventories = ReturnInventory::orderBy('created_at','asc')
+        $returnInventories = Inventory::orderBy('created_at','asc')
+        ->where('isReturn','=',1)
         ->get();
         return view('returnInventories.index')->with(['returnInventories' => $returnInventories, 'user' => $user]);
     }
@@ -53,18 +58,23 @@ class ReturnInventoriesController extends Controller
             'genericName' => 'required',
             'manufacturer' => 'required',
             'drugType' => 'required',
-            'expirationDate' => 'required|date|after:today',
+            'expirationDate' => 'required|exists:inventories,expiration_date',
             'quantity' => 'gt:0'
         ]);
 
-        $returnInventory = ReturnInventory::create(
-            [
-                'product_id' => $request->input('productId'),
-                'quantity' => $request->input('quantity'),
-                'sold' => 0,
-                'expiration_date' => $request->input('expirationDate'),
-            ]
-        );
+        $inventory = Inventory::find($request->inventoryId);
+        
+        $returnedInventory = new Inventory();
+        $returnedInventory = Inventory::create([
+            'quantity' => $request->input('quantity'),
+            'sold' => 0,
+            'expiration_date' => $request->input('expirationDate'),
+            'batch_number' => $inventory->batch_number,
+            'supplier_id' => $inventory->supplier_id,
+            'product_id' => $inventory->product_id,
+            'delivery_date' => $inventory->delivery_date,
+            'isReturn' => 1
+        ]);
 
         return redirect('/returns')->with('success','Product has been successfully returned.');
     }

@@ -21,7 +21,7 @@ class SalesController extends Controller
      */
     public function index()
     {
-        $sales = Sale::orderBy('sale_date','desc')
+        $sales = Sale::orderBy('created_at','desc')
         ->with('productSale')
         ->paginate(30);
 
@@ -128,5 +128,11 @@ class SalesController extends Controller
         // ->get();
 
         return view('sales.monthly')->with(['sales'=> $sales]);
+    }
+
+    public function printDaily($date){
+        $fpdf = new Fpdf();
+        $fpdf::AddPage();
+        $fpdf::Output();
     }
 }

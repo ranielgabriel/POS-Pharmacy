@@ -124,7 +124,7 @@
                                     quantity += remainingQuantity;
                                 }
                             }
-                            $('#pricesContainer').show();
+                            $('#pricesContainer').fadeIn();
 
                             $('#productId').val(msg['product']['id']);
                             $('#genericName').val(msg['genericNames']['description']);

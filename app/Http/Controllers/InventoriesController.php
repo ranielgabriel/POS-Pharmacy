@@ -143,7 +143,8 @@ class InventoriesController extends Controller
             'batch_number' => $batch->id,
             'supplier_id' => $supplier->id,
             'product_id' => $product->id,
-            'delivery_date' => $request->input('deliveryDate')
+            'delivery_date' => $request->input('deliveryDate'),
+            'isReturn' => 0
         ]);
 
         // redirect to index of inventories

@@ -30,9 +30,9 @@
                                 <tr class="text-center">
                                     <td class="align-middle" hidden id="productId{{$loop->iteration}}">{{$item->product_id}}</td>
                                     <td class="align-middle" hidden id="inventoryId{{$loop->iteration}}"></td>
+                                    {{-- <td class="align-middle" hidden id="returnInventoryId{{$loop->iteration}}"></td> --}}
                                     <td class="align-middle" hidden id="cartId{{$loop->iteration}}">{{$item->id}}</td>
                                     <td class="align-middle"><a data-product-id="{{$item->product_id}}" class="btn btn-primary addProductToCart" href="#" role="button"><span class="fa fa-plus-circle"></span></a></td>
-                                    {{-- <td class="align-middle">{{ link_to_action('CartsController@store', $title = 'Add', $parameters = ['productId' => $item->product_id, 'userId' => Auth::user()->id], $attributes = ['class' => 'btn btn-primary']) }}</td> --}}
                                     <td class="align-middle"><small id="genericName{{$loop->iteration}}">{{$item->product->genericNames->description}}</small></td>
                                     <td class="align-middle"><small id="brandName{{$loop->iteration}}" class="text-center">{{$item->product->brand_name}}</small></td>
                                     <td class="align-middle"><small id="manufacturer{{$loop->iteration}}" class="text-center">{{$item->product->manufacturers->name}}</small></td>
@@ -42,7 +42,11 @@
                                     @endphp
                                     @foreach ($item->product->inventories->sortBy('expiration_date') as $inventory)
                                         @if($inventory->quantity > $inventory->sold)
-                                            <?php $expirationDatesToDisplay[$inventory->expiration_date] = $inventory->expiration_date;?>
+                                            @if($inventory->isReturn == 1)
+                                                <?php $expirationDatesToDisplay[$inventory->id] = $inventory->expiration_date . ' ***';?>
+                                            @else
+                                                <?php $expirationDatesToDisplay[$inventory->id] = $inventory->expiration_date;?>
+                                            @endif
                                         @endif
                                     @endforeach
                                     <td class="align-middle">{{Form::select('expirationDate' . $loop->iteration, $expirationDatesToDisplay , null, ['class' => 'form-control expirationSelect', 'placeholder' => 'Pick an expiration date...', 'id' => 'expirationDate' . $loop->iteration])}}</td>
@@ -143,8 +147,15 @@
 
                                 $("#quantity"+rowIndex).val('');
                             }
-
-                            searchProductQuantityInfo($("#productId"+rowIndex).html(), $("#expirationDate"+rowIndex).val(), rowIndex);
+                            
+                            // console.log($(this).find(':selected').text());
+                            // var returnInventoryId = $(this).val().split(",");
+                            // if(returnInventoryId.length == 2){
+                            //     console.log(returnInventoryId);
+                            //     searchReturnInventoryInfo(returnInventoryId, rowIndex);
+                            // }else{
+                            searchProductQuantityInfo($("#expirationDate"+rowIndex).val(), rowIndex);
+                            // }
                         }
             });
 
@@ -188,13 +199,15 @@
 
                     totalAmount += parseFloat(subTotal.toFixed(2));
 
+                    var returnedExpirationDate = $('#expirationDate'+i).find(':selected').text().split(' ',2);
+
                     // console.log($('#inventoryId'+i).html());
                     code += "<tr class='align-middle small'>" +
                     "<td class='align-middle'>" + $('#genericName'+i).html() + "</td>" +
                     "<td class='align-middle'>" + $('#brandName'+i).html() + "</td>" +
                     // "<td>" + $('#manufacturer'+i).html() + "</td>" +
                     "<td class='align-middle'>" + $('#drugType'+i).html() + "</td>" +
-                    "<td class='align-middle'>" + $('#expirationDate'+i).val() + "</td>" +
+                    "<td class='align-middle'>" + returnedExpirationDate[0] + "</td>" +
                     // "<td>" + $('#quantity'+i).val() + "</td>" +
                     "<td class='align-middle'>" + $('#quantity'+i).val()  + " x &#8369; " + Number($('#price'+i).val()).toLocaleString('en') + "</td>" +
                     "<td class='align-middle'>&#8369; " + Number(subTotal.toFixed(2)).toLocaleString('en') + "</td>" +
@@ -242,14 +255,13 @@
             return false;
         }
 
-        function searchProductQuantityInfo(productId, expirationDate, rowIndex) {
+        function searchProductQuantityInfo(inventoryId, rowIndex) {
             $.ajax({
                 url: '/searchProductQuantityInfo',
                 type: 'POST',
                 data: {
                     _token: "{{ csrf_token() }}",
-                    productId: productId,
-                    expirationDate: expirationDate
+                    inventoryId: inventoryId
                 },
                 success: function (msg) {
 
@@ -266,6 +278,7 @@
                         console.log(msg['inventories']);
 
                         $("#inventoryId"+rowIndex).html(msg['inventories']['id']);
+                        $("#returnInventoryId"+rowIndex).html('');
                     }
                 }
             });

@@ -10,7 +10,8 @@ $factory->define(App\Inventory::class, function (Faker $faker) {
         'sold' => $faker->numberBetween($min = 0, $max = 50),
         'expiration_date' => $faker->unique()->dateTimeBetween($startDate = '-3 months', $endDate = '+2 years', $timezone = null),
         'batch_number' => $faker->numberBetween($min = 50, $max = 100),
-        'delivery_date' => $faker->dateTimeBetween($startDate = 'now', $endDate = '+1 week', $timezone = null)
+        'delivery_date' => $faker->dateTimeBetween($startDate = 'now', $endDate = '+1 week', $timezone = null),
+        'isReturn' => '0'
     ];
 });
 

@@ -36,10 +36,30 @@ Route::post('/searchProductInfo','AjaxController@searchProductInfo');
 Route::post('/searchProductQuantityInfo','AjaxController@searchProductQuantityInfo');
 Route::post('/searchSupplierInfo','AjaxController@searchSupplierInfo');
 Route::post('/searchSupplierInfoById','AjaxController@searchSupplierInfoById');
+Route::post('/searchBySaleId','AjaxController@searchBySaleId');
+Route::post('/searchProductSaleInfo','AjaxController@searchProductSaleInfo');
 Route::post('/searchSupplier','AjaxController@searchSupplier');
 Route::post('/insertSale','AjaxController@insertSale');
 
 Route::get('/sales/daily/{date}','SalesController@daily');
+Route::get('/sales/daily/print/{date}', function(Codedge\Fpdf\Fpdf\Fpdf $fpdf, $date) {
+    
+    $sales = App\Sale::orderBy('created_at','desc')
+        ->where('sale_date','LIKE','%' . $date . '%')
+        ->with('productSale')
+        ->get();
+
+    $fpdf->AddPage();
+    $fpdf->SetFont('Arial', '', 12);
+
+    foreach($sales as $sale){
+        $fpdf->Write(10, $sale);
+    }
+
+    $fpdf->Output();
+    exit();
+
+});
 Route::get('/sales/monthly/{date}','SalesController@monthly');
 
 // Get

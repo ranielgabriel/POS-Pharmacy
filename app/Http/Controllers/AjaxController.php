@@ -17,6 +17,7 @@ use App\Cart;
 use App\Customer;
 use App\Sale;
 use App\ProductSale;
+use App\ReturnInventory;
 
 class AjaxController extends Controller
 {
@@ -150,26 +151,43 @@ class AjaxController extends Controller
         }
     }
 
+    // This function is for searching a specific product sale
+    // This returns every information about the product sale.
+    public function searchProductSaleInfo(Request $request){
+        if($request->id != null and $request->saleId != null){
+
+            $productSale = ProductSale::where([
+                ['sale_id','=',$request->saleId],
+                ['product_id','=',$request->id]
+            ])
+            ->get()
+            ->first();
+            $product = Product::find($request->id);
+            $inventory = Inventory::find($productSale->inventory_id);
+            return response()->json([
+                'product' => $product,
+                'genericNames' => $product->genericNames,
+                'manufacturers' => $product->manufacturers,
+                'drugTypes' => $product->drugTypes,
+                'inventory' => $inventory,
+                'productSale' => $productSale
+            ]);
+        }
+    }
+
     // This function is for searching a specific product quantity
     // This returns every information about the product quantity.
     public function searchProductQuantityInfo(Request $request){
-        if($request->productId != null){
+        if($request->inventoryId != null){
 
-            $inventories = Inventory::
-            where([
-                ['product_id','=',$request->productId],
-                ['expiration_date', '=', $request->expirationDate]
-            ])
-            ->whereColumn('quantity','!=','sold')
-            ->get()
-            ->first();
+            $inventories = Inventory::find($request->inventoryId);
 
             return response()->json([
                 'inventories' => $inventories
             ]);
         }
     }
-
+    
     // This function is for searching suppliers
     // This returns a list of supplier(s).
     public function searchSupplier(Request $request){
@@ -257,6 +275,20 @@ class AjaxController extends Controller
         }
     }
 
+    // This function is for searching a specific sale
+    // This returns every information about the sale.
+    public function searchBySaleId(Request $request){
+        if($request->saleId != null){
+            $sales = ProductSale::where('sale_id','=',$request->saleId)
+            ->with('product')
+            ->get();
+
+            return response()->json([
+                'sales' => $sales,
+            ]);
+        }
+    }
+
     // This function gets the list of all the Drug types from the database.
     // This returns a list of drug types
     public function getDrugTypes(){
@@ -320,6 +352,7 @@ class AjaxController extends Controller
         ]);
 
         foreach($object as $item){
+            
             $inventory = Inventory::find($item['inventoryId']);
             if($inventory->quantity >= $inventory->sold + $item['inventorySold']){
                 $inventory->sold = $inventory->sold + $item['inventorySold'];

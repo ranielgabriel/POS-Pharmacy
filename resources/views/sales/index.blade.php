@@ -11,7 +11,7 @@
                 <table class="table table-striped table-bordered table-hover">
                     <thead class="thead-dark table-sm">
                         <tr class="align-middle">
-                            <th colspan="8" class="align-middle small">Sale number: {{ $sale->id }}<b class="float-right align-middle small">Date: {{ Carbon\Carbon::parse($sale->sale_date)->format('l jS \\of F Y h:i:s A') }}</b></th>
+                            <th colspan="8" class="align-middle small">Sale number: {{ $sale->id }}<b class="float-right align-middle small">Date: {{ Carbon\Carbon::parse($sale->created_at)->format('l jS \\of F Y h:i:s A') }}</b></th>
                         </tr>
                         <tr>
                             <th class="align-middle small" colspan="8">Sold to: {{ $sale->customer->name }}</th>

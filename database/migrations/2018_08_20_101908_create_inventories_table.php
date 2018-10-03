@@ -22,6 +22,7 @@ class CreateInventoriesTable extends Migration
             $table->date('expiration_date');
             $table->date('delivery_date');
             $table->integer('batch_number');
+            $table->integer('isReturn')->nullable()->default(0);
             $table->timestamps();
         });
     }
